@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -18,7 +19,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.haahooshop.utils.Global;
+import com.example.haahooshop.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,10 +32,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    TextInputEditText phoneno;
-    TextView continuetologin;
+    TextInputLayout pwdlayout;
+    TextInputEditText phoneno,password;
+    TextView continuetologin,login;
+    FirebaseAnalytics firebaseAnalytics;
+    private String token_firebase;
     Context context=this;
+    String device_id = null;
+    SessionManager sessionManager;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_otp_generation/";
+    private String URLli = Global.BASE_URL+"api_shop_app/shop_login/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +51,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sessionManager = new SessionManager(this);
+
         phoneno=findViewById(R.id.uname);
+        pwdlayout=findViewById(R.id.pwdlayout);
+        password=findViewById(R.id.pwd);
+        login=findViewById(R.id.login);
         continuetologin=findViewById(R.id.continuetologin);
+        device_id =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        token_firebase = FirebaseInstanceId.getInstance().getToken();
+        Log.d("tokkkken","lhykhiyh"+token_firebase);
 
 
         continuetologin.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +91,28 @@ public class MainActivity extends AppCompatActivity {
 
                             Log.d("otp","mm"+token);
                             Log.d("code","mm"+status);
-                            if(status.equals("200")){
+                            if(status.equals("200")&&(!(ot.equals("verify")))){
                                 Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(MainActivity.this, VerifyOtp.class);
                                 intent.putExtra("phone_no",phoneno.getText().toString());
                                 intent.putExtra("otp",ot);
                                 startActivity(intent);
                             }
-                            else{
+                            if(ot.equals("verify")){
+                                password.setVisibility(View.VISIBLE);
+                                pwdlayout.setVisibility(View.VISIBLE);
+                                login.setVisibility(View.VISIBLE);
+                                continuetologin.setVisibility(View.GONE);
+
+                                login.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        loginuser();
+                                    }
+                                });
+
+                            }
+                            if(!(status.equals("200"))){
                                 Toast.makeText(MainActivity.this, "Failed."+ot, Toast.LENGTH_LONG).show();
 
 
@@ -111,5 +145,65 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
 
+    }
+    private void loginuser(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLli,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                    //    dialog.dismiss();
+                        //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+                            String token=jsonObject.optString("Token");
+                         sessionManager.setTokens(token);
+
+
+
+
+                            Log.d("otp","mm"+token);
+                            Log.d("code","mm"+status);
+                            if(status.equals("200")){
+                                Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(MainActivity.this, MainUI.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(MainActivity.this, "Login Failed."+ot, Toast.LENGTH_LONG).show();
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                          Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("phone_no",phoneno.getText().toString());
+                params.put("password",password.getText().toString());
+                params.put("fire_token",token_firebase);
+                params.put("device_id",device_id);
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
     }
 }

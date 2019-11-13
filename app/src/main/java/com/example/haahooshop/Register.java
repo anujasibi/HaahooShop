@@ -1,18 +1,24 @@
 package com.example.haahooshop;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,12 +45,17 @@ import java.util.Map;
 public class Register extends AppCompatActivity {
     EditText shopname,owner,gstno,phone,email,password;
     EditText address;
-    TextView submit;
+    TextView submit,show,hide;
+    String device_id = null;
     Spinner spinner;
+    public String idsp;
     ArrayList<String> areas = new ArrayList<String>();
+    ArrayList<String> areasid = new ArrayList<String>();
+    boolean doubleBackToExitPressedOnce = false;
+
     String URL="https://testapi.creopedia.com/api_shop_app/list_shop_cat/ ";
     Context context=this;
-    private String URLline = Global.BASE_URL+"api_shop_app/shop_otp_generation/";
+    private String URLline = Global.BASE_URL+"api_shop_app/shop_registeration/";
     public String source_lat,source_lng;
 
     @Override
@@ -62,6 +73,10 @@ public class Register extends AppCompatActivity {
         email=findViewById(R.id.email);
         password=findViewById(R.id.password);
         address=findViewById(R.id.des);
+        show=findViewById(R.id.show);
+        hide=findViewById(R.id.hide);
+        device_id =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
 
         address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -69,6 +84,26 @@ public class Register extends AppCompatActivity {
                 GeocodingLocation locationAddress = new GeocodingLocation();
                 locationAddress.getAddressFromLocation(address.getText().toString(),
                         getApplicationContext(), new Register.GeocoderHandler());
+            }
+        });
+
+
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                hide.setVisibility(View.VISIBLE);
+                show.setVisibility(View.GONE);
+
+            }
+        });
+
+        hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                hide.setVisibility(View.GONE);
+                show.setVisibility(View.VISIBLE);
             }
         });
 
@@ -81,6 +116,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String country= spinner.getItemAtPosition(spinner.getSelectedItemPosition()).toString();
+                idsp=areasid.get(spinner.getSelectedItemPosition());
                 Toast.makeText(getApplicationContext(),country,Toast.LENGTH_LONG).show();
             }
             @Override
@@ -99,6 +135,8 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+
+
     private class GeocoderHandler extends Handler {
         @Override
         public void handleMessage(Message message) {
@@ -139,7 +177,10 @@ public class Register extends AppCompatActivity {
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject jsonObject1=jsonArray.getJSONObject(i);
                             String country=jsonObject1.getString("name");
+                            String id=jsonObject1.getString("id");
                             areas.add(country);
+                            areasid.add(id);
+
                         }
 
                     spinner.setAdapter(new ArrayAdapter<String>(Register.this, android.R.layout.simple_spinner_dropdown_item, areas));
@@ -180,7 +221,7 @@ public class Register extends AppCompatActivity {
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
                                 Toast.makeText(Register.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Register.this, Register.class);
+                                Intent intent = new Intent(Register.this, MainUI.class);
                                 startActivity(intent);
                             }
                             else{
@@ -206,16 +247,28 @@ public class Register extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
+                params.put("device_id",device_id);
+                Log.d("name","mm"+device_id);
                 params.put("name",shopname.getText().toString());
+                Log.d("name","mm"+shopname.getText().toString());
                 params.put("owner_name",owner.getText().toString());
+                Log.d("owener","mm"+owner.getText().toString());
                 params.put("gst_no",gstno.getText().toString());
-                params.put("emial",email.getText().toString());
+                Log.d("gstno","mm"+gstno.getText().toString());
+                params.put("email",email.getText().toString());
+                Log.d("email","mm"+email.getText().toString());
                 params.put("password",password.getText().toString());
+                Log.d("pass","mm"+password.getText().toString());
                 params.put("phone_no",phone.getText().toString());
+                Log.d("phone","mm"+phone.getText().toString());
                 params.put("address",address.getText().toString());
+                Log.d("address","mm"+address.getText().toString());
                 params.put("lat",source_lat);
+                Log.d("lat","mm"+source_lat);
                 params.put("log",source_lng);
-                params.put("category",spinner.getSelectedItem().toString());
+                Log.d("long","mm"+source_lng);
+                params.put("category",idsp);
+                Log.d("category","mm"+idsp);
 
 
                 return params;
@@ -225,5 +278,25 @@ public class Register extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            finishAffinity();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(Register.this,"Press again to exit",Toast.LENGTH_SHORT).show();
+
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
