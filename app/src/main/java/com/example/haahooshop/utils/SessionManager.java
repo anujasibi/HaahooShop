@@ -37,6 +37,72 @@ public class SessionManager {
 
         return  sharedPreferences.getString("token","");
     }
+
+    public void setPdtName(String PdtName){
+        sharedPreferences.edit().putString("PdtName",PdtName).commit();
+    }
+    public String getPdtName(){
+
+        return  sharedPreferences.getString("token","");
+    }
+
+    public void setprice(String price){
+        sharedPreferences.edit().putString("price",price).commit();
+    }
+    public String getprice(){
+
+        return  sharedPreferences.getString("price","");
+    }
+    public void setret(String ret){
+        sharedPreferences.edit().putString("ret",ret).commit();
+    }
+    public String getret(){
+
+        return  sharedPreferences.getString("ret","");
+    }
+    public void setdis(String dis){
+        sharedPreferences.edit().putString("dis",dis).commit();
+    }
+    public String getdis(){
+
+        return  sharedPreferences.getString("dis","");
+    }
+    public void setstock(String stock){
+        sharedPreferences.edit().putString("stock",stock).commit();
+    }
+    public String getstock(){
+
+        return  sharedPreferences.getString("stock","");
+    }
+    public void setdes(String des){
+        sharedPreferences.edit().putString("des",des).commit();
+    }
+    public String getdes(){
+
+        return  sharedPreferences.getString("des","");
+    }
+    public void setcatName(String cname){
+        sharedPreferences.edit().putString("cname",cname).commit();
+    }
+    public String getcatName(){
+
+        return  sharedPreferences.getString("cname","");
+    }
+    public void setcatid(String cid){
+        sharedPreferences.edit().putString("cid",cid).commit();
+    }
+
+    public String getcatdistance(){
+
+        return  sharedPreferences.getString("distance","");
+    }
+    public void setcatdistance(String distance){
+        sharedPreferences.edit().putString("distance",distance).commit();
+    }
+    public String getcatid(){
+
+        return  sharedPreferences.getString("cid","");
+    }
     public String getID() {
         String lat = sharedPreferences.getString("ID","");
 

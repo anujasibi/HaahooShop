@@ -1,6 +1,9 @@
 package com.example.haahooshop.utils;
 
+import com.example.haahooshop.Specpojo;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Global {
 
@@ -9,6 +12,7 @@ public class Global {
     public static String price="null";
     public static String total="0";
     public static boolean flag = false;
+    public static List<Specpojo> specpojos = new ArrayList<>();
 
 
 

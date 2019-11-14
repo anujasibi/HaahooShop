@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.haahooshop.utils.SessionManager;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ public class AddProduct extends AppCompatActivity {
     Spinner spinner;
     public String idsp;
     SessionManager sessionManager;
+    TextInputEditText name;
     ArrayList<String> areas = new ArrayList<String>();
     ArrayList<String> areasid = new ArrayList<String>();
     String URL="https://testapi.creopedia.com/api_shop_app/list_pdt_cat/ ";
@@ -47,6 +49,8 @@ public class AddProduct extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
 
         spinner = findViewById(R.id.spinner);
+
+        name=findViewById(R.id.name);
         textView=findViewById(R.id.save);
         sessionManager = new SessionManager(this);
         loadSpinnerData(URL);
@@ -67,6 +71,8 @@ public class AddProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                sessionManager.setPdtName(name.getText().toString());
+                sessionManager.setcatid(idsp);
                 Intent intent = new Intent(AddProduct.this,category.class);
                 intent.putExtra("category",idsp);
                 startActivity(intent);

@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,7 +38,7 @@ public class category extends AppCompatActivity {
     Context context = this;
     String[] value = null;
     SessionManager sessionManager;
-
+    TextView save;
     String url = "https://testapi.creopedia.com/api_shop_app/list_pdt_cat_spec/";
 
     @Override
@@ -49,13 +51,27 @@ public class category extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         recyclerView = findViewById(R.id.recycle);
+        save=findViewById(R.id.save);
         sessionManager = new SessionManager(this);
         Bundle bundle =getIntent().getExtras();
-        String category = bundle.getString("category");
+        final String category = bundle.getString("category");
         loadspecs(category);
         ArrayList<String> vals = new ArrayList<>();
 
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                Toast.makeText(context,"kjnkj"+specpojos.get(position).getName(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,addprod.class));
+            }
+        });
 
 
     }
@@ -80,6 +96,7 @@ public class category extends AppCompatActivity {
                                 specpojo.setId(jsonObject1.optString("id"));
                                 value = jsonObject1.optString("values").split(",");
                                 ArrayList<String> values = new ArrayList<>();
+                                values.add("Please Select ...");
                                 for (int j = 0 ;j<value.length;j++){
                                     values.add(value[j].replace("[","").replace("]",""));
                                 }

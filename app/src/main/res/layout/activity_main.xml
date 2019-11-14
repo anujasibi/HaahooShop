@@ -41,7 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:id="@+id/logo"
-                android:src="@drawable/haahoologo"
                 android:gravity="center_vertical|center_horizontal|center"
                 android:textColor="#fff" />
 
