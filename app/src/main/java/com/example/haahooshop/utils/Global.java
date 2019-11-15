@@ -8,6 +8,7 @@ import java.util.List;
 public class Global {
 
     public static String BASE_URL = "https://testapi.creopedia.com/";
+    public static String category = "null";
     public static ArrayList<String> discount = new ArrayList<>();
     public static String price="null";
     public static String total="0";

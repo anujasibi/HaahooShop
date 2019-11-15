@@ -91,6 +91,10 @@ public class SessionManager {
     public void setcatid(String cid){
         sharedPreferences.edit().putString("cid",cid).commit();
     }
+    public String getcatid(){
+
+        return  sharedPreferences.getString("cid","");
+    }
 
     public String getcatdistance(){
 
@@ -99,10 +103,22 @@ public class SessionManager {
     public void setcatdistance(String distance){
         sharedPreferences.edit().putString("distance",distance).commit();
     }
-    public String getcatid(){
 
-        return  sharedPreferences.getString("cid","");
+    public String getcheck(){
+
+        return  sharedPreferences.getString("check","");
     }
+    public void setcheck(String check){
+        sharedPreferences.edit().putString("check",check).commit();
+    }
+    public String getradio(){
+
+        return  sharedPreferences.getString("radio","");
+    }
+    public void setradio(String radio){
+        sharedPreferences.edit().putString("radio",radio).commit();
+    }
+
     public String getID() {
         String lat = sharedPreferences.getString("ID","");
 

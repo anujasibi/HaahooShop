@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.haahooshop.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
@@ -42,17 +43,23 @@ public class addprod extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sessionManager.setprice(name.getText().toString());
-                Log.d("name","mm"+sessionManager.getprice());
-                sessionManager.setret(address.getText().toString());
-                Log.d("name","mm"+sessionManager.getret());
-                sessionManager.setdis(pincode.getText().toString());
-                Log.d("name","mm"+sessionManager.getdis());
-                sessionManager.setstock(stock.getText().toString());
-                Log.d("name","mm"+sessionManager.getstock());
-                sessionManager.setdes(des.getText().toString());
-                Log.d("name","mm"+sessionManager.getdes());
-                startActivity(new Intent(addprod.this,finaladd.class));
+                if(name.getText().length()==0||address.getText().length()==0||pincode.getText().length()==0||stock.getText().length()==0|des.getText().length()==0){
+                    Toast.makeText(addprod.this,"All are fields are required",Toast.LENGTH_SHORT).show();
+                }
+                if(!(name.getText().length()==0||address.getText().length()==0||pincode.getText().length()==0||stock.getText().length()==0|des.getText().length()==0)) {
+
+                    sessionManager.setprice(name.getText().toString());
+                    Log.d("name", "mm" + sessionManager.getprice());
+                    sessionManager.setret(address.getText().toString());
+                    Log.d("name", "mm" + sessionManager.getret());
+                    sessionManager.setdis(pincode.getText().toString());
+                    Log.d("name", "mm" + sessionManager.getdis());
+                    sessionManager.setstock(stock.getText().toString());
+                    Log.d("name", "mm" + sessionManager.getstock());
+                    sessionManager.setdes(des.getText().toString());
+                    Log.d("name", "mm" + sessionManager.getdes());
+                    startActivity(new Intent(addprod.this, finaladd.class));
+                }
             }
         });
 

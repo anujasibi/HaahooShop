@@ -15,11 +15,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.haahooshop.utils.SessionManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,21 +37,57 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class addimage extends AppCompatActivity {
     ImageButton captureBtn = null;
     final int CAMERA_CAPTURE = 1;
     private Uri picUri;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private GridView grid;
-    private List<String> listOfImagesPath;
+    private List<String> listOfImagesPath= new ArrayList<>();
     Context context=this;
+    TextView save;
+    SessionManager sessionManager;
 
     public static final String GridViewDemo_ImagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GridViewDemo/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // will hide the title
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addimage);
+
+        sessionManager=new SessionManager(this);
+
+        listOfImagesPath.clear();
+
+        save=findViewById(R.id.save);
+
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submituser();
+            }
+        });
+
+        File imageDirectory = new File(GridViewDemo_ImagePath);
+        imageDirectory.mkdirs();
+        if (imageDirectory.isDirectory()){
+            String[] children = imageDirectory.list();
+            for (int i =0;i<children.length;i++){
+                new File(imageDirectory,children[i]).delete();
+            }
+        }
 
         captureBtn = findViewById(R.id.card_view_image);
         captureBtn.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +113,8 @@ public class addimage extends AppCompatActivity {
         });
         grid = (GridView) findViewById(R.id.card_view_recycler_list);
 
-        listOfImagesPath = null;
-        listOfImagesPath = RetriveCapturedImagePath();
+
+      //  listOfImagesPath = RetriveCapturedImagePath();
         if(listOfImagesPath!=null){
             grid.setAdapter(new ImageListAdapter(this,listOfImagesPath));
         }
@@ -101,8 +141,7 @@ public class addimage extends AppCompatActivity {
                 Bundle extras = data.getExtras();
                 Bitmap thePic = extras.getParcelable("data");
                 String imgcurTime = dateFormat.format(new Date());
-                File imageDirectory = new File(GridViewDemo_ImagePath);
-                imageDirectory.mkdirs();
+
                 String _path = GridViewDemo_ImagePath + imgcurTime + ".jpg";
                 try {
                     FileOutputStream out = new FileOutputStream(_path);
@@ -113,7 +152,7 @@ public class addimage extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                listOfImagesPath = null;
+                listOfImagesPath.clear();
                 listOfImagesPath = RetriveCapturedImagePath();
                 if (listOfImagesPath != null) {
                     grid.setAdapter(new ImageListAdapter(this, listOfImagesPath));
@@ -206,5 +245,46 @@ public class addimage extends AppCompatActivity {
             }
             return imageView;
         }
+    }
+
+    private void submituser(){
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(this);
+        UploadAPI uploadAPIs = retrofit.create(UploadAPI.class);
+        //Create a file object using file path
+        MultipartBody.Part[] part = new MultipartBody.Part[listOfImagesPath.size()];
+        for (int index = 0; index < listOfImagesPath.size(); index++) {
+            File file = new File(listOfImagesPath.get(index));
+            RequestBody surveyBody = RequestBody.create(MediaType.parse("image/*"), file);
+            part[index] = MultipartBody.Part.createFormData("pdt_image", file.getName(), surveyBody);
+
+        }
+        //Create request body with text description and text media type
+        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+        RequestBody pdt_name = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getPdtName() );
+        RequestBody pdt_cat_id = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcatid() );
+        RequestBody pdt_spec = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcatName() );
+        RequestBody pdt_price = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getprice() );
+        RequestBody pdt_return_period = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getret() );
+        RequestBody pdt_discount = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getdis() );
+        RequestBody stock = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getstock() );
+        RequestBody pdt_description = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getdes() );
+        RequestBody delivery_mode = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcheck() );
+        RequestBody distance = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcatdistance() );
+        RequestBody type = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getradio() );
+        //
+        Call call = uploadAPIs.uploadImage("Token "+sessionManager.getTokens(),part,pdt_name,pdt_cat_id,pdt_spec,pdt_price,pdt_return_period,pdt_discount,stock,pdt_description,delivery_mode,distance,type);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Toast.makeText(context,"Successful"+response,Toast.LENGTH_SHORT).show();
+
+            }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+            }
+        });
+
+
     }
 }

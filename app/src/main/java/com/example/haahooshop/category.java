@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.haahooshop.utils.Global;
 import com.example.haahooshop.utils.SessionManager;
 
 import org.json.JSONArray;
@@ -61,7 +62,7 @@ public class category extends AppCompatActivity {
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Toast.makeText(context,"kjnkj"+specpojos.get(position).getName(),Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -69,7 +70,16 @@ public class category extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context,addprod.class));
+               // Toast.makeText(context,"kjnkj"+ Global.category,Toast.LENGTH_SHORT).show();
+
+                if(Global.category.equals("Please Select ...")){
+                    Toast.makeText(context,"Please Select All Specifications"+ Global.category,Toast.LENGTH_SHORT).show();
+                }
+                if(!(Global.category.equals("Please Select ..."))){
+                    //Toast.makeText(context,"Please Select All Specifications"+ Global.category,Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(context,addprod.class));
+                }
+              //
             }
         });
 
@@ -87,6 +97,16 @@ public class category extends AppCompatActivity {
                         //parseData(response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
+
+                            String message=jsonObject.optString("message");
+
+                            if(message.equals("No Specifications")){
+                                Toast.makeText(context,"Currently no specifications available for the choosen category",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(context,addprod.class));
+                            }
+                            if(message.equals("success")){
+
+
 
                             JSONArray jsonArray = jsonObject.optJSONArray("data");
                             for (int i =0;i<jsonArray.length();i++){
@@ -107,7 +127,7 @@ public class category extends AppCompatActivity {
                             specAdapter = new SpecAdapter(specpojos, context);
                             recyclerView.setAdapter(specAdapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();

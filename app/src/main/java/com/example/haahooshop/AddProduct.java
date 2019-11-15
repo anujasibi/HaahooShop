@@ -71,11 +71,17 @@ public class AddProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                sessionManager.setPdtName(name.getText().toString());
-                sessionManager.setcatid(idsp);
-                Intent intent = new Intent(AddProduct.this,category.class);
-                intent.putExtra("category",idsp);
-                startActivity(intent);
+                if(name.getText().toString().equals("")){
+                    Toast.makeText(AddProduct.this,"All are fields are required",Toast.LENGTH_SHORT).show();
+                }
+                if(!(name.getText().toString().equals(""))) {
+
+                    sessionManager.setPdtName(name.getText().toString());
+                    sessionManager.setcatid(idsp);
+                    Intent intent = new Intent(AddProduct.this, category.class);
+                    intent.putExtra("category", idsp);
+                    startActivity(intent);
+                }
 //                startActivity(new Intent(AddProduct.this,category.class));
             }
         });

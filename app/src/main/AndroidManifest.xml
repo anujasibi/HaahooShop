@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VerifyOtp"></activity>
+        <activity android:name=".profile"></activity>
+        <activity android:name=".VerifyOtp" />
         <activity android:name=".viewproduct" />
         <activity android:name=".finaladd" />
         <activity android:name=".addimage" />

@@ -2,7 +2,9 @@ package com.example.haahooshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -23,6 +25,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.haahooshop.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
@@ -40,6 +43,7 @@ public class finaladd extends AppCompatActivity {
     CheckBox checkBox1,checkBox2,checkBox3;
     private RadioGroup radioSexGroup;
     private RadioButton one,two,three;
+    SessionManager sessionManager;
 
     TextView save;
 
@@ -58,6 +62,9 @@ public class finaladd extends AppCompatActivity {
         two=findViewById(R.id.radioFemale);
         three=findViewById(R.id.radioFe);
         save=findViewById(R.id.save);
+        distance=findViewById(R.id.name);
+        sessionManager=new SessionManager(this);
+
 
         checkBox1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,16 +104,29 @@ public class finaladd extends AppCompatActivity {
             }
         });
 
+        sessionManager.setcheck(delivery_type);
+        Log.d("gvggxxsxsssxss","mm"+delivery_type);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedId = radioSexGroup.getCheckedRadioButtonId();
+                if(distance.getText().length()==0||delivery_type.equals("null")){
+                    Toast.makeText(finaladd.this,"All are fields are required",Toast.LENGTH_SHORT).show();
+                }
+                if(!(distance.getText().length()==0||delivery_type.equals("null"))) {
+                    sessionManager.setcatdistance(distance.getText().toString());
+                    int selectedId = radioSexGroup.getCheckedRadioButtonId();
 
-                // find the radiobutton by returned id
-                one = (RadioButton) findViewById(selectedId);
+                    // find the radiobutton by returned id
+                    one = (RadioButton) findViewById(selectedId);
 
-                Toast.makeText(MyAndroidAppActivity.this,
-                        radioSexButton.getText(), Toast.LENGTH_SHORT).show();
+                    sessionManager.setradio(one.getText().toString());
+
+                    Toast.makeText(finaladd.this,
+                            one.getText(), Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(finaladd.this, addimage.class));
+                }
             }
         });
 
@@ -128,7 +148,7 @@ public class finaladd extends AppCompatActivity {
 //            checkBox1.setChecked(false);
 //            checkBox2.setChecked(false);
 //        }
-        distance=findViewById(R.id.name);
+
 
        // spinner = findViewById(R.id.spinner);
        // loadSpinnerData(URL);

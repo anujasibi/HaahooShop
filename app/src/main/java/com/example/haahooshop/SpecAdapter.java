@@ -64,6 +64,7 @@ public class SpecAdapter extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
                 HashMap<String, JSONObject> map = new HashMap<String, JSONObject>();
                // Toast.makeText(context1,""+Global.specpojos.size(),Toast.LENGTH_SHORT).show();
               //  for (int j = 0; j < 1; j++) {
+                Global.category = downloadPojos.get(position).getValues().get(holder.spinner.getSelectedItemPosition());
                     if(!(downloadPojos.get(position).getValues().get(holder.spinner.getSelectedItemPosition()).equals("Please Select ..."))){
                         HashMap<String,JSONObject> map1 = new HashMap<String, JSONObject>();
                         JSONObject json = new JSONObject();
