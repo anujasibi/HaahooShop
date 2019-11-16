@@ -43,8 +43,17 @@ public class SessionManager {
     }
     public String getPdtName(){
 
-        return  sharedPreferences.getString("token","");
+        return  sharedPreferences.getString("PdtName","");
     }
+
+    public void setPdtid(String Pdtid){
+        sharedPreferences.edit().putString("Pdtid",Pdtid).commit();
+    }
+    public String getPdtid(){
+
+        return  sharedPreferences.getString("Pdtid","");
+    }
+
 
     public void setprice(String price){
         sharedPreferences.edit().putString("price",price).commit();

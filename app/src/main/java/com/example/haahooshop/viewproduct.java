@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -46,11 +47,12 @@ public class viewproduct extends AppCompatActivity {
     ImageView logout;
     SessionManager sessionManager;
     Context context=this;
+    public String image,pname,price,discount,descr,stock;
 
 
    // private List<CardRecyclerViewItem> carItemList = null;
     GridView simpleList;
-    ArrayList birdList=new ArrayList<>();
+    ArrayList<Item> birdList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +76,19 @@ public class viewproduct extends AppCompatActivity {
 
         submituser();
 
-
-
+        simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(viewproduct.this,viewpdtdetails.class);
+                intent.putExtra("pname",birdList.get(i).name);
+                intent.putExtra("image",birdList.get(i).getImage());
+                intent.putExtra("price",birdList.get(i).getPrice());
+                intent.putExtra("stock",birdList.get(i).getStock());
+                intent.putExtra("discount",birdList.get(i).getDiscount());
+                intent.putExtra("des",birdList.get(i).getDescription());
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -114,6 +127,17 @@ public class viewproduct extends AppCompatActivity {
                                 JSONObject dataobj = dataArray.getJSONObject(i);
                                 //   playerModel.setProductname(dataobj.optSt ring("name"));
                                 // ApiClient.productids.add(dataobj.optString("id"));
+                                pname=dataobj.optString("name");
+                                price=dataobj.optString("price");
+                                descr=dataobj.optString("description");
+                                discount=dataobj.optString("selling");
+                                stock=dataobj.optString("stock");
+                                String id=dataobj.optString("id");
+                                playerModel.setId(id);
+                                sessionManager.setPdtid(id);
+                                playerModel.setDescription(descr);
+                                playerModel.setDiscount(discount);
+                                playerModel.setStock(stock);
                                 playerModel.setName(dataobj.optString("name"));
                                 Log.d("ssssd", "resp" + dataobj);
                                 playerModel.setPrice("₹ "+dataobj.optString("price"));
@@ -121,6 +145,7 @@ public class viewproduct extends AppCompatActivity {
                                 String[] seperated = images1.split(",");
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
+                                image=Global.BASE_URL+split;
                                 Log.d("imageurl","bhcbvfc"+Global.BASE_URL+"media/"+split);
                               //  images.add(split);
                                 //  playerModel.setStatus("");

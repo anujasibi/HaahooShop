@@ -19,15 +19,17 @@
                 android:layout_width="match_parent"
                 android:background="#5C25B7"
                 android:id="@+id/re"
-                android:layout_height="250dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:id="@+id/img"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/haahoologo"
-                    android:layout_centerVertical="true"/>
+                    />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -43,10 +45,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textAlignment="center"
-                    android:text="Shop Name"
+                    android:text="Product Name"
                     android:id="@+id/sname"
                     android:textSize="20dp"
                     android:textStyle="bold"
+                    android:layout_marginBottom="20dp"
                     android:textColor="#fff"
                     android:layout_below="@id/img"/>
 
@@ -60,60 +63,60 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="   Location"
+                    android:text="   Price"
                     android:gravity="center_vertical"
                     android:id="@+id/location"
                     android:textColor="#000"
-                    android:drawableLeft="@drawable/location"
+                    android:drawableLeft="@drawable/money"
                     android:layout_marginLeft="50dp"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="   Ownewr"
+                    android:text="   Discount"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/location"
                     android:layout_marginTop="30dp"
                     android:id="@+id/owner"
                     android:textColor="#000"
-                    android:drawableLeft="@drawable/person"
+                    android:drawableLeft="@drawable/moneydis"
                     android:layout_marginLeft="50dp"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="   GstNO"
+                    android:text="   Stock"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/owner"
                     android:layout_marginTop="30dp"
                     android:id="@+id/gstno"
                     android:textColor="#000"
-                    android:drawableLeft="@drawable/gst"
+                    android:drawableLeft="@drawable/stock"
                     android:layout_marginLeft="50dp"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="   Category"
+                    android:text="   Description"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/gstno"
                     android:layout_marginTop="30dp"
                     android:id="@+id/category"
                     android:textColor="#000"
-                    android:drawableLeft="@drawable/cat"
+                    android:drawableLeft="@drawable/descri"
                     android:layout_marginLeft="50dp"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="    Edit Profile"
+                    android:text="    Edit Product Details"
                     android:layout_marginRight="50dp"
                     android:layout_below="@+id/category"
                     android:layout_marginTop="50dp"
                     android:id="@+id/edit"
                     android:textColor="#000"
                     android:gravity="center_vertical"
-                   android:layout_alignParentRight="true"
-                   android:drawableLeft="@drawable/editp"
+                    android:layout_alignParentRight="true"
+                    android:drawableLeft="@drawable/editp"
                     android:layout_height="wrap_content"
                     />
 

@@ -1,8 +1,5 @@
 package com.example.haahooshop;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -22,14 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.haahooshop.utils.Global;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.haahooshop.utils.SessionManager;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -40,91 +32,90 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.xml.transform.Result;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class profile extends AppCompatActivity {
-    ImageView imageView,image;
-    TextView shopname,location,gstno,catgory,owner,edit;
-    private String URLline = Global.BASE_URL+"api_shop_app/shop_details_show/";
+public class edit_product extends AppCompatActivity {
+    TextView pdtname, price, stocks, discount, des, submit,change;
+    ImageView imageView;
     SessionManager sessionManager;
-    Context context=this;
+    Context context = this;
     private static final String IMAGE_DIRECTORY = "/demonuts";
     private int GALLERY = 1, CAMERA = 2;
     String filePath;
     private Uri uri;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // will hide the title
+        requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        requestMultiplePermissions();
+        setContentView(R.layout.activity_edit_product);
 
-        sessionManager=new SessionManager(this);
-
-        imageView=findViewById(R.id.img);
-        image=findViewById(R.id.imgg);
-        shopname=findViewById(R.id.sname);
-        location=findViewById(R.id.location);
-        owner=findViewById(R.id.owner);
-        gstno=findViewById(R.id.gstno);
-        catgory=findViewById(R.id.category);
-        edit=findViewById(R.id.edit);
-
-
-        submituser();
-
-        image.setOnClickListener(new View.OnClickListener() {
+        pdtname = findViewById(R.id.shopname);
+        change = findViewById(R.id.change);
+//        change.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPictureDialog();
+//            }
+//        });
+        price = findViewById(R.id.owner);
+        discount = findViewById(R.id.email);
+        des = findViewById(R.id.des);
+        stocks = findViewById(R.id.gst);
+        imageView = findViewById(R.id.imgs);
+//        Bundle bundle = getIntent().getExtras();
+//        String pname = bundle.getString("pname");
+//        String image = bundle.getString("image");
+//        String price1 = bundle.getString("price");
+//        String discount1 = bundle.getString("discount");
+//        String stock = bundle.getString("stock");
+//        String description = bundle.getString("desc");
+//        pdtname.setText(pname);
+//        price.setText(price1);
+//        Picasso.with(context).load(image).into(imageView);
+//        discount.setText(discount1);
+//        stocks.setText(stock);
+//        des.setText(description);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 showPictureDialog();
-
-
             }
         });
 
-        edit.setOnClickListener(new View.OnClickListener() {
+        sessionManager = new SessionManager(this);
+
+        submit = findViewById(R.id.submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(profile.this,editprofile.class));
+                upload(filePath);
             }
         });
-
-
-
     }
 
-
-    private void showPictureDialog(){
+    private void showPictureDialog() {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action");
         String[] pictureDialogItems = {
                 "Select photo from gallery",
-                "Capture photo from camera" };
+                "Capture photo from camera"};
         pictureDialog.setItems(pictureDialogItems,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -164,19 +155,19 @@ public class profile extends AppCompatActivity {
         if (requestCode == GALLERY) {
             if (data != null) {
                 Uri contentURI = data.getData();
-                uri=data.getData();
-                filePath = getRealPathFromURIPath(uri, profile.this);
+                uri = data.getData();
+                filePath = getRealPathFromURIPath(uri, edit_product.this);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     bitmap = getResizedBitmap(bitmap, 400);
                     String path = saveImage(bitmap);
-                    Toast.makeText(profile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(edit_product.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                     imageView.setImageBitmap(bitmap);
-                    uploadToServer(filePath);
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(profile.this, "Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(edit_product.this, "Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -184,11 +175,10 @@ public class profile extends AppCompatActivity {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(thumbnail);
             saveImage(thumbnail);
-            Toast.makeText(profile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(edit_product.this, "Image Saved!", Toast.LENGTH_SHORT).show();
             Uri tempUri = getImageUri(getApplicationContext(), thumbnail);
-            filePath= (getRealPathFromURI(tempUri));
-            uploadToServer(filePath);
-            Log.d("filepath","mm"+filePath);
+            filePath = (getRealPathFromURI(tempUri));
+            Log.d("filepath", "mm" + filePath);
         }
     }
 
@@ -214,12 +204,11 @@ public class profile extends AppCompatActivity {
     }
 
 
-
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
 
-        float bitmapRatio = (float)width / (float) height;
+        float bitmapRatio = (float) width / (float) height;
         if (bitmapRatio > 1) {
             width = maxSize;
             height = (int) (width / bitmapRatio);
@@ -229,7 +218,6 @@ public class profile extends AppCompatActivity {
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-
 
 
     public String saveImage(Bitmap myBitmap) {
@@ -261,7 +249,7 @@ public class profile extends AppCompatActivity {
         return "";
     }
 
-    private void  requestMultiplePermissions(){
+    private void requestMultiplePermissions() {
         Dexter.withActivity(this)
                 .withPermissions(
                         Manifest.permission.CAMERA,
@@ -298,6 +286,7 @@ public class profile extends AppCompatActivity {
                 .onSameThread()
                 .check();
     }
+
     private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
         Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
         if (cursor == null) {
@@ -309,127 +298,48 @@ public class profile extends AppCompatActivity {
         }
     }
 
-    private void uploadToServer(String filePath) {
+    private void upload(String filePath) {
         Retrofit retrofit = NetworkClient.getRetrofitClient(this);
-        UploadImage uploadAPI = retrofit.create(UploadImage.class);
-
-//        Log.d("url","mmm"+filePath);
-        //Create a file object using file path
-        if (filePath == null){
-            Toast.makeText(profile.this,"Please Upload Image",Toast.LENGTH_SHORT).show();
+        UploadAPI uploadAPIs = retrofit.create(UploadAPI.class);
+        if (filePath == null) {
+            Toast.makeText(edit_product.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
         }
         if (filePath != null) {
             File immm = new File(filePath);
             Log.d("mmmmmmm", "mmm" + immm.length());
             // Create a request body with file and image media type
 
-
             RequestBody photob = RequestBody.create(MediaType.parse("image/*"), immm);
             // Create MultipartBody.Part using file request-body,file name and part name
-            MultipartBody.Part part1 = MultipartBody.Part.createFormData("shop_image", immm.getName(), photob);
-            Log.d("image","mm"+part1);
-            Log.d("image","mm"+immm.getName());
-
-
+            MultipartBody.Part part1 = MultipartBody.Part.createFormData("pdt_image", immm.getName(), photob);
+            //Create a file object using file path
 
             //Create request body with text description and text media type
+            RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+            RequestBody pdt_name = RequestBody.create(MediaType.parse("text/plain"), pdtname.getText().toString());
+            RequestBody pdt_price = RequestBody.create(MediaType.parse("text/plain"), price.getText().toString());
+            RequestBody pdt_discount = RequestBody.create(MediaType.parse("text/plain"), discount.getText().toString());
+            RequestBody stock = RequestBody.create(MediaType.parse("text/plain"), stocks.getText().toString());
+            RequestBody pdt_description = RequestBody.create(MediaType.parse("text/plain"), des.getText().toString());
+            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.getPdtid());
+
             //
-            Call<ResponseBody> call = uploadAPI.uploadImage(part1,"Token "+ sessionManager.getTokens());
-            call.enqueue(new Callback<ResponseBody>() {
+            Call call = uploadAPIs.uploadImag("Token " + sessionManager.getTokens(), part1, pdt_name, pdt_price, pdt_discount, stock, pdt_description,id);
+            call.enqueue(new Callback() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                    Toast.makeText(context,"Successful"+response,Toast.LENGTH_SHORT).show();
-                    Log.d("recyfvggbhh","mm"+response);
+                public void onResponse(Call call, Response response) {
 
+                    Toast.makeText(context, "Successfully updated"+response, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(context,viewproduct.class));
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-
+                public void onFailure(Call call, Throwable t) {
                 }
-
-
             });
+
+
         }
-    }
-
-
-
-    private void submituser(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                     //   dialog.dismiss();
-                        //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
-                        //parseData(response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String ot = jsonObject.optString("message");
-                            String status=jsonObject.optString("code");
-
-                            JSONArray jsonArray=jsonObject.optJSONArray("data");
-                            JSONObject jsonObject1 = jsonArray.optJSONObject(0);
-
-                            String shopnam=jsonObject1.optString("name");
-                            shopname.setText("  "+shopnam);
-                            String locatio=jsonObject1.optString("location");
-                            location.setText("  "+locatio);
-                            String owne=jsonObject1.optString("owner");
-                            owner.setText("  "+owne);
-                            String gst_n=jsonObject1.optString("gst_no");
-                            gstno.setText("  "+gst_n);
-                            String categor=jsonObject1.optString("category");
-                            catgory.setText("  "+categor);
-                            String images1 = jsonObject1.getString("image");
-                            String[] seperated = images1.split(",");
-                            String split = seperated[0].replace("[", "").replace("]","");
-                            Log.d("imagesddd","mm"+split);
-                            Picasso.with(context).load(Global.BASE_URL+split).into(imageView);
-
-
-
-
-                            Log.d("code","mm"+status);
-                            if(status.equals("200")){
-                                Toast.makeText(profile.this, "Successful", Toast.LENGTH_LONG).show();
-                               // Intent intent = new Intent(pasteaddress.this, ordersummary.class);
-                               // startActivity(intent);
-                            }
-                            else{
-                                Toast.makeText(profile.this, "Failed."+ot, Toast.LENGTH_LONG).show();
-
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d("response","hhh"+response);
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(profile.this,error.toString(),Toast.LENGTH_LONG).show();
-                    }
-                }){
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Token "+sessionManager.getTokens());
-                return params;
-            }
-
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(stringRequest);
-
 
     }
 }

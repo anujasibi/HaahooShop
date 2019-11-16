@@ -262,6 +262,7 @@ public class addimage extends AppCompatActivity {
         //Create request body with text description and text media type
         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
         RequestBody pdt_name = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getPdtName() );
+        Log.d("pdtname","mm"+sessionManager.getPdtName());
         RequestBody pdt_cat_id = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcatid() );
         RequestBody pdt_spec = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcatName() );
         RequestBody pdt_price = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getprice() );
