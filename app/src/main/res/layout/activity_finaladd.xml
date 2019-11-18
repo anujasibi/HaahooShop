@@ -74,7 +74,6 @@
                                 android:layout_width="match_parent"
                                 android:id="@+id/name"
                                 android:hint="Distance Covered"
-                                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="2dp"
                                 android:layout_height="match_parent" />
@@ -106,7 +105,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/yu"
+                        android:id="@+id/yp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
@@ -141,6 +140,39 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_height="wrap_content"
                         android:text="Both" />
+
+
+
+                    <TextView
+                        android:id="@+id/yu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center_vertical"
+                        android:text="Resell Availability"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="18sp" />
+
+
+                    <CheckBox
+                        android:id="@+id/checkBo"
+                        android:layout_width="130dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Yes" />
+
+                    <CheckBox
+                        android:id="@+id/checkBo1"
+                        android:layout_width="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+
+
 
 
 

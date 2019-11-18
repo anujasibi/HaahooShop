@@ -120,6 +120,13 @@ public class SessionManager {
     public void setcheck(String check){
         sharedPreferences.edit().putString("check",check).commit();
     }
+    public String getcheckn(){
+
+        return  sharedPreferences.getString("checkn","");
+    }
+    public void setcheckn(String checkn){
+        sharedPreferences.edit().putString("checkn",checkn).commit();
+    }
     public String getradio(){
 
         return  sharedPreferences.getString("radio","");

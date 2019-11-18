@@ -37,10 +37,11 @@ import java.util.ArrayList;
 public class finaladd extends AppCompatActivity {
     TextInputEditText distance;
     Spinner spinner;
+    public String status="0";
     ArrayList<String> areas = new ArrayList<String>();
     String delivery_type = "null";
     String URL="https://testapi.creopedia.com/api_shop_app/list_shop_cat/ ";
-    CheckBox checkBox1,checkBox2,checkBox3;
+    CheckBox checkBox1,checkBox2,checkBox3,check,checkm;
     private RadioGroup radioSexGroup;
     private RadioButton one,two,three;
     SessionManager sessionManager;
@@ -57,6 +58,8 @@ public class finaladd extends AppCompatActivity {
         checkBox1 = findViewById(R.id.checkBox);
         checkBox2 = findViewById(R.id.checkBox1);
         checkBox3 = findViewById(R.id.checkBox2);
+        check=findViewById(R.id.checkBo);
+        checkm=findViewById(R.id.checkBo1);
         radioSexGroup = (RadioGroup) findViewById(R.id.radioSex);
         one=findViewById(R.id.radioMale);
         two=findViewById(R.id.radioFemale);
@@ -64,6 +67,23 @@ public class finaladd extends AppCompatActivity {
         save=findViewById(R.id.save);
         distance=findViewById(R.id.name);
         sessionManager=new SessionManager(this);
+
+
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkm.setChecked(false);
+                status="1";
+            }
+        });
+
+        checkm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                check.setChecked(false);
+                status="0";
+            }
+        });
 
 
         checkBox1.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +125,7 @@ public class finaladd extends AppCompatActivity {
         });
 
         sessionManager.setcheck(delivery_type);
+        sessionManager.setcheckn(status);
         Log.d("gvggxxsxsssxss","mm"+delivery_type);
 
         save.setOnClickListener(new View.OnClickListener() {

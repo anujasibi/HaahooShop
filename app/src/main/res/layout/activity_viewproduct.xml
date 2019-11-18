@@ -16,14 +16,20 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="View Products"
-            android:textAlignment="center"
-            android:gravity="center_vertical"
-            android:textColor="#fff"
-            android:textStyle="bold"
+            android:gravity="center_horizontal|center_vertical"
             android:textSize="20sp"
-            android:background="#5C25B7"
-            android:id="@+id/tex"
+            android:textColor="#fff"
+            android:background="#5c25b7"
             />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:id="@+id/back"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp" />
 
 
 

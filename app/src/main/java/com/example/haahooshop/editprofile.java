@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class editprofile extends AppCompatActivity {
     private String URLline = Global.BASE_URL+"api_shop_app/shop_update/";
     SessionManager sessionManager;
     Context context=this;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +49,38 @@ public class editprofile extends AppCompatActivity {
         owner=findViewById(R.id.owner);
         gst=findViewById(R.id.gst);
         email=findViewById(R.id.email);
+        back=findViewById(R.id.back);
+
+
+        Bundle bundle = getIntent().getExtras();
+
+        String shop = bundle.getString("shopname");
+        String own=bundle.getString("owner");
+        String gstn=bundle.getString("gstno");
+        String em=bundle.getString("email");
+
+        shopname.setText(shop);
+        owner.setText(own);
+        gst.setText(gstn);
+        email.setText(em);
 
         sessionManager=new SessionManager(this);
 
         submit=findViewById(R.id.submit);
 
-
-        submit.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+        submit.setOnClickListener(new View.OnClickListener() {
+             @Override
+            public void onClick(View view) {
                 submituser();
+                startActivity(new Intent(editprofile.this,profile.class));
             }
         });
 

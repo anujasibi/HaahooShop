@@ -3,6 +3,7 @@ package com.example.haahooshop;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -13,9 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.picasso.Picasso;
 
 public class viewpdtdetails extends AppCompatActivity {
-    ImageView imageView,image;
+    ImageView imageView,image,io;
     Context context = this;
     TextView shopname,location,gstno,catgory,owner,edit;
+    String id = "null";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,14 @@ public class viewpdtdetails extends AppCompatActivity {
         gstno=findViewById(R.id.gstno);
         catgory=findViewById(R.id.category);
         edit=findViewById(R.id.edit);
+        io=findViewById(R.id.io);
+
+        io.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
 
@@ -42,6 +52,9 @@ public class viewpdtdetails extends AppCompatActivity {
         final String stock = bundle.getString("stock");
         final String discount = bundle.getString("discount");
         final String des = bundle.getString("des");
+        id=bundle.getString("id");
+        Log.d("mnjbkjbkbj","hjghjghg"+id);
+      //  final String ema=bundle.getString("email");
 
         shopname.setText(pname);
         location.setText(price);
@@ -60,6 +73,9 @@ public class viewpdtdetails extends AppCompatActivity {
                 intent.putExtra("stock",stock);
                 intent.putExtra("discount",discount);
                 intent.putExtra("desc",des);
+                intent.putExtra("id",id);
+
+             //   intent.putExtra("email",ema);
                 startActivity(intent);
 
                 //startActivity(new Intent(viewpdtdetails.this,edit_product.class));

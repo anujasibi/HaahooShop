@@ -8,6 +8,7 @@ public class Item {
     public String stock;
     public String discount;
     public String description;
+    public String email;
 
 
     public String getStock() {
@@ -64,5 +65,13 @@ public class Item {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

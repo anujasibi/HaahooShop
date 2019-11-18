@@ -1,11 +1,14 @@
 package com.example.haahooshop;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +42,7 @@ public class category extends AppCompatActivity {
     Context context = this;
     String[] value = null;
     SessionManager sessionManager;
+    BroadcastReceiver broadcastReceiver;
     TextView save;
     String url = "https://testapi.creopedia.com/api_shop_app/list_pdt_cat_spec/";
 
@@ -82,6 +86,7 @@ public class category extends AppCompatActivity {
               //
             }
         });
+
 
 
     }

@@ -22,6 +22,23 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/io"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/back"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:id="@+id/imgg"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/img"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/edit"
+                    android:layout_marginTop="20dp"/>
+
+                <ImageView
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:id="@+id/img"
@@ -31,14 +48,6 @@
                     android:src="@drawable/haahoologo"
                     />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:id="@+id/imgg"
-                    android:layout_height="20dp"
-                    android:layout_toRightOf="@+id/img"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/edit"
-                    android:layout_marginTop="50dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -61,48 +70,75 @@
                 android:layout_marginTop="30dp"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/money"/>
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="   Price"
+                    android:text="Price"
                     android:gravity="center_vertical"
                     android:id="@+id/location"
                     android:textColor="#000"
-                    android:drawableLeft="@drawable/money"
                     android:layout_marginLeft="50dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="25dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/location"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/moneydis"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="   Discount"
+                    android:text="Discount"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/location"
                     android:layout_marginTop="30dp"
                     android:id="@+id/owner"
                     android:textColor="#000"
-                    android:drawableLeft="@drawable/moneydis"
                     android:layout_marginLeft="50dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="25dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/owner"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/stock"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="   Stock"
+                    android:text="Stock"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/owner"
                     android:layout_marginTop="30dp"
                     android:id="@+id/gstno"
                     android:textColor="#000"
-                    android:drawableLeft="@drawable/stock"
                     android:layout_marginLeft="50dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="25dp"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/gstno"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/descri"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="   Description"
+                    android:text="Description"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/gstno"
                     android:layout_marginTop="30dp"
                     android:id="@+id/category"
                     android:textColor="#000"
-                    android:drawableLeft="@drawable/descri"
                     android:layout_marginLeft="50dp"
                     android:layout_height="wrap_content"/>
 

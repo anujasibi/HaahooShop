@@ -15,9 +15,21 @@
         >
 
     </TextView>
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/spec1"
+        android:id="@+id/value"
+        android:layout_marginStart="10dp"
+        android:hint="Enter Your Specification in Units"
+        android:layout_toRightOf="@+id/spec1"
+        android:layout_marginLeft="10dp" />
     <Spinner
         android:layout_width="match_parent"
         android:id="@+id/spinner"
+        android:visibility="gone"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -26,6 +38,27 @@
 
 
     </Spinner>
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/spec1"
+       android:text="Click here to apply this specification"
+       android:textStyle="bold"
+       android:id="@+id/apply"
+       android:textAlignment="center"
+       android:textColor="#5C25B7"
+       android:layout_marginBottom="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spec1"
+        android:text="Applied"
+        android:id="@+id/remove"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:textColor="#5C25B7"
+        android:layout_marginBottom="20dp"/>
 
 
 </RelativeLayout>

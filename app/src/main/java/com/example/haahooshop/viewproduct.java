@@ -46,8 +46,9 @@ public class viewproduct extends AppCompatActivity {
     Activity activity = this;
     ImageView logout;
     SessionManager sessionManager;
+    ImageView back;
     Context context=this;
-    public String image,pname,price,discount,descr,stock;
+    public String image,pname,price,discount,descr,stock,email;
 
 
    // private List<CardRecyclerViewItem> carItemList = null;
@@ -65,6 +66,15 @@ public class viewproduct extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
         cardView=findViewById(R.id.card);
+
+        back=findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -86,6 +96,7 @@ public class viewproduct extends AppCompatActivity {
                 intent.putExtra("stock",birdList.get(i).getStock());
                 intent.putExtra("discount",birdList.get(i).getDiscount());
                 intent.putExtra("des",birdList.get(i).getDescription());
+                intent.putExtra("id",birdList.get(i).getId());
                 startActivity(intent);
             }
         });
@@ -130,14 +141,17 @@ public class viewproduct extends AppCompatActivity {
                                 pname=dataobj.optString("name");
                                 price=dataobj.optString("price");
                                 descr=dataobj.optString("description");
-                                discount=dataobj.optString("selling");
+                                discount=dataobj.optString("discount");
                                 stock=dataobj.optString("stock");
-                                String id=dataobj.optString("id");
+                              //  email=dataobj.optString("email");
+                                String id=dataobj.getString("id");
+                                Log.d("imageurl","bhcbvfc"+id);
                                 playerModel.setId(id);
                                 sessionManager.setPdtid(id);
                                 playerModel.setDescription(descr);
                                 playerModel.setDiscount(discount);
                                 playerModel.setStock(stock);
+                            //    playerModel.setEmail(email);
                                 playerModel.setName(dataobj.optString("name"));
                                 Log.d("ssssd", "resp" + dataobj);
                                 playerModel.setPrice("₹ "+dataobj.optString("price"));
@@ -146,7 +160,7 @@ public class viewproduct extends AppCompatActivity {
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
                                 image=Global.BASE_URL+split;
-                                Log.d("imageurl","bhcbvfc"+Global.BASE_URL+"media/"+split);
+
                               //  images.add(split);
                                 //  playerModel.setStatus("");
 

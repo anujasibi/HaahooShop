@@ -49,13 +49,14 @@ import retrofit2.Retrofit;
 
 public class edit_product extends AppCompatActivity {
     TextView pdtname, price, stocks, discount, des, submit,change;
-    ImageView imageView;
+    ImageView imageView,img;
     SessionManager sessionManager;
     Context context = this;
     private static final String IMAGE_DIRECTORY = "/demonuts";
     private int GALLERY = 1, CAMERA = 2;
     String filePath;
     private Uri uri;
+    public String ids;
 
 
     @Override
@@ -65,8 +66,24 @@ public class edit_product extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_product);
 
+        img=findViewById(R.id.img);
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+
+            Bundle bundle= getIntent().getExtras();
+            ids=bundle.getString("id");
+
+            Log.d("VVGHHHBH","LLL"+ids);
+
         pdtname = findViewById(R.id.shopname);
-        change = findViewById(R.id.change);
+      //  change = findViewById(R.id.change);
 //        change.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -77,26 +94,26 @@ public class edit_product extends AppCompatActivity {
         discount = findViewById(R.id.email);
         des = findViewById(R.id.des);
         stocks = findViewById(R.id.gst);
-        imageView = findViewById(R.id.imgs);
-//        Bundle bundle = getIntent().getExtras();
-//        String pname = bundle.getString("pname");
-//        String image = bundle.getString("image");
-//        String price1 = bundle.getString("price");
-//        String discount1 = bundle.getString("discount");
-//        String stock = bundle.getString("stock");
-//        String description = bundle.getString("desc");
-//        pdtname.setText(pname);
-//        price.setText(price1);
-//        Picasso.with(context).load(image).into(imageView);
-//        discount.setText(discount1);
-//        stocks.setText(stock);
-//        des.setText(description);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        //imageView = findViewById(R.id.imgs);
+
+      String pname = bundle.getString("pname");
+        String image = bundle.getString("image");
+        String price1 = bundle.getString("price");
+        String discount1 = bundle.getString("discount");
+        String stocke = bundle.getString("stock");
+        String description = bundle.getString("desc");
+        pdtname.setText(pname);
+        price.setText(price1);
+       // Picasso.with(context).load(image).into(imageView);
+        discount.setText(discount1);
+        stocks.setText(stocke);
+        des.setText(description);
+        /*imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPictureDialog();
             }
-        });
+        });*/
 
         sessionManager = new SessionManager(this);
 
@@ -299,20 +316,10 @@ public class edit_product extends AppCompatActivity {
     }
 
     private void upload(String filePath) {
+        Log.d("mmmmmmm", "mmm" + sessionManager.getPdtid());
         Retrofit retrofit = NetworkClient.getRetrofitClient(this);
         UploadAPI uploadAPIs = retrofit.create(UploadAPI.class);
-        if (filePath == null) {
-            Toast.makeText(edit_product.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
-        }
-        if (filePath != null) {
-            File immm = new File(filePath);
-            Log.d("mmmmmmm", "mmm" + immm.length());
-            // Create a request body with file and image media type
 
-            RequestBody photob = RequestBody.create(MediaType.parse("image/*"), immm);
-            // Create MultipartBody.Part using file request-body,file name and part name
-            MultipartBody.Part part1 = MultipartBody.Part.createFormData("pdt_image", immm.getName(), photob);
-            //Create a file object using file path
 
             //Create request body with text description and text media type
             RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
@@ -321,10 +328,10 @@ public class edit_product extends AppCompatActivity {
             RequestBody pdt_discount = RequestBody.create(MediaType.parse("text/plain"), discount.getText().toString());
             RequestBody stock = RequestBody.create(MediaType.parse("text/plain"), stocks.getText().toString());
             RequestBody pdt_description = RequestBody.create(MediaType.parse("text/plain"), des.getText().toString());
-            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.getPdtid());
+            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), ids);
 
             //
-            Call call = uploadAPIs.uploadImag("Token " + sessionManager.getTokens(), part1, pdt_name, pdt_price, pdt_discount, stock, pdt_description,id);
+            Call call = uploadAPIs.uploadImag("Token " + sessionManager.getTokens(), pdt_name, pdt_price, pdt_discount, stock, pdt_description,id);
             call.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) {
@@ -342,4 +349,4 @@ public class edit_product extends AppCompatActivity {
         }
 
     }
-}
+

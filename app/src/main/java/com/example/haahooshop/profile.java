@@ -73,6 +73,8 @@ public class profile extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
     String filePath;
     private Uri uri;
+    public String em;
+    ImageView io;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,14 @@ public class profile extends AppCompatActivity {
         gstno=findViewById(R.id.gstno);
         catgory=findViewById(R.id.category);
         edit=findViewById(R.id.edit);
+        io=findViewById(R.id.io);
+
+        io.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         submituser();
@@ -110,7 +120,14 @@ public class profile extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(profile.this,editprofile.class));
+                Intent intent=new Intent(profile.this,editprofile.class);
+                intent.putExtra("shopname",shopname.getText().toString());
+                intent.putExtra("owner",owner.getText().toString());
+                intent.putExtra("gstno",gstno.getText().toString());
+                intent.putExtra("email",em);
+                startActivity(intent);
+                //
+
             }
         });
 
@@ -382,6 +399,7 @@ public class profile extends AppCompatActivity {
                             gstno.setText("  "+gst_n);
                             String categor=jsonObject1.optString("category");
                             catgory.setText("  "+categor);
+                            em=jsonObject1.optString("email");
                             String images1 = jsonObject1.getString("image");
                             String[] seperated = images1.split(",");
                             String split = seperated[0].replace("[", "").replace("]","");
