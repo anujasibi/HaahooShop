@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class addprod extends AppCompatActivity {
     SessionManager sessionManager;
     Context context1=this;
     TextView save;
+    ImageView imageView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,14 @@ public class addprod extends AppCompatActivity {
         pincode=findViewById(R.id.pincode);
         stock=findViewById(R.id.stock);
         save = findViewById(R.id.save);
+        imageView3=findViewById(R.id.imageView3);
+
+        imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               finish();
+            }
+        });
 
         des=findViewById(R.id.des);
 
@@ -67,5 +77,10 @@ public class addprod extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+       finish();
     }
 }

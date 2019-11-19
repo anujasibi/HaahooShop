@@ -76,6 +76,14 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/te"
+                                android:textColor="#000"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="Enter Your Product Name"/>
 
 
 
@@ -85,7 +93,7 @@
                                 android:id="@+id/shopname"
                                 android:layout_marginStart="10dp"
                                 android:background="@null"
-                                android:hint="Enter your Product Name"
+                                android:layout_below="@+id/te"
                                 android:layout_marginLeft="10dp" />
 
                         </RelativeLayout>
@@ -107,6 +115,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ter"
+                            android:textColor="#000"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Price"/>
+
 
 
                         <EditText
@@ -115,7 +132,7 @@
                             android:layout_marginStart="10dp"
                             android:background="@null"
                             android:id="@+id/owner"
-                            android:hint="Price"
+                            android:layout_below="@+id/ter"
                             android:layout_marginLeft="10dp" />
 
                     </RelativeLayout>
@@ -134,6 +151,14 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/terr"
+                            android:textColor="#000"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Number of Stock"/>
 
                         <EditText
                             android:layout_width="match_parent"
@@ -141,7 +166,7 @@
                             android:id="@+id/gst"
                             android:layout_marginStart="10dp"
                             android:background="@null"
-                            android:hint="Number of stock"
+                            android:layout_below="@id/terr"
                             android:layout_marginLeft="10dp" />
 
                     </RelativeLayout>
@@ -159,6 +184,14 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/terrr"
+                            android:textColor="#000"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Discount"/>
 
 
                         <EditText
@@ -167,7 +200,7 @@
                             android:id="@+id/email"
                             android:layout_marginStart="10dp"
                             android:background="@null"
-                            android:hint="Discount"
+                            android:layout_below="@+id/terrr"
                             android:layout_marginLeft="10dp" />
 
                     </RelativeLayout>
@@ -186,12 +219,21 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/terrrr"
+                            android:textColor="#000"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Edit Your Product's Description"/>
 
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:id="@+id/des"
+                            android:layout_below="@+id/terrrr"
                             android:background="@drawable/custom_button"
                             android:textAlignment="center"
                             android:hint="Add New Description"
@@ -218,7 +260,7 @@
                         android:layout_height="50dp"
                         android:id="@+id/submit"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Edit Profile"
+                        android:text="Edit Product Details"
                         android:textColor="#fff"
                         android:textSize="20sp" />
 

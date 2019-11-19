@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class AddProduct extends AppCompatActivity {
     TextInputEditText name;
     ArrayList<String> areas = new ArrayList<String>();
     ArrayList<String> areasid = new ArrayList<String>();
+    ImageView imageView3;
     String URL="https://testapi.creopedia.com/api_shop_app/list_pdt_cat/ ";
     TextView textView;
     @Override
@@ -49,7 +51,7 @@ public class AddProduct extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
 
         spinner = findViewById(R.id.spinner);
-
+        imageView3=findViewById(R.id.imageView3);
         name=findViewById(R.id.name);
         textView=findViewById(R.id.save);
         sessionManager = new SessionManager(this);
@@ -80,9 +82,18 @@ public class AddProduct extends AppCompatActivity {
                     sessionManager.setcatid(idsp);
                     Intent intent = new Intent(AddProduct.this, category.class);
                     intent.putExtra("category", idsp);
+                    sessionManager.setPid(idsp);
                     startActivity(intent);
                 }
 //                startActivity(new Intent(AddProduct.this,category.class));
+            }
+        });
+
+
+        imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AddProduct.this,MainUI.class));
             }
         });
 
@@ -131,4 +142,8 @@ public class AddProduct extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(AddProduct.this,MainUI.class));
+    }
 }

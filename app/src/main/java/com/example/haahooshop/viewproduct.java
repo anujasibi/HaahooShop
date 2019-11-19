@@ -72,7 +72,7 @@ public class viewproduct extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                startActivity(new Intent(viewproduct.this,MainUI.class));
             }
         });
         Window window = activity.getWindow();
@@ -97,6 +97,9 @@ public class viewproduct extends AppCompatActivity {
                 intent.putExtra("discount",birdList.get(i).getDiscount());
                 intent.putExtra("des",birdList.get(i).getDescription());
                 intent.putExtra("id",birdList.get(i).getId());
+                intent.putExtra("catid",birdList.get(i).getCategoryid());
+                intent.putExtra("display",birdList.get(i).getDisplay());
+                intent.putExtra("memory",birdList.get(i).getMemory());
                 startActivity(intent);
             }
         });
@@ -148,6 +151,8 @@ public class viewproduct extends AppCompatActivity {
                                 Log.d("imageurl","bhcbvfc"+id);
                                 playerModel.setId(id);
                                 sessionManager.setPdtid(id);
+                                String catid=dataobj.optString("category_id");
+                                playerModel.setCategoryid(catid);
                                 playerModel.setDescription(descr);
                                 playerModel.setDiscount(discount);
                                 playerModel.setStock(stock);
@@ -160,6 +165,23 @@ public class viewproduct extends AppCompatActivity {
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
                                 image=Global.BASE_URL+split;
+
+                                JSONObject jsonArray=dataobj.optJSONObject("specifications");
+                                Log.d("specifications","mm"+jsonArray);
+                                String display=jsonArray.optString("Display");
+                                Log.d("specifications","mm"+display);
+                                String Memory=jsonArray.optString("Memory");
+                                Log.d("specifications","mm"+Memory);
+
+                                playerModel.setDisplay(display);
+                                playerModel.setMemory(Memory);
+                             /*   JSONObject jsonObject=jsonArray.getJSONObject(0);
+
+
+
+                               */
+
+
 
                               //  images.add(split);
                                 //  playerModel.setStatus("");
@@ -200,4 +222,9 @@ public class viewproduct extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(viewproduct.this,MainUI.class));
+
+    }
 }

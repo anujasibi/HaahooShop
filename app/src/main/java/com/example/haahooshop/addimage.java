@@ -55,6 +55,7 @@ public class addimage extends AppCompatActivity {
     Context context=this;
     TextView save;
     SessionManager sessionManager;
+    ImageView imageView3;
 
     public static final String GridViewDemo_ImagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GridViewDemo/";
 
@@ -71,6 +72,14 @@ public class addimage extends AppCompatActivity {
         listOfImagesPath.clear();
 
         save=findViewById(R.id.save);
+        imageView3=findViewById(R.id.imageView3);
+
+        imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,finaladd.class));
+            }
+        });
 
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -291,5 +300,10 @@ public class addimage extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context,finaladd.class));
     }
 }

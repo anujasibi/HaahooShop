@@ -9,6 +9,9 @@ public class Item {
     public String discount;
     public String description;
     public String email;
+    public String Categoryid;
+    public String display;
+    public String memory;
 
 
     public String getStock() {
@@ -73,5 +76,29 @@ public class Item {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCategoryid() {
+        return Categoryid;
+    }
+
+    public void setCategoryid(String categoryid) {
+        Categoryid = categoryid;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    public String getMemory() {
+        return memory;
+    }
+
+    public void setMemory(String memory) {
+        this.memory = memory;
     }
 }

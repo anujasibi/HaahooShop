@@ -35,18 +35,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class category extends AppCompatActivity {
+public class editcategory extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayList<Specpojo> specpojos = new ArrayList<>();
-    SpecAdapter specAdapter;
+    Specad specad;
     Context context = this;
     String[] value = null;
     SessionManager sessionManager;
     ImageView imageView3;
+    public String ids,catid,display,Memory;
     BroadcastReceiver broadcastReceiver;
     TextView save;
     String url = "https://testapi.creopedia.com/api_shop_app/list_pdt_cat_spec/";
+    private String URLline = Global.BASE_URL+"api_shop_app/pdt_spec_edit/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,19 @@ public class category extends AppCompatActivity {
         save=findViewById(R.id.save);
         sessionManager = new SessionManager(this);
         sessionManager.setcatName("");
-        Bundle bundle =getIntent().getExtras();
+        Bundle bundle= getIntent().getExtras();
+        ids=bundle.getString("id");
+        catid=bundle.getString("catid");
+        display=bundle.getString("display");
+        Memory=bundle.getString("memory");
+
+        sessionManager.setdisplay(display);
+        sessionManager.setmemory(Memory);
+
+
+
+
+        Log.d("VVGHHHBH","LLL"+ids);
         final String category = bundle.getString("category");
         loadspecs(category);
         ArrayList<String> vals = new ArrayList<>();
@@ -85,7 +99,7 @@ public class category extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Toast.makeText(context,"kjnkj"+ Global.category,Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context,"kjnkj"+ Global.category,Toast.LENGTH_SHORT).show();
 
 //                if(Global.category.equals("Please Select ...")){
 //                    Toast.makeText(context,"Please Select All Specifications"+ Global.category,Toast.LENGTH_SHORT).show();
@@ -99,12 +113,76 @@ public class category extends AppCompatActivity {
                     Toast.makeText(context,"Specifications cannot be left empty",Toast.LENGTH_SHORT).show();
                 }
                 if (sessionManager.getcatName().length()!=0){
-                    startActivity(new Intent(context,addprod.class));
+                    submitpt();
                 }
-              //
+                //
             }
         });
 
+
+
+    }
+
+    private void submitpt(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                       // dialog.dismiss();
+                        // Toast.makeText(ManualOrders.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+                            String id=jsonObject.optString("data");
+                            sessionManager.setID(id);
+                            Log.d("otp","mm"+ot);
+                            if(status.equals("200")){
+                                Toast.makeText(editcategory.this, "Successful", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(editcategory.this, MainUI.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(editcategory.this, "Failed."+ot, Toast.LENGTH_LONG).show();
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(editcategory.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("pdt_spec",sessionManager.getcatName());
+                params.put("id",ids);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token "+sessionManager.getTokens());
+                Log.d("token","mm"+sessionManager.getTokens());
+                return params;
+            }
+
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
 
 
     }
@@ -131,25 +209,25 @@ public class category extends AppCompatActivity {
 
 
 
-                            JSONArray jsonArray = jsonObject.optJSONArray("data");
-                            for (int i =0;i<jsonArray.length();i++){
-                                JSONObject jsonObject1 = jsonArray.optJSONObject(i);
-                                Specpojo specpojo = new Specpojo();
-                                specpojo.setName(jsonObject1.optString("name"));
-                                specpojo.setId(jsonObject1.optString("id"));
-                                value = jsonObject1.optString("values").split(",");
-                                ArrayList<String> values = new ArrayList<>();
-                                values.add("Please Select ...");
-                                for (int j = 0 ;j<value.length;j++){
-                                    values.add(value[j].replace("[","").replace("]",""));
+                                JSONArray jsonArray = jsonObject.optJSONArray("data");
+                                for (int i =0;i<jsonArray.length();i++){
+                                    JSONObject jsonObject1 = jsonArray.optJSONObject(i);
+                                    Specpojo specpojo = new Specpojo();
+                                    specpojo.setName(jsonObject1.optString("name"));
+                                    specpojo.setId(jsonObject1.optString("id"));
+                                    value = jsonObject1.optString("values").split(",");
+                                    ArrayList<String> values = new ArrayList<>();
+                                    values.add("Please Select ...");
+                                    for (int j = 0 ;j<value.length;j++){
+                                        values.add(value[j].replace("[","").replace("]",""));
+                                    }
+                                    specpojo.setValues(values);
+                                    // Log.d("jsonresponse","hgf"+value[0]+"kkk"+value[1]+value.length);
+                                    specpojos.add(specpojo);
                                 }
-                                specpojo.setValues(values);
-                               // Log.d("jsonresponse","hgf"+value[0]+"kkk"+value[1]+value.length);
-                                specpojos.add(specpojo);
-                            }
-                            specAdapter = new SpecAdapter(specpojos, context);
-                            recyclerView.setAdapter(specAdapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+                                specad = new Specad(specpojos, context);
+                                recyclerView.setAdapter(specad);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
                             }
 
                         } catch (JSONException e) {
@@ -163,13 +241,13 @@ public class category extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(category.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(editcategory.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
-            protected Map<String,String> getParams() throws AuthFailureError{
+            protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("cat_id",category);
+                params.put("cat_id",catid);
 
                 return params;
             }

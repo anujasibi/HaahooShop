@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -45,6 +46,7 @@ public class finaladd extends AppCompatActivity {
     private RadioGroup radioSexGroup;
     private RadioButton one,two,three;
     SessionManager sessionManager;
+    ImageView imageView;
 
     TextView save;
 
@@ -67,7 +69,15 @@ public class finaladd extends AppCompatActivity {
         save=findViewById(R.id.save);
         distance=findViewById(R.id.name);
         sessionManager=new SessionManager(this);
+        imageView=findViewById(R.id.imageView3);
 
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(finaladd.this,addprod.class));
+            }
+        });
 
         check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,5 +232,8 @@ public class finaladd extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(finaladd.this,addprod.class));
+    }
 }

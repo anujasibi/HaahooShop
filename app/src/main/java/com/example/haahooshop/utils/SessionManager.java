@@ -38,6 +38,7 @@ public class SessionManager {
         return  sharedPreferences.getString("token","");
     }
 
+
     public void setPdtName(String PdtName){
         sharedPreferences.edit().putString("PdtName",PdtName).commit();
     }
@@ -52,6 +53,14 @@ public class SessionManager {
     public String getPdtid(){
 
         return  sharedPreferences.getString("Pdtid","");
+    }
+
+    public void setPid(String Pid){
+        sharedPreferences.edit().putString("Pid",Pid).commit();
+    }
+    public String getPid(){
+
+        return  sharedPreferences.getString("Pid","");
     }
 
 
@@ -134,6 +143,22 @@ public class SessionManager {
     public void setradio(String radio){
         sharedPreferences.edit().putString("radio",radio).commit();
     }
+
+    public String getdisplay(){
+
+        return  sharedPreferences.getString("display","");
+    }
+    public void setdisplay(String display){
+        sharedPreferences.edit().putString("display",display).commit();
+    }
+    public String getmemory(){
+
+        return  sharedPreferences.getString("memory","");
+    }
+    public void setmemory(String memory){
+        sharedPreferences.edit().putString("memory",memory).commit();
+    }
+
 
     public String getID() {
         String lat = sharedPreferences.getString("ID","");

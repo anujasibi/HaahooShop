@@ -82,7 +82,7 @@
                                 android:textColor="#000"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:text="Enter your Shop Name"/>
+                                android:text="Enter Your Shop Name"/>
 
 
 
@@ -121,7 +121,7 @@
                             android:textColor="#000"
                             android:layout_marginLeft="10dp"
                             android:layout_marginBottom="10dp"
-                            android:text="Name of owner"/>
+                            android:text="Name of Owner"/>
 
 
 
@@ -159,7 +159,7 @@
                             android:textColor="#000"
                             android:layout_marginLeft="10dp"
                             android:layout_marginBottom="10dp"
-                            android:text="Enter GST number"/>
+                            android:text="Enter GST Number"/>
 
 
                         <EditText

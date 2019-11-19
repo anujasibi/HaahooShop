@@ -14,10 +14,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.haahooshop.utils.SessionManager;
 
 
 public class splashscreen extends AppCompatActivity {
     Activity activity = this;
+    SessionManager sessionManager;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -27,6 +29,7 @@ public class splashscreen extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
+        sessionManager = new SessionManager(this);
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -39,6 +42,8 @@ public class splashscreen extends AppCompatActivity {
 
 
 
+        if (sessionManager.getTokens().length() == 0){
+
             handler=new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -49,8 +54,21 @@ public class splashscreen extends AppCompatActivity {
                 }
             },3000);
 
+        }
+        if (!(sessionManager.getTokens().length() == 0)){
+            handler=new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent=new Intent(splashscreen.this,MainUI.class);
+                    startActivity(intent);
+                    finish();
+                }
+            },3000);
+        }
+
+    }
 
 
     }
 
-}

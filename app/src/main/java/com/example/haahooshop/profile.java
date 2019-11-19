@@ -100,7 +100,7 @@ public class profile extends AppCompatActivity {
         io.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                startActivity(new Intent(profile.this,MainUI.class));
             }
         });
 
@@ -449,5 +449,10 @@ public class profile extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(profile.this,MainUI.class));
     }
 }

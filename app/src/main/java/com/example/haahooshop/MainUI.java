@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.example.haahooshop.utils.SessionManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +36,7 @@ public class MainUI extends AppCompatActivity {
     CardView cardView;
     Activity activity = this;
     ImageView logout;
- //   SessionManager sessionManager;
+    SessionManager sessionManager;
 
     private List<CardRecyclerViewItem> carItemList = null;
 
@@ -47,7 +49,7 @@ public class MainUI extends AppCompatActivity {
         setContentView(R.layout.activity_main_ui);
 
       //  imageView=findViewById(R.id.);
-     //   sessionManager = new SessionManager(this);
+       sessionManager = new SessionManager(this);
 
         cardView=findViewById(R.id.card);
         Window window = activity.getWindow();
@@ -75,16 +77,16 @@ public class MainUI extends AppCompatActivity {
         carRecyclerView.setAdapter(carDataAdapter);
 
         logout = findViewById(R.id.logout);
-       /* logout.setOnClickListener(new View.OnClickListener() {
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sessionManager.setTokens(null);
-                startActivity(new Intent(MainUI.this, Login.class));
+                startActivity(new Intent(MainUI.this, MainActivity.class));
                 finish();
 
 
             }
-        });*/
+        });
 
 
 

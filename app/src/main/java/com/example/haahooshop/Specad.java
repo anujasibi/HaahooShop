@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SpecAdapter extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
+public class Specad extends RecyclerView.Adapter<Specad.ViewHolder> {
 
     public ArrayList<Specpojo> downloadPojos;
     Context context1 ;
@@ -39,22 +39,25 @@ public class SpecAdapter extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
     SessionManager sessionManager;
     TextWatcher addOntext = null;
 
-    public SpecAdapter(ArrayList<Specpojo> productPojo, Context context) {
+    public Specad(ArrayList<Specpojo> productPojo, Context context) {
         this.downloadPojos = productPojo;
         this.context1 = context;
     }
 
     @Override
-    public SpecAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Specad.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem= layoutInflater.inflate(R.layout.specification, parent, false);
-        SpecAdapter.ViewHolder viewHolder = new SpecAdapter.ViewHolder(listItem);
+        Specad.ViewHolder viewHolder = new Specad.ViewHolder(listItem);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final SpecAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final Specad.ViewHolder holder, final int position) {
+
+     //   holder.value.setText(sessionManager.getmemory());
         sessionManager = new SessionManager(context1);
+        holder.value.setText(sessionManager.getdisplay());
         holder.spec1.setText(downloadPojos.get(position).getName());
         holder.apply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +65,7 @@ public class SpecAdapter extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
 
                 if (holder.value.getText().toString().length() == 0) {
                     Toast.makeText(context1, "Spec cannot be empty"+products.length(), Toast.LENGTH_SHORT).show();
-                    }
+                }
                 if (holder.value.getText().toString().length() != 0) {
                     holder.remove.setVisibility(View.VISIBLE);
                     holder.apply.setVisibility(View.GONE);
@@ -137,7 +140,7 @@ public class SpecAdapter extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
                     products.put("spec",arr);
                     sessionManager.setcatName(products.toString());
 
-
+,
                     Log.d("fff", "mm" +sessionManager.getcatName());
 
                     Log.d("fff", "mm" +products);
