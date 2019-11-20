@@ -75,15 +75,27 @@
                     android:id="@+id/locat"
                     android:src="@drawable/location"/>
 
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:text="Location :"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:id="@+id/locatr"
+                    android:textColor="#000"
+                    android:layout_marginLeft="40dp"
+                    android:layout_height="25dp"/>
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="Location"
                     android:gravity="center_vertical"
                     android:id="@+id/location"
+                    android:layout_marginEnd="5dp"
                     android:textColor="#000"
-                    android:layout_marginStart="10dp"
-                    android:layout_toRightOf="@id/locat"
-                    android:layout_height="25dp"/>
+                    android:textAlignment="viewStart"
+                    android:layout_toRightOf="@id/locatr"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -93,17 +105,30 @@
                     android:layout_marginTop="30dp"
                     android:id="@+id/per"
                     android:src="@drawable/person"/>
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:text="Owner :"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/location"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/owne"
+                    android:textColor="#000"
+                    android:layout_marginLeft="40dp"
+                    android:layout_height="25dp"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="Ownewr"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/location"
                     android:layout_marginTop="30dp"
                     android:id="@+id/owner"
-                    android:layout_toRightOf="@id/per"
+                    android:layout_marginEnd="5dp"
+                    android:textAlignment="viewStart"
+                    android:layout_toRightOf="@id/owne"
                     android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="25dp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -115,16 +140,31 @@
                     android:src="@drawable/gst"/>
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:text="GstNO"
+                    android:layout_width="100dp"
+                    android:text="GST No :"
+                    android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/owner"
-                    android:layout_toRightOf="@id/gst"
                     android:layout_marginTop="30dp"
-                    android:id="@+id/gstno"
+                    android:id="@+id/gstn"
                     android:textColor="#000"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_height="25dp"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_below="@+id/owner"
+                    android:layout_toRightOf="@id/gstn"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="5dp"
+
+                    android:id="@+id/gstno"
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -136,20 +176,37 @@
                     android:src="@drawable/cat"/>
 
                 <TextView
+                    android:layout_width="100dp"
+                    android:text="Category :"
+                    android:gravity="center_vertical"
+                    android:layout_below="@+id/gstno"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/categor"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:layout_marginLeft="40dp"
+                    android:layout_height="wrap_content"/>
+
+
+                <TextView
                     android:layout_width="match_parent"
-                    android:text="Category"
                     android:layout_toRightOf="@id/cat"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/gstno"
                     android:layout_marginTop="30dp"
                     android:id="@+id/category"
+                    android:layout_marginEnd="5dp"
                     android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="25dp"/>
+                    android:textAlignment="viewStart"
+                    android:layout_toEndOf="@+id/categor"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:text="    Edit Profile"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
                     android:layout_marginRight="50dp"
                     android:layout_below="@+id/category"
                     android:layout_marginTop="50dp"

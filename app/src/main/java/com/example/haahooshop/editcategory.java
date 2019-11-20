@@ -73,12 +73,15 @@ public class editcategory extends AppCompatActivity {
         sessionManager.setdisplay(display);
         sessionManager.setmemory(Memory);
 
+        submituser();
+
 
 
 
         Log.d("VVGHHHBH","LLL"+ids);
         final String category = bundle.getString("category");
-        loadspecs(category);
+       // loadspecs(category);
+
         ArrayList<String> vals = new ArrayList<>();
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -186,6 +189,141 @@ public class editcategory extends AppCompatActivity {
 
 
     }
+    private void submituser(){
+        RequestQueue queue = Volley.newRequestQueue(editcategory.this);
+
+        //this is the url where you want to send the request
+
+        String url = Global.BASE_URL+"api_shop_app/product_id/";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //dialog.dismiss();
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+                            Log.d("objfdfddf","hjbhjb"+response);
+                            // amount.setText(obj.optString("total"));
+                         //   birdList = new ArrayList<>();
+                            String total=obj.optString("total");
+                            JSONArray dataArray  = obj.getJSONArray("data");
+
+
+                            for (int i = 0; i < dataArray.length(); i++) {
+
+                                //Item playerModel = new Item();
+                                JSONObject dataobj = dataArray.getJSONObject(i);
+                                Global.spec_headers.clear();
+                                Global.spec_values.clear();
+                                //   playerModel.setProductname(dataobj.optSt ring("name"));
+                                // ApiClient.productids.add(dataobj.optString("id"));
+                               /* pname=dataobj.optString("name");
+                                price=dataobj.optString("price");
+                                descr=dataobj.optString("description");
+                                discount=dataobj.optString("discount");*/
+                                ArrayList<String>spec_headers = new ArrayList<>();
+                                JSONObject specification_headers = dataobj.optJSONObject("specification_header");
+                                for (int j = 0 ; j < specification_headers.length() ; j++){
+                                    Global.spec_headers.add(specification_headers.optString("spec"+j));
+                                    //Log.d("specheaders","bhjb"+spec_headers.get(j));
+                                }
+                                ArrayList<String>spec_values = new ArrayList<>();
+                                JSONObject specifications = dataobj.optJSONObject("specification");
+                                for (int k = 0 ; k <Global.spec_headers.size();k++){
+                                    Global.spec_values.add(specifications.optString(Global.spec_headers.get(k)));
+                                    //Log.d("specvalues","bhjb"+spec_values.get(k));
+                                }
+//                                Global.spec_headers = spec_headers;
+//                                Global.spec_values = spec_values;
+                              /*  stock=dataobj.optString("stock");
+                                //  email=dataobj.optString("email");
+                                String id=dataobj.getString("id");
+                                Log.d("imageurl","bhcbvfc"+id);
+                                playerModel.setId(id);
+                                sessionManager.setPdtid(id);
+                                String catid=dataobj.optString("category_id");
+                                playerModel.setCategoryid(catid);
+                                playerModel.setDescription(descr);
+                                playerModel.setDiscount(discount);
+                                playerModel.setStock(stock);*/
+                                //    playerModel.setEmail(email);
+                              /*  playerModel.setName(dataobj.optString("name"));
+                                Log.d("ssssd", "resp" + dataobj);
+                                playerModel.setPrice("₹ "+dataobj.optString("price"));
+                                String images1 = dataobj.getString("image");
+                                String[] seperated = images1.split(",");
+                                String split = seperated[0].replace("[", "").replace("]","");
+                                playerModel.setImage(Global.BASE_URL+split);
+                                image=Global.BASE_URL+split;*/
+
+                               /* JSONObject jsonArray=dataobj.optJSONObject("specifications");
+                                Log.d("specifications","mm"+jsonArray);
+                                String display=jsonArray.optString("Display");
+                                Log.d("specifications","mm"+display);
+                                String Memory=jsonArray.optString("Memory");
+                                Log.d("specifications","mm"+Memory);
+
+                                playerModel.setDisplay(display);
+                                playerModel.setMemory(Memory);*/
+                                /*   JSONObject jsonObject=jsonArray.getJSONObject(0);
+
+
+
+                                 */
+
+
+
+                                //  images.add(split);
+                                //  playerModel.setStatus("");
+
+
+                               // birdList.add(playerModel);
+
+                            }
+                            specad = new Specad(Global.spec_headers,context);
+                            recyclerView.setAdapter(specad);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+                           /* MyAdapter myAdapter=new MyAdapter(context,R.layout.grid_view_items,birdList);
+                            simpleList.setAdapter(myAdapter);
+*/
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(editcategory.this,"Internal Server Error",Toast.LENGTH_LONG).show();
+
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("product_id", ids);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders()  {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token " + sessionManager.getTokens());
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
 
 
     private void loadspecs(final String category){
@@ -225,7 +363,7 @@ public class editcategory extends AppCompatActivity {
                                     // Log.d("jsonresponse","hgf"+value[0]+"kkk"+value[1]+value.length);
                                     specpojos.add(specpojo);
                                 }
-                                specad = new Specad(specpojos, context);
+                                //specad = new Specad(specpojos, context);
                                 recyclerView.setAdapter(specad);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
                             }

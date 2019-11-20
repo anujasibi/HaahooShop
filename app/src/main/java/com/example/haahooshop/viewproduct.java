@@ -139,12 +139,28 @@ public class viewproduct extends AppCompatActivity {
 
                                 Item playerModel = new Item();
                                 JSONObject dataobj = dataArray.getJSONObject(i);
+                                Global.spec_headers.clear();
+                                Global.spec_values.clear();
                                 //   playerModel.setProductname(dataobj.optSt ring("name"));
                                 // ApiClient.productids.add(dataobj.optString("id"));
                                 pname=dataobj.optString("name");
                                 price=dataobj.optString("price");
                                 descr=dataobj.optString("description");
                                 discount=dataobj.optString("discount");
+                                ArrayList<String>spec_headers = new ArrayList<>();
+                                JSONObject specification_headers = dataobj.optJSONObject("specification_headers");
+                                for (int j = 0 ; j < specification_headers.length() ; j++){
+                                    spec_headers.add(specification_headers.optString("spec"+j));
+                                    Log.d("specheaders","bhjb"+spec_headers.get(j));
+                                }
+                                ArrayList<String>spec_values = new ArrayList<>();
+                                JSONObject specifications = dataobj.optJSONObject("specifications");
+                                for (int k = 0 ; k <spec_headers.size();k++){
+                                    spec_values.add(specifications.optString(spec_headers.get(k)));
+                                    Log.d("specvalues","bhjb"+spec_values.get(k));
+                                }
+                               // Global.spec_headers = spec_headers;
+                             //   Global.spec_values = spec_values;
                                 stock=dataobj.optString("stock");
                               //  email=dataobj.optString("email");
                                 String id=dataobj.getString("id");

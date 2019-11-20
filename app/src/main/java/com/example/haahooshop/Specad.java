@@ -32,14 +32,14 @@ import java.util.List;
 
 public class Specad extends RecyclerView.Adapter<Specad.ViewHolder> {
 
-    public ArrayList<Specpojo> downloadPojos;
+    public ArrayList<String> downloadPojos;
     Context context1 ;
     JSONArray arr = new JSONArray();
     JSONObject products = new JSONObject();
     SessionManager sessionManager;
     TextWatcher addOntext = null;
 
-    public Specad(ArrayList<Specpojo> productPojo, Context context) {
+    public Specad(ArrayList<String> productPojo, Context context) {
         this.downloadPojos = productPojo;
         this.context1 = context;
     }
@@ -57,8 +57,10 @@ public class Specad extends RecyclerView.Adapter<Specad.ViewHolder> {
 
      //   holder.value.setText(sessionManager.getmemory());
         sessionManager = new SessionManager(context1);
-        holder.value.setText(sessionManager.getdisplay());
-        holder.spec1.setText(downloadPojos.get(position).getName());
+        holder.value.setText(Global.spec_values.get(position));
+        Toast.makeText(context1,"mm"+Global.spec_values.get(position),Toast.LENGTH_SHORT).show();
+        Toast.makeText(context1,"mm"+Global.spec_headers.get(position),Toast.LENGTH_SHORT).show();
+        holder.spec1.setText(Global.spec_headers.get(position));
         holder.apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,12 +74,12 @@ public class Specad extends RecyclerView.Adapter<Specad.ViewHolder> {
                     holder.value.setEnabled(false);
                     ArrayList<String> names = new ArrayList<>();
                     // names.clear();
-                    names.add(downloadPojos.get(position).getName());
+                    //names.add(downloadPojos.get(position).getName());
                     HashMap<String, JSONObject> map1 = new HashMap<String, JSONObject>();
                     JSONObject json = new JSONObject();
                     try {
 
-                        json.put("name", names.get(0));
+                        json.put("name", holder.spec1.getText().toString());
                         json.put("value", holder.value.getText().toString());
                         map1.put("json", json);
                         arr.put(map1.get("json"));

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -72,6 +73,7 @@ public class profile extends AppCompatActivity {
     private static final String IMAGE_DIRECTORY = "/demonuts";
     private int GALLERY = 1, CAMERA = 2;
     String filePath;
+    private ProgressDialog dialog ;
     private Uri uri;
     public String em;
     ImageView io;
@@ -86,6 +88,10 @@ public class profile extends AppCompatActivity {
         requestMultiplePermissions();
 
         sessionManager=new SessionManager(this);
+
+        dialog=new ProgressDialog(profile.this,R.style.MyAlertDialogStyle);
+        dialog.setMessage("Loading..");
+        dialog.show();
 
         imageView=findViewById(R.id.img);
         image=findViewById(R.id.imgg);
@@ -411,17 +417,20 @@ public class profile extends AppCompatActivity {
 
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
-                                Toast.makeText(profile.this, "Successful", Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                             //   Toast.makeText(profile.this, "Successful", Toast.LENGTH_LONG).show();
                                // Intent intent = new Intent(pasteaddress.this, ordersummary.class);
                                // startActivity(intent);
                             }
                             else{
+                                dialog.dismiss();
                                 Toast.makeText(profile.this, "Failed."+ot, Toast.LENGTH_LONG).show();
 
 
                             }
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                         Log.d("response","hhh"+response);

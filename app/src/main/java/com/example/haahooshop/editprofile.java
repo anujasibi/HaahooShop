@@ -2,6 +2,7 @@ package com.example.haahooshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ public class editprofile extends AppCompatActivity {
     SessionManager sessionManager;
     Context context=this;
     ImageView back;
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class editprofile extends AppCompatActivity {
         gst.setText(gstn);
         email.setText(em);
 
+        dialog=new ProgressDialog(editprofile.this,R.style.MyAlertDialogStyle);
+
         sessionManager=new SessionManager(this);
 
         submit=findViewById(R.id.submit);
@@ -79,8 +83,10 @@ public class editprofile extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
              @Override
             public void onClick(View view) {
+                 dialog.setMessage("Loading..");
+                 dialog.show();
                 submituser();
-                startActivity(new Intent(editprofile.this,profile.class));
+
             }
         });
 
@@ -91,7 +97,7 @@ public class editprofile extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                     //   dialog.dismiss();
+                        dialog.dismiss();
                         // Toast.makeText(ManualOrders.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -101,8 +107,8 @@ public class editprofile extends AppCompatActivity {
                           //  String id=jsonObject.optString("data");
                             Log.d("otp","mm"+ot);
                             if(status.equals("200")){
-                                Toast.makeText(editprofile.this, "Successful", Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(editprofile.this, "Successfully Updated", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(editprofile.this,profile.class));
                             }
                             else{
                                 Toast.makeText(editprofile.this, "Failed."+ot, Toast.LENGTH_LONG).show();

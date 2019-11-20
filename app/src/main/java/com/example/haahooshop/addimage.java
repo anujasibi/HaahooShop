@@ -1,12 +1,17 @@
 package com.example.haahooshop;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.haahooshop.utils.SessionManager;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,6 +40,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +55,7 @@ import retrofit2.Retrofit;
 
 public class addimage extends AppCompatActivity {
     ImageButton captureBtn = null;
-    final int CAMERA_CAPTURE = 1;
+    final int CAMERA_CAPTURE = 1,GALLERY = 2;
     private Uri picUri;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private GridView grid;
@@ -56,6 +64,9 @@ public class addimage extends AppCompatActivity {
     TextView save;
     SessionManager sessionManager;
     ImageView imageView3;
+    private Uri uri;
+    String imageEncoded;
+    List<String> imagesEncodedList;
 
     public static final String GridViewDemo_ImagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GridViewDemo/";
 
@@ -106,9 +117,10 @@ public class addimage extends AppCompatActivity {
 
                     try {
 //use standard intent to capture an image
-                        Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                      /*  Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //we will handle the returned data in onActivityResult
-                        startActivityForResult(captureIntent, CAMERA_CAPTURE);
+                        startActivityForResult(captureIntent, CAMERA_CAPTURE);*/
+                        showPictureDialog();
                     } catch(ActivityNotFoundException anfe){
 //display an error message
                         String errorMessage = "Whoops – your device doesn’t support capturing images!";
@@ -142,6 +154,41 @@ public class addimage extends AppCompatActivity {
 
     }
 
+    private void showPictureDialog(){
+        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+        pictureDialog.setTitle("Select Action");
+        String[] pictureDialogItems = {
+                "Select photo from gallery",
+                "Capture photo from camera" };
+        pictureDialog.setItems(pictureDialogItems,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                choosePhotoFromGallary();
+                                break;
+                            case 1:
+                                takePhotoFromCamera();
+                                break;
+                        }
+                    }
+                });
+        pictureDialog.show();
+    }
+
+    public void choosePhotoFromGallary() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, GALLERY);
+    }
+
+    private void takePhotoFromCamera() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAMERA_CAPTURE);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -161,16 +208,106 @@ public class addimage extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                listOfImagesPath.clear();
-                listOfImagesPath = RetriveCapturedImagePath();
+//                listOfImagesPath.clear();
+
+                File f = new File(GridViewDemo_ImagePath);
+                if (f.exists()) {
+                    File[] files=f.listFiles();
+                    Arrays.sort(files);
+
+                    for(int i=0; i<files.length; i++){
+                        File file = files[i];
+                        if(file.isDirectory())
+                            continue;
+//                        Log.d("vvvvvvvv","bkbhj"+file.getPath());
+                        if (listOfImagesPath.size()==0){
+                            listOfImagesPath.add(file.getPath());
+                        }
+                       /* if ((listOfImagesPath.get(i).equals(file.getPath()))) {
+                             listOfImagesPath.clear();
+                        }*/
+
+                        if(listOfImagesPath.contains(file.getPath())){
+                            listOfImagesPath.remove(file.getPath());
+                        }
+                        /*if (!(listOfImagesPath.get(i).equals(file.getPath()))) {
+                            listOfImagesPath.add(file.getPath());
+                        }*/
+
+                        if(!(listOfImagesPath.contains(file.getPath()))){
+                            listOfImagesPath.add(file.getPath());
+                        }
+
+
+                        //listOfImagesPath.add(file.getPath());
+                    }
+                }
+
+
+                //listOfImagesPath=RetriveCapturedImagePath();
+                Log.d("imagearrasyaise","bkbhj"+listOfImagesPath.size());
+                //listOfImagesPath.add(RetriveCapturedImagePath().get(0));
                 if (listOfImagesPath != null) {
                     grid.setAdapter(new ImageListAdapter(this, listOfImagesPath));
 
-                    Log.d("IMafggvGASVS","MM"+listOfImagesPath);
+                    Log.d("IMafggvGASVS","MM"+listOfImagesPath.size());
                 }
             }
+            if (requestCode == GALLERY) {
+                if (data != null) {
+                    Uri contentURI = data.getData();
+                    uri = data.getData();
+                    listOfImagesPath.add((getRealPathFromURIPath(uri, addimage.this)));
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                        bitmap = getResizedBitmap(bitmap, 400);
+                       // String path = saveImage(bitmap);
+                        Toast.makeText(addimage.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                        grid.setAdapter(new ImageListAdapter(this, listOfImagesPath));
+                        Log.d("IMafggvGASVS","MM"+listOfImagesPath.size());
+                   //     submituser();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(addimage.this, "Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+
         }
     }
+    private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
+        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
+
+
+
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+
+
 
     private List<String> RetriveCapturedImagePath() {
         List<String> tFileList = new ArrayList<String>();
@@ -184,6 +321,7 @@ public class addimage extends AppCompatActivity {
                 if(file.isDirectory())
                     continue;
                 tFileList.add(file.getPath());
+                //listOfImagesPath.add(file.getPath());
             }
         }
         return tFileList;
@@ -290,7 +428,7 @@ public class addimage extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                Toast.makeText(context,"Successful"+response,Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Successfully Added The Product",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(addimage.this,MainUI.class));
 
             }
