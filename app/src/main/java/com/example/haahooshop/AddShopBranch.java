@@ -351,6 +351,7 @@ public class AddShopBranch extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d("ressssssssss","mm"+response);
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {

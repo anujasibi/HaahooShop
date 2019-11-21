@@ -52,6 +52,7 @@ public class addproductnew extends AppCompatActivity {
 
 
         grid=(GridView)findViewById(R.id.grid);
+        submituser();
        /* grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -69,7 +70,7 @@ public class addproductnew extends AppCompatActivity {
 
         //this is the url where you want to send the request
 
-        String url = Global.BASE_URL+"api_shop_app/shop_pdt_details/";
+        String url = Global.BASE_URL+"api_shop_app/list_shop_cat/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

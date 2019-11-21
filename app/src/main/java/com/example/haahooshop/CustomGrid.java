@@ -36,21 +36,18 @@ public class CustomGrid extends ArrayAdapter {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null) {
 
-            grid = new View(mContext);
+            View grid = convertView;
+
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             grid = inflater.inflate(R.layout.gridviewadd, null);
+
+
             TextView textView = (TextView) grid.findViewById(R.id.textView);
             ImageView imageView = (ImageView)grid.findViewById(R.id.profile_image);
             textView.setText(birdList.get(position).getName());
             Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);
-        } else {
-            grid = (View) convertView;
-        }
 
         return grid;
     }

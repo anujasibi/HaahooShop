@@ -22,7 +22,7 @@
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_ILgsfZCZoFIKMb" />
 
-        <activity android:name=".addproductnew" />
+        <activity android:name=".splashscreen" />
         <activity android:name=".Payment" />
         <activity android:name=".editcategory" />
         <activity android:name=".edit_product" />
@@ -39,7 +39,7 @@
         <activity android:name=".AddProduct" />
         <activity android:name=".Register" />
         <activity android:name=".MainUI" />
-        <activity android:name=".splashscreen">
+        <activity android:name=".addproductnew">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
