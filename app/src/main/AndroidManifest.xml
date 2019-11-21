@@ -14,9 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".editcategory"></activity>
-        <activity android:name=".edit_product"></activity>
-        <activity android:name=".viewpdtdetails"></activity>
+        <activity android:name=".ViewBranches"></activity>
+        <activity android:name=".AddEmployee" />
+        <activity android:name=".AddShopBranch" />
+
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_ILgsfZCZoFIKMb" />
+
+        <activity android:name=".addproductnew" />
+        <activity android:name=".Payment" />
+        <activity android:name=".editcategory" />
+        <activity android:name=".edit_product" />
+        <activity android:name=".viewpdtdetails" />
         <activity android:name=".editprofile" />
         <activity android:name=".profile" />
         <activity android:name=".VerifyOtp" />

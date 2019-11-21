@@ -43,7 +43,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
-    EditText shopname,owner,gstno,phone,email,password;
+    EditText shopname,owner,gstno,phone,email,password,distance;
     EditText address;
     TextView submit,show,hide;
     String device_id = null;
@@ -73,6 +73,7 @@ public class Register extends AppCompatActivity {
         email=findViewById(R.id.email);
         password=findViewById(R.id.password);
         address=findViewById(R.id.des);
+        distance=findViewById(R.id.distance);
         show=findViewById(R.id.show);
         hide=findViewById(R.id.hide);
         device_id =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -267,6 +268,8 @@ public class Register extends AppCompatActivity {
                 Log.d("lat","mm"+source_lat);
                 params.put("log",source_lng);
                 Log.d("long","mm"+source_lng);
+                params.put("distance",distance.getText().toString());
+                Log.d("long","mm"+distance.getText().toString());
                 params.put("category",idsp);
                 Log.d("category","mm"+idsp);
 

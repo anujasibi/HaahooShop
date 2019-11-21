@@ -17,5 +17,9 @@ public interface  UploadAPI {
     @POST("api_shop_app/shop_product_update/")
     Call<ResponseBody> uploadImag(@Header("Authorization") String token, @Part("pdt_name") RequestBody pdt_name, @Part("pdt_price") RequestBody pdt_price, @Part("pdt_discount") RequestBody pdt_discount, @Part("stock") RequestBody stock, @Part("pdt_description") RequestBody pdt_description, @Part("id") RequestBody id);
 
+    @Multipart
+    @POST("api_shop_app/shop_product_update/")
+    Call<ResponseBody> uploadIm(@Header("Authorization") String token, @Part MultipartBody.Part pdt_image,@Part("pdt_name") RequestBody pdt_name, @Part("pdt_price") RequestBody pdt_price, @Part("pdt_discount") RequestBody pdt_discount, @Part("stock") RequestBody stock, @Part("pdt_description") RequestBody pdt_description, @Part("id") RequestBody id);
+
 }
 

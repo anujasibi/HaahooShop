@@ -102,8 +102,13 @@ public class MainUI extends AppCompatActivity {
         {
             carItemList = new ArrayList<CardRecyclerViewItem>();
             carItemList.add(new CardRecyclerViewItem("Add Products", R.drawable.add));
-            carItemList.add(new CardRecyclerViewItem("View/Modify Products", R.drawable.view));
+            carItemList.add(new CardRecyclerViewItem("View/Modify Products", R.drawable.eye));
             carItemList.add(new CardRecyclerViewItem("View/Modify Profile", R.drawable.person));
+            carItemList.add(new CardRecyclerViewItem("Add Your Employee", R.drawable.groupadd));
+            carItemList.add(new CardRecyclerViewItem("Add Your Shop Branches", R.drawable.shopbranch));
+            carItemList.add(new CardRecyclerViewItem("My Branches", R.drawable.branch));
+            carItemList.add(new CardRecyclerViewItem("View/Modify Branch Details", R.drawable.ic_rate_review_black_24dp));
+            carItemList.add(new CardRecyclerViewItem("View Branch Products", R.drawable.view));
 
 
         }

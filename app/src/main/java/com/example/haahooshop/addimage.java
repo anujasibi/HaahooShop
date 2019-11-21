@@ -428,7 +428,7 @@ public class addimage extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                Toast.makeText(context,"Successfully Added The Product",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Successfully Added The Product"+response,Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(addimage.this,MainUI.class));
 
             }
