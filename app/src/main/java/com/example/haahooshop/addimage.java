@@ -411,18 +411,27 @@ public class addimage extends AppCompatActivity {
         RequestBody pdt_name = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getPdtName() );
         Log.d("pdtname","mm"+sessionManager.getPdtName());
         RequestBody pdt_cat_id = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcatid() );
+        Log.d("catid","mm"+sessionManager.getcatid());
         RequestBody pdt_spec = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcatName() );
+        Log.d("pdtspec","mm"+sessionManager.getcatName());
         RequestBody pdt_price = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getprice() );
-        Log.d("pdtname","mm"+sessionManager.getprice());
+        Log.d("pdtprice","mm"+sessionManager.getprice());
         RequestBody pdt_return_period = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getret() );
+        Log.d("returnperiod","mm"+sessionManager.getret());
         RequestBody pdt_discount = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getdis() );
         Log.d("discountttt","mm"+sessionManager.getdis());
         RequestBody stock = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getstock() );
+        Log.d("stock","mm"+sessionManager.getstock());
         RequestBody pdt_description = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getdes() );
+        Log.d("desc","mm"+sessionManager.getdes());
         RequestBody delivery_mode = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcheck() );
+        Log.d("mode","mm"+sessionManager.getcheck());
         RequestBody distance = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcatdistance() );
+        Log.d("distance","mm"+sessionManager.getcatdistance());
         RequestBody type = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getradio() );
+        Log.d("type","mm"+sessionManager.getradio());
         RequestBody resell = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getcheckn() );
+        Log.d("resell","mm"+sessionManager.getcheckn());
         //
         Call call = uploadAPIs.uploadImage("Token "+sessionManager.getTokens(),part,pdt_name,pdt_cat_id,pdt_spec,pdt_price,pdt_return_period,pdt_discount,stock,pdt_description,delivery_mode,distance,type,resell);
         call.enqueue(new Callback() {

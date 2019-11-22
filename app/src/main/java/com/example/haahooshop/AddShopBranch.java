@@ -12,7 +12,10 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -81,6 +84,8 @@ public class AddShopBranch extends AppCompatActivity {
     ArrayList<String> areasid = new ArrayList<String>();
     String URL = "https://testapi.creopedia.com/api_shop_app/list_shop_cat/ ";
     SessionManager sessionManager;
+    String device_id = null;
+    public String source_lat,source_lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,13 +101,23 @@ public class AddShopBranch extends AppCompatActivity {
         phone = findViewById(R.id.phone);
         email = findViewById(R.id.email);
         distance = findViewById(R.id.distance);
-        address = findViewById(R.id.address);
+        address = findViewById(R.id.des);
         password = findViewById(R.id.password);
         imageView = findViewById(R.id.img);
         show = findViewById(R.id.show);
         hide = findViewById(R.id.hide);
 
+        address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                GeocodingLocation locationAddress = new GeocodingLocation();
+                locationAddress.getAddressFromLocation(address.getText().toString(),
+                        getApplicationContext(), new AddShopBranch.GeocoderHandler());
+            }
+        });
+
         submit = findViewById(R.id.submit);
+        device_id =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         show.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +171,35 @@ public class AddShopBranch extends AppCompatActivity {
 
 
     }
+
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            String lat,lonh;
+
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    lat= bundle.getString("lat");
+                    lonh=bundle.getString("long");
+                    Log.d("source","mm"+lat);
+                    Log.d("longitude","mm"+lonh);
+                    source_lat = lat;
+                    source_lng = lonh;
+                    Toast.makeText(AddShopBranch.this,source_lat+source_lng,Toast.LENGTH_SHORT).show();
+                    //  sessionManager.setDestLong(lonh);
+                    break;
+                default:
+                    locationAddress = null;
+            }
+            //  latLongTV.setText(locationAddress);
+            Log.d("locationaddress","mm"+locationAddress);
+        }
+
+    }
+
 
     private void showPictureDialog() {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
@@ -396,22 +440,38 @@ public class AddShopBranch extends AppCompatActivity {
 
             RequestBody photob = RequestBody.create(MediaType.parse("image/*"), immm);
             // Create MultipartBody.Part using file request-body,file name and part name
-            MultipartBody.Part part1 = MultipartBody.Part.createFormData("pdt_image", immm.getName(), photob);
+            MultipartBody.Part part1 = MultipartBody.Part.createFormData("shop_image", immm.getName(), photob);
             Log.d("image", "mm" + part1);
             Log.d("image", "mm" + immm.getName());
 
 
             //Create request body with text description and text media type
             RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
-            RequestBody pdt_name = RequestBody.create(MediaType.parse("text/plain"), shopname.getText().toString());
-            RequestBody pdt_price = RequestBody.create(MediaType.parse("text/plain"), gst.getText().toString());
-            RequestBody pdt_discount = RequestBody.create(MediaType.parse("text/plain"), phone.getText().toString());
-            RequestBody stock = RequestBody.create(MediaType.parse("text/plain"), email.getText().toString());
-            RequestBody pdt_description = RequestBody.create(MediaType.parse("text/plain"), distance.getText().toString());
-            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), address.getText().toString());
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), shopname.getText().toString());
+            Log.d("nameee","mm"+shopname.getText().toString());
+            RequestBody gst_no = RequestBody.create(MediaType.parse("text/plain"), gst.getText().toString());
+            Log.d("nameee","mm"+gst.getText().toString());
+            RequestBody phone_no = RequestBody.create(MediaType.parse("text/plain"), phone.getText().toString());
+            Log.d("nameee","mm"+phone.getText().toString());
+            RequestBody emails = RequestBody.create(MediaType.parse("text/plain"), email.getText().toString());
+            Log.d("nameee","mm"+email.getText().toString());
+            RequestBody passwords = RequestBody.create(MediaType.parse("text/plain"), password.getText().toString());
+            Log.d("nameee","mm"+password.getText().toString());
+            RequestBody addresss = RequestBody.create(MediaType.parse("text/plain"), address.getText().toString());
+            Log.d("nameee","mm"+address.getText().toString());
+            RequestBody lat = RequestBody.create(MediaType.parse("text/plain"), source_lat);
+            Log.d("nameee","mm"+source_lat);
+            RequestBody log = RequestBody.create(MediaType.parse("text/plain"), source_lng);
+            Log.d("nameee","mm"+source_lng);
+            RequestBody distances = RequestBody.create(MediaType.parse("text/plain"), distance.getText().toString());
+            Log.d("nameee","mm"+distance.getText().toString());
+            RequestBody category = RequestBody.create(MediaType.parse("text/plain"), idsp);
+            Log.d("nameee","mm"+idsp);
+            RequestBody device = RequestBody.create(MediaType.parse("text/plain"), device_id);
+            Log.d("nameee","mm"+device_id);
 
             //
-            Call call = uploadAPIs.uploadImag("Token " + sessionManager.getTokens(), pdt_name, pdt_price, pdt_discount, stock, pdt_description, id);
+            Call call = uploadAPIs.uploadI("Token " + sessionManager.getTokens(),part1, name, gst_no, emails, passwords, phone_no, addresss,lat,log,category,distances,device);
             call.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, retrofit2.Response response) {

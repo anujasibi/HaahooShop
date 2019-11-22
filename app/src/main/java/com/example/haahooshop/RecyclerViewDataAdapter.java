@@ -57,7 +57,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 snackbar.show();
 
                 if (carTitle.equals("Add Products")){
-                    Intent intent=new Intent(context,AddProduct.class);
+                    Intent intent=new Intent(context,addproductnew.class);
                     context.startActivity(intent);
                 }
 
@@ -75,6 +75,14 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 }
                 if (carTitle.equals("Add Your Employee")){
                     Intent intent=new Intent(context,AddEmployee.class);
+                    context.startActivity(intent);
+                }
+                if (carTitle.equals("My Branches")){
+                    Intent intent=new Intent(context,ViewBranches.class);
+                    context.startActivity(intent);
+                }
+                if (carTitle.equals("View/Modify Employee Details")){
+                    Intent intent=new Intent(context,viewemployee.class);
                     context.startActivity(intent);
                 }
 
@@ -101,7 +109,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 snackbar.show();
 
                 if (carTitle.equals("Add Products")){
-                    Intent intent=new Intent(context,AddProduct.class);
+                    Intent intent=new Intent(context,addproductnew.class);
                     context.startActivity(intent);
                 }
 
@@ -117,8 +125,16 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                     Intent intent=new Intent(context,AddShopBranch.class);
                     context.startActivity(intent);
                 }
+                if (carTitle.equals("My Branches")){
+                    Intent intent=new Intent(context,ViewBranches.class);
+                    context.startActivity(intent);
+                }
                 if (carTitle.equals("Add Your Employee")){
                     Intent intent=new Intent(context,AddEmployee.class);
+                    context.startActivity(intent);
+                }
+                if (carTitle.equals("View/Modify Employee Details")){
+                    Intent intent=new Intent(context,viewemployee.class);
                     context.startActivity(intent);
                 }
                /* if (carTitle.equals("Earnings")){

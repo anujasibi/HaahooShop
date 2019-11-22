@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.haahooshop.utils.Global;
+import com.example.haahooshop.utils.SessionManager;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +39,9 @@ public class addproductnew extends AppCompatActivity {
     Activity activity = this;
     ArrayList<Itemprod> birdList=new ArrayList<>();
     Context context=this;
+    SessionManager sessionManager;
+    TextView textView;
+    TextInputEditText name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +52,44 @@ public class addproductnew extends AppCompatActivity {
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        sessionManager=new SessionManager(this);
+        name=findViewById(R.id.name);
+        sessionManager.setcatid("");
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
+        textView=findViewById(R.id.save);
+
 
         grid=(GridView)findViewById(R.id.grid);
         submituser();
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(name.getText().toString().equals("")){
+                    name.setError("ProductName is required");
+                    Toast.makeText(addproductnew.this,"All are fields are required",Toast.LENGTH_SHORT).show();
+                }
+                if(sessionManager.getcatid().length()==0){
+                    Toast.makeText(addproductnew.this,"Should requires at least one category",Toast.LENGTH_SHORT).show();
+                }
+                if(!(name.getText().toString().equals(""))) {
+                    if (!(sessionManager.getcatid().length() == 0)) {
+
+                        sessionManager.setPdtName(name.getText().toString());
+                        // sessionManager.setcatid(idsp);
+                        Intent intent = new Intent(addproductnew.this, category.class);
+                        intent.putExtra("category", sessionManager.getcatid());
+                        // sessionManager.setPid(idsp);
+                        startActivity(intent);
+                    }
+                }
+//                startActivity(new Intent(AddProduct.this,category.class));
+            }
+        });
        /* grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -70,7 +107,7 @@ public class addproductnew extends AppCompatActivity {
 
         //this is the url where you want to send the request
 
-        String url = Global.BASE_URL+"api_shop_app/list_shop_cat/";
+        String url = Global.BASE_URL+"api_shop_app/list_pdt_cat/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -102,6 +139,7 @@ public class addproductnew extends AppCompatActivity {
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
                                 birdList.add(playerModel);
+                                playerModel.setId(dataobj.optString("id"));
 
                             }
                             CustomGrid myAdapter=new CustomGrid(context,R.layout.gridviewadd,birdList);
@@ -126,7 +164,7 @@ public class addproductnew extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders()  {
                 Map<String, String> params = new HashMap<String, String>();
-           //     params.put("Authorization", "Token " + sessionManager.getTokens());
+             params.put("Authorization", "Token " + sessionManager.getTokens());
                 return params;
             }
         };

@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewBranches"></activity>
+        <activity android:name=".employeedetails"></activity>
+        <activity android:name=".editbranchprofile" />
+        <activity android:name=".branchprofile" />
+        <activity android:name=".viewemployee" />
+        <activity android:name=".ViewBranches" />
         <activity android:name=".AddEmployee" />
         <activity android:name=".AddShopBranch" />
 
@@ -22,7 +26,7 @@
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_ILgsfZCZoFIKMb" />
 
-        <activity android:name=".splashscreen" />
+        <activity android:name=".addproductnew" />
         <activity android:name=".Payment" />
         <activity android:name=".editcategory" />
         <activity android:name=".edit_product" />
@@ -39,7 +43,7 @@
         <activity android:name=".AddProduct" />
         <activity android:name=".Register" />
         <activity android:name=".MainUI" />
-        <activity android:name=".addproductnew">
+        <activity android:name=".splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

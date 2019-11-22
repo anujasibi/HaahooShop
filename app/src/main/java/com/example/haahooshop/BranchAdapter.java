@@ -57,7 +57,7 @@ public class BranchAdapter extends ArrayAdapter {
         v = inflater.inflate(R.layout.gridbranch, null);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView textView1=(TextView)v.findViewById(R.id.textView1);
-        ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
+        ImageView imageView = (ImageView) v.findViewById(R.id.profile_image);
         ImageView delete = (ImageView) v.findViewById(R.id.delete);
         textView.setText(birdList.get(position).getName());
         Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.haahooshop.utils.Global;
+import com.example.haahooshop.utils.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +33,9 @@ import java.util.Map;
 public class AddEmployee extends AppCompatActivity {
     EditText empname,branch,phone,password;
     TextView submit,show,hide;
-    private String Urline = Global.BASE_URL+"api_shop_app/shop_registeration/";
+    private String Urline = Global.BASE_URL+"api_shop_app/employee_registration/";
     Context context=this;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class AddEmployee extends AppCompatActivity {
 
         show = findViewById(R.id.show);
         hide = findViewById(R.id.hide);
+
+        sessionManager=new SessionManager(this);
 
         submit = findViewById(R.id.submit);
 
@@ -126,30 +131,24 @@ public class AddEmployee extends AppCompatActivity {
                 Map<String,String> params = new HashMap<String, String>();
                // params.put("device_id",device_id);
               //  Log.d("name","mm"+device_id);
-              /*  params.put("name",shopname.getText().toString());
-                Log.d("name","mm"+shopname.getText().toString());
-                params.put("owner_name",owner.getText().toString());
-                Log.d("owener","mm"+owner.getText().toString());
-                params.put("gst_no",gstno.getText().toString());
-                Log.d("gstno","mm"+gstno.getText().toString());
-                params.put("email",email.getText().toString());
-                Log.d("email","mm"+email.getText().toString());
+                params.put("name",empname.getText().toString());
+                Log.d("name","mm"+empname.getText().toString());
+                params.put("branch_name",branch.getText().toString());
+                Log.d("owener","mm"+branch.getText().toString());
                 params.put("password",password.getText().toString());
                 Log.d("pass","mm"+password.getText().toString());
-                params.put("phone_no",phone.getText().toString());
+                params.put("phone",phone.getText().toString());
                 Log.d("phone","mm"+phone.getText().toString());
-                params.put("address",address.getText().toString());
-                Log.d("address","mm"+address.getText().toString());
-                params.put("lat",source_lat);
-                Log.d("lat","mm"+source_lat);
-                params.put("log",source_lng);
-                Log.d("long","mm"+source_lng);
-                params.put("distance",distance.getText().toString());
-                Log.d("long","mm"+distance.getText().toString());
-                params.put("category",idsp);
-                Log.d("category","mm"+idsp);
-*/
 
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token "+sessionManager.getTokens());
+                Log.d("token","mm"+sessionManager.getTokens());
                 return params;
             }
 

@@ -38,7 +38,7 @@ import java.util.ArrayList;
 public class finaladd extends AppCompatActivity {
     TextInputEditText distance;
     Spinner spinner;
-    public String status="0";
+    public String status="";
     ArrayList<String> areas = new ArrayList<String>();
     String delivery_type = "null";
     String URL="https://testapi.creopedia.com/api_shop_app/list_shop_cat/ ";
@@ -103,6 +103,7 @@ public class finaladd extends AppCompatActivity {
                     checkBox2.setChecked(false);
                     checkBox3.setChecked(false);
                     delivery_type = checkBox1.getText().toString();
+                    sessionManager.setcheck(delivery_type);
                     Toast.makeText(finaladd.this,"bhnjv"+checkBox1.getText().toString(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -115,6 +116,7 @@ public class finaladd extends AppCompatActivity {
                     checkBox1.setChecked(false);
                     checkBox3.setChecked(false);
                     delivery_type = checkBox2.getText().toString();
+                    sessionManager.setcheck(delivery_type);
                     Toast.makeText(finaladd.this,"bhnjv"+checkBox2.getText().toString(),Toast.LENGTH_SHORT).show();
 
                 }
@@ -128,6 +130,7 @@ public class finaladd extends AppCompatActivity {
                     checkBox1.setChecked(false);
                     checkBox2.setChecked(false);
                     delivery_type = checkBox3.getText().toString();
+                    sessionManager.setcheck(delivery_type);
                     Toast.makeText(finaladd.this,"bhnjv"+checkBox3.getText().toString(),Toast.LENGTH_SHORT).show();
 
                 }
@@ -141,10 +144,10 @@ public class finaladd extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(distance.getText().length()==0||delivery_type.equals("null")){
+                if(distance.getText().length()==0||delivery_type.equals("null")||status.equals("")){
                     Toast.makeText(finaladd.this,"All are fields are required",Toast.LENGTH_SHORT).show();
                 }
-                if(!(distance.getText().length()==0||delivery_type.equals("null"))) {
+                if(!(distance.getText().length()==0||delivery_type.equals("null")||status.equals(""))) {
                     sessionManager.setcatdistance(distance.getText().toString());
                     int selectedId = radioSexGroup.getCheckedRadioButtonId();
 

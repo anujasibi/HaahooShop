@@ -83,32 +83,49 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                    <GridView
-                        android:numColumns="2"
-                        android:gravity="center"
-                        android:columnWidth="100dp"
-                        android:stretchMode="columnWidth"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/grid"
-                        />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
 
+                        <GridView
+                            android:id="@+id/grid"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:columnWidth="100dp"
+                            android:gravity="center"
+                            android:numColumns="2"
+                            android:stretchMode="columnWidth" />
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/save"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_below="@+id/grid"
+                            android:background="#5C25B7"
+                            android:gravity="center_vertical"
+                            android:text="Continue"
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="18sp" />
+
+
+
+
+
+                    </LinearLayout>
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/save"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="20dp"
-                    android:background="#5C25B7"
-                    android:gravity="center_vertical"
-                    android:text="Continue"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:textSize="18sp" />
+
 
             </LinearLayout>
 

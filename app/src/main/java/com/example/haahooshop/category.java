@@ -77,7 +77,7 @@ public class category extends AppCompatActivity {
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context,AddProduct.class));
+                startActivity(new Intent(context,addproductnew.class));
             }
         });
 
@@ -125,6 +125,7 @@ public class category extends AppCompatActivity {
 
                             if(message.equals("No Specifications")){
                                 Toast.makeText(context,"Currently no specifications available for the choosen category",Toast.LENGTH_SHORT).show();
+                                sessionManager.setcatName("");
                                 startActivity(new Intent(context,addprod.class));
                             }
                             if(message.equals("success")){
@@ -189,6 +190,6 @@ public class category extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,AddProduct.class));
+        startActivity(new Intent(context,addproductnew.class));
     }
 }

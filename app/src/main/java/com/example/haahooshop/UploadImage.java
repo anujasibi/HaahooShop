@@ -16,4 +16,8 @@ public interface UploadImage {
     @Multipart
     @POST("api_shop_app/shop_pdt_img/")
     Call<ResponseBody> uploadImag(@Part MultipartBody.Part pdt_image, @Header("Authorization")String Token,@Part("id") RequestBody id);
+    @POST("api_shop_app/branch_profile_img//")
+    Call<ResponseBody> uploadIma(@Part MultipartBody.Part shop_image, @Header("Authorization")String Token,@Part("id") RequestBody id);
 }
+
+

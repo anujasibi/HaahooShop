@@ -3,13 +3,11 @@ package com.example.haahooshop;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -32,7 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ViewBranches extends AppCompatActivity {
+public class viewemployee extends AppCompatActivity {
 
     GridView simpleList;
     ArrayList<Itembranch> birdList=new ArrayList<>();
@@ -57,27 +55,23 @@ public class ViewBranches extends AppCompatActivity {
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
         simpleList = (GridView) findViewById(R.id.card_view_recycler_list);
-        simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        simpleList.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(ViewBranches.this,branchprofile.class);
-                intent.putExtra("pname",birdList.get(i).name);
-                intent.putExtra("image",birdList.get(i).getImage());
-                intent.putExtra("price",birdList.get(i).getLocation());
-                intent.putExtra("id",birdList.get(i).getId());
-                intent.putExtra("email",birdList.get(i).getEmail());
-                startActivity(intent);
+            public void onClick(View view) {
+
             }
         });
+
         submituser();
     }
 
     private void submituser(){
-        RequestQueue queue = Volley.newRequestQueue(ViewBranches.this);
+        RequestQueue queue = Volley.newRequestQueue(viewemployee.this);
 
         //this is the url where you want to send the request
 
-        String url = Global.BASE_URL+"api_shop_app/list_branches/";
+        String url = Global.BASE_URL+"api_shop_app/employee_list/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -95,7 +89,7 @@ public class ViewBranches extends AppCompatActivity {
                             JSONArray dataArray  = obj.getJSONArray("data");
 
                             if(dataArray.length() == 0){
-                                Toast.makeText(ViewBranches.this,"Nothing to display",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(viewemployee.this,"Nothing to display",Toast.LENGTH_SHORT).show();
                             }
 
                             for (int i = 0; i < dataArray.length(); i++) {
@@ -138,17 +132,13 @@ public class ViewBranches extends AppCompatActivity {
                                 //    playerModel.setEmail(email);
                                 playerModel.setName(dataobj.optString("name"));
                                 Log.d("ssssd", "resp" + dataobj);
-                                playerModel.setLocation(dataobj.optString("location"));
-                                String images1 = dataobj.getString("image");
+                                playerModel.setLocation(dataobj.optString("branch"));
+                                playerModel.setId(dataobj.optString("id"));
+                               /* String images1 = dataobj.getString("image");
                                 String[] seperated = images1.split(",");
                                 String split = seperated[0].replace("[", "").replace("]","");
-                                playerModel.setImage(Global.BASE_URL+split);
-                                String id=dataobj.getString("id");
-                                playerModel.setId(id);
-                                String email=dataobj.getString("mail");
-                                playerModel.setEmail(email);
-
-                              //  image=Global.BASE_URL+split;
+                                playerModel.setImage(Global.BASE_URL+split);*/
+                                //  image=Global.BASE_URL+split;
 
                                 /*JSONObject jsonArray=dataobj.optJSONObject("specifications");
                                 Log.d("specifications","mm"+jsonArray);
@@ -157,7 +147,7 @@ public class ViewBranches extends AppCompatActivity {
                                 String Memory=jsonArray.optString("Memory");
                                 Log.d("specifications","mm"+Memory);*/
 
-                               // playerModel.setDisplay(display);
+                                // playerModel.setDisplay(display);
                                 //playerModel.setMemory(Memory);
                                 /*   JSONObject jsonObject=jsonArray.getJSONObject(0);
 
@@ -187,7 +177,7 @@ public class ViewBranches extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ViewBranches.this,"Internal Server Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(viewemployee.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 
             }
@@ -196,7 +186,7 @@ public class ViewBranches extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders()  {
                 Map<String, String> params = new HashMap<String, String>();
-             params.put("Authorization", "Token " + sessionManager.getTokens());
+                params.put("Authorization", "Token " + sessionManager.getTokens());
                 return params;
             }
         };

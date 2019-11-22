@@ -5,6 +5,7 @@ public class Itembranch {
     public  String name;
     public String image;
     public String location;
+    public  String email;
 
     public String getId() {
         return id;
@@ -36,5 +37,13 @@ public class Itembranch {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
