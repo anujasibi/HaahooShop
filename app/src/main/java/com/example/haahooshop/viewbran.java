@@ -3,17 +3,17 @@ package com.example.haahooshop;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,31 +30,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class viewemployee extends AppCompatActivity implements
-        ItemClickSupport.OnItemClickListener {
+public class viewbran extends AppCompatActivity {
 
     GridView simpleList;
-    ArrayList<RowItem> birdList=new ArrayList<>();
+    ArrayList<Itembranch> birdList=new ArrayList<>();
     Activity activity = this;
     Context context=this;
     SessionManager sessionManager;
-    ListView listView;
-    List<RowItem> rowItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewemployee);
+        setContentView(R.layout.activity_view_branches);
 
         sessionManager=new SessionManager(this);
-
-        rowItems = new ArrayList<RowItem>();
-        listView = (ListView) findViewById(R.id.list);
 
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -63,16 +56,34 @@ public class viewemployee extends AppCompatActivity implements
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
-
+        simpleList = (GridView) findViewById(R.id.card_view_recycler_list);
+        simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(viewbran.this,viewbranchproducts.class);
+                intent.putExtra("shopname",birdList.get(i).getName());
+                Global.name=birdList.get(i).getName();
+                intent.putExtra("image",birdList.get(i).getImage());
+                Global.image=birdList.get(i).getImage();
+                intent.putExtra("price",birdList.get(i).getLocation());
+                Global.location=birdList.get(i).getLocation();
+                intent.putExtra("id",birdList.get(i).getId());
+                Global.id=birdList.get(i).getId();
+                intent.putExtra("email",birdList.get(i).getEmail());
+                Global.email=birdList.get(i).getEmail();
+                Global.gst=birdList.get(i).getGst();
+                startActivity(intent);
+            }
+        });
         submituser();
     }
 
     private void submituser(){
-        RequestQueue queue = Volley.newRequestQueue(viewemployee.this);
+        RequestQueue queue = Volley.newRequestQueue(viewbran.this);
 
         //this is the url where you want to send the request
 
-        String url = Global.BASE_URL+"api_shop_app/employee_list/";
+        String url = Global.BASE_URL+"api_shop_app/list_branches/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -90,12 +101,12 @@ public class viewemployee extends AppCompatActivity implements
                             JSONArray dataArray  = obj.getJSONArray("data");
 
                             if(dataArray.length() == 0){
-                                Toast.makeText(viewemployee.this,"Nothing to display",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(viewbran.this,"Nothing to display",Toast.LENGTH_SHORT).show();
                             }
 
                             for (int i = 0; i < dataArray.length(); i++) {
 
-                                RowItem playerModel = new RowItem();
+                                Itembranch playerModel = new Itembranch();
                                 JSONObject dataobj = dataArray.getJSONObject(i);
                               /*  Global.spec_headers.clear();
                                 Global.spec_values.clear();
@@ -131,14 +142,20 @@ public class viewemployee extends AppCompatActivity implements
                                 playerModel.setDiscount(discount);
                                 playerModel.setStock(stock);*/
                                 //    playerModel.setEmail(email);
-                                playerModel.setTitle(dataobj.optString("name"));
+                                playerModel.setName(dataobj.optString("name"));
                                 Log.d("ssssd", "resp" + dataobj);
-                                playerModel.setDesc(dataobj.optString("branch"));
-                                playerModel.setId(dataobj.optString("id"));
-                               /* String images1 = dataobj.getString("image");
+                                playerModel.setLocation(dataobj.optString("location"));
+                                String images1 = dataobj.getString("image");
                                 String[] seperated = images1.split(",");
                                 String split = seperated[0].replace("[", "").replace("]","");
-                                playerModel.setImage(Global.BASE_URL+split);*/
+                                playerModel.setImage(Global.BASE_URL+split);
+                                String id=dataobj.getString("id");
+                                playerModel.setId(id);
+                                String email=dataobj.getString("mail");
+                                playerModel.setEmail(email);
+                                String gst=dataobj.getString("gst");
+                                playerModel.setGst(gst);
+
                                 //  image=Global.BASE_URL+split;
 
                                 /*JSONObject jsonArray=dataobj.optJSONObject("specifications");
@@ -163,12 +180,10 @@ public class viewemployee extends AppCompatActivity implements
 
 
                                 birdList.add(playerModel);
-                                CustomListViewAdapter adapter = new CustomListViewAdapter(context,
-                                        R.layout.list_item, birdList);
-                                listView.setAdapter(adapter);
 
                             }
-
+                            BranchAdapter myAdapter=new BranchAdapter(context,R.layout.gridbranch,birdList);
+                            simpleList.setAdapter(myAdapter);
 
 
 
@@ -180,7 +195,7 @@ public class viewemployee extends AppCompatActivity implements
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(viewemployee.this,"Internal Server Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(viewbran.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 
             }
@@ -199,8 +214,4 @@ public class viewemployee extends AppCompatActivity implements
 
     }
 
-    @Override
-    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-
-    }
 }

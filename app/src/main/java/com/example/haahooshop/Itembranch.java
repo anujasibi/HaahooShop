@@ -6,6 +6,7 @@ public class Itembranch {
     public String image;
     public String location;
     public  String email;
+    public String gst;
 
     public String getId() {
         return id;
@@ -45,5 +46,13 @@ public class Itembranch {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGst() {
+        return gst;
+    }
+
+    public void setGst(String gst) {
+        this.gst = gst;
     }
 }

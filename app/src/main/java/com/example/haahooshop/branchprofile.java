@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.haahooshop.utils.Global;
 import com.example.haahooshop.utils.SessionManager;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -51,12 +52,13 @@ public class branchprofile extends AppCompatActivity {
     ImageView imageView,image,io;
     Context context = this;
     TextView shopname,location,gstno,catgory,owner,edit;
-    String id = "null";
+
     SessionManager sessionManager;
     private static final String IMAGE_DIRECTORY = "/demonuts";
     private int GALLERY = 1, CAMERA = 2;
     String filePath;
     private Uri uri;
+    String pname ="null";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,23 @@ public class branchprofile extends AppCompatActivity {
         requestMultiplePermissions();
 
         imageView=findViewById(R.id.img);
+        Picasso.with(context).load(Global.image).into(imageView);
+
+       /* Bundle bundle = getIntent().getExtras();
+
+        assert bundle != null;
+//        pname = bundle.getString("shopname");
+        final String image1 = bundle.getString("image");
+
+        final String price = bundle.getString("price");
+        final String email=bundle.getString("email");
+
+
+        id=bundle.getString("id");
+        Log.d("mnjbkjbkbj","hjghjghg"+id);*/
+
+
+
         image=findViewById(R.id.imgg);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,23 +113,13 @@ public class branchprofile extends AppCompatActivity {
             }
         });
 
-        Bundle bundle = getIntent().getExtras();
 
-//Extract the data…
-        final String pname = bundle.getString("pname");
-        final String image = bundle.getString("image");
-        Picasso.with(context).load(image).into(imageView);
-        final String price = bundle.getString("price");
-        final String email=bundle.getString("email");
-
-
-        id=bundle.getString("id");
-        Log.d("mnjbkjbkbj","hjghjghg"+id);
         //  final String ema=bundle.getString("email");
 
-        shopname.setText(pname);
-        location.setText(price);
-        owner.setText(email);
+        shopname.setText(Global.name);
+        location.setText(Global.location);
+        owner.setText(Global.email);
+        gstno.setText(Global.gst);
 
 
         edit.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +127,7 @@ public class branchprofile extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(context,editbranchprofile.class);
-                intent.putExtra("pname",pname);
-                intent.putExtra("image",image);
-                intent.putExtra("price",price);
-                intent.putExtra("email",email);
+
 
 
                 //   intent.putExtra("email",ema);
@@ -342,7 +348,7 @@ public class branchprofile extends AppCompatActivity {
             MultipartBody.Part part1 = MultipartBody.Part.createFormData("shop_image", immm.getName(), photob);
             Log.d("image","mm"+part1);
             Log.d("image","mm"+immm.getName());
-            RequestBody id1 = RequestBody.create(MediaType.parse("text/plain"),id );
+            RequestBody id1 = RequestBody.create(MediaType.parse("text/plain"),Global.id );
 
 
 

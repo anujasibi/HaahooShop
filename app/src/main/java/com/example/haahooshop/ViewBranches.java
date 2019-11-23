@@ -61,11 +61,17 @@ public class ViewBranches extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(ViewBranches.this,branchprofile.class);
-                intent.putExtra("pname",birdList.get(i).name);
+                intent.putExtra("shopname",birdList.get(i).getName());
+                Global.name=birdList.get(i).getName();
                 intent.putExtra("image",birdList.get(i).getImage());
+                Global.image=birdList.get(i).getImage();
                 intent.putExtra("price",birdList.get(i).getLocation());
+                Global.location=birdList.get(i).getLocation();
                 intent.putExtra("id",birdList.get(i).getId());
+                Global.id=birdList.get(i).getId();
                 intent.putExtra("email",birdList.get(i).getEmail());
+                Global.email=birdList.get(i).getEmail();
+                Global.gst=birdList.get(i).getGst();
                 startActivity(intent);
             }
         });
@@ -147,6 +153,8 @@ public class ViewBranches extends AppCompatActivity {
                                 playerModel.setId(id);
                                 String email=dataobj.getString("mail");
                                 playerModel.setEmail(email);
+                                String gst=dataobj.getString("gst");
+                                playerModel.setGst(gst);
 
                               //  image=Global.BASE_URL+split;
 

@@ -17,6 +17,14 @@ public class Global {
     public static ArrayList<String>spec_values = new ArrayList<>();
     public static List<Specpojo> specpojos = new ArrayList<>();
 
+    public static String name;
+    public static String image;
+    public static String location;
+    public static String id;
+    public static String email;
+    public static String gst;
+
+
 
 
 }

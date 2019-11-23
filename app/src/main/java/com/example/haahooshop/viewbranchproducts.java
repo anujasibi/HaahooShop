@@ -1,19 +1,25 @@
 package com.example.haahooshop;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,29 +39,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class viewemployee extends AppCompatActivity implements
-        ItemClickSupport.OnItemClickListener {
-
-    GridView simpleList;
-    ArrayList<RowItem> birdList=new ArrayList<>();
+public class viewbranchproducts extends AppCompatActivity {
+    ImageView imageView;
+    boolean doubleBackToExitPressedOnce = false;
+    CardView cardView;
     Activity activity = this;
-    Context context=this;
+    ImageView logout;
     SessionManager sessionManager;
-    ListView listView;
-    List<RowItem> rowItems;
+    ImageView back;
+    Context context=this;
+    public String image,pname,price,discount,descr,stock,email;
+
+
+    // private List<CardRecyclerViewItem> carItemList = null;
+    GridView simpleList;
+    ArrayList<Item> birdList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewemployee);
+        setContentView(R.layout.activity_viewproduct);
 
-        sessionManager=new SessionManager(this);
+        // imageView=findViewById(R.id.img);
+        sessionManager = new SessionManager(this);
 
-        rowItems = new ArrayList<RowItem>();
-        listView = (ListView) findViewById(R.id.list);
+        cardView=findViewById(R.id.card);
 
+        back=findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(viewbranchproducts.this,MainUI.class));
+            }
+        });
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -63,16 +82,23 @@ public class viewemployee extends AppCompatActivity implements
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
+        simpleList = (GridView) findViewById(R.id.card_view_recycler_list);
 
         submituser();
-    }
 
+
+
+
+
+
+
+    }
     private void submituser(){
-        RequestQueue queue = Volley.newRequestQueue(viewemployee.this);
+        RequestQueue queue = Volley.newRequestQueue(viewbranchproducts.this);
 
         //this is the url where you want to send the request
 
-        String url = Global.BASE_URL+"api_shop_app/employee_list/";
+        String url = Global.BASE_URL+"api_shop_app/branch_pdt_details/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -90,14 +116,14 @@ public class viewemployee extends AppCompatActivity implements
                             JSONArray dataArray  = obj.getJSONArray("data");
 
                             if(dataArray.length() == 0){
-                                Toast.makeText(viewemployee.this,"Nothing to display",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(viewbranchproducts.this,"Nothing to display",Toast.LENGTH_SHORT).show();
                             }
 
                             for (int i = 0; i < dataArray.length(); i++) {
 
-                                RowItem playerModel = new RowItem();
+                                Item playerModel = new Item();
                                 JSONObject dataobj = dataArray.getJSONObject(i);
-                              /*  Global.spec_headers.clear();
+                                Global.spec_headers.clear();
                                 Global.spec_values.clear();
                                 //   playerModel.setProductname(dataobj.optSt ring("name"));
                                 // ApiClient.productids.add(dataobj.optString("id"));
@@ -129,27 +155,26 @@ public class viewemployee extends AppCompatActivity implements
                                 playerModel.setCategoryid(catid);
                                 playerModel.setDescription(descr);
                                 playerModel.setDiscount(discount);
-                                playerModel.setStock(stock);*/
+                                playerModel.setStock(stock);
                                 //    playerModel.setEmail(email);
-                                playerModel.setTitle(dataobj.optString("name"));
+                                playerModel.setName(dataobj.optString("name"));
                                 Log.d("ssssd", "resp" + dataobj);
-                                playerModel.setDesc(dataobj.optString("branch"));
-                                playerModel.setId(dataobj.optString("id"));
-                               /* String images1 = dataobj.getString("image");
+                                playerModel.setPrice("₹ "+dataobj.optString("price"));
+                                String images1 = dataobj.getString("image");
                                 String[] seperated = images1.split(",");
                                 String split = seperated[0].replace("[", "").replace("]","");
-                                playerModel.setImage(Global.BASE_URL+split);*/
-                                //  image=Global.BASE_URL+split;
+                                playerModel.setImage(Global.BASE_URL+split);
+                                image=Global.BASE_URL+split;
 
-                                /*JSONObject jsonArray=dataobj.optJSONObject("specifications");
+                                JSONObject jsonArray=dataobj.optJSONObject("specifications");
                                 Log.d("specifications","mm"+jsonArray);
                                 String display=jsonArray.optString("Display");
                                 Log.d("specifications","mm"+display);
                                 String Memory=jsonArray.optString("Memory");
-                                Log.d("specifications","mm"+Memory);*/
+                                Log.d("specifications","mm"+Memory);
 
-                                // playerModel.setDisplay(display);
-                                //playerModel.setMemory(Memory);
+                                playerModel.setDisplay(display);
+                                playerModel.setMemory(Memory);
                                 /*   JSONObject jsonObject=jsonArray.getJSONObject(0);
 
 
@@ -163,12 +188,10 @@ public class viewemployee extends AppCompatActivity implements
 
 
                                 birdList.add(playerModel);
-                                CustomListViewAdapter adapter = new CustomListViewAdapter(context,
-                                        R.layout.list_item, birdList);
-                                listView.setAdapter(adapter);
 
                             }
-
+                            MyAdapter myAdapter=new MyAdapter(context,R.layout.grid_view_items,birdList);
+                            simpleList.setAdapter(myAdapter);
 
 
 
@@ -180,11 +203,18 @@ public class viewemployee extends AppCompatActivity implements
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(viewemployee.this,"Internal Server Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(viewbranchproducts.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 
             }
         }) {
+
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("id",Global.id);
+                return params;
+            }
 
             @Override
             public Map<String, String> getHeaders()  {
@@ -200,7 +230,8 @@ public class viewemployee extends AppCompatActivity implements
     }
 
     @Override
-    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+    public void onBackPressed() {
+        startActivity(new Intent(viewbranchproducts.this,MainUI.class));
 
     }
 }
