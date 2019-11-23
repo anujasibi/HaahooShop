@@ -90,6 +90,10 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                     Intent intent=new Intent(context,viewbran.class);
                     context.startActivity(intent);
                 }
+                if (carTitle.equals("View Upcoming Orders")){
+                    Intent intent=new Intent(context,UpcomingOrder.class);
+                    context.startActivity(intent);
+                }
 
 
                 /*if (carTitle.equals("Manual Orders List")){
@@ -145,6 +149,10 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 }
                 if (carTitle.equals("View Branch Products")){
                     Intent intent=new Intent(context,viewbran.class);
+                    context.startActivity(intent);
+                }
+                if (carTitle.equals("View Upcoming Orders")){
+                    Intent intent=new Intent(context,UpcomingOrder.class);
                     context.startActivity(intent);
                 }
                /* if (carTitle.equals("Earnings")){
