@@ -10,6 +10,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         app:cardElevation="5dp"
+        android:id="@+id/card"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
@@ -59,6 +60,34 @@
                 android:textAlignment="center"
                 android:textColor="#000"
                  />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/profile_image"
+                android:text="Status :"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <TextView
+                android:id="@+id/statuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/status"
+                android:text="Status "
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
 
 
             <com.ncorti.slidetoact.SlideToActView

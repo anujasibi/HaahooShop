@@ -64,6 +64,8 @@ public class UpcomingOrder extends AppCompatActivity {
        submituser();
 
 
+
+
     }
     private void submituser(){
         RequestQueue queue = Volley.newRequestQueue(UpcomingOrder.this);
@@ -137,6 +139,17 @@ public class UpcomingOrder extends AppCompatActivity {
                                 String[] seperated = images1.split(",");
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
+                                playerModel.setCusname(dataobj.optString("cus_name"));
+                                playerModel.setNumber(dataobj.optString("cus_phone"));
+                                playerModel.setHouse(dataobj.optString("house_no"));
+                                playerModel.setCity(dataobj.optString("city"));
+                                playerModel.setState(dataobj.optString("state"));
+                                playerModel.setPincode(dataobj.optString("pin"));
+                                playerModel.setPrice(dataobj.optString("pdt_price"));
+                                playerModel.setStatus(dataobj.optString("status"));
+
+
+
                                 //  image=Global.BASE_URL+split;
 
                                 /*JSONObject jsonArray=dataobj.optJSONObject("specifications");
