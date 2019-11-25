@@ -79,6 +79,17 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
             holder.statuss.setVisibility(View.VISIBLE);
             holder.status.setVisibility(View.VISIBLE);
         }
+        if(dataModelArrayList.get(position).getStatus().equals("Rejected")){
+            holder.sta.setVisibility(View.GONE);
+            holder.sta1.setVisibility(View.GONE);
+            holder.statuss.setVisibility(View.VISIBLE);
+            holder.status.setVisibility(View.VISIBLE);
+          //  holder.cardView.setVisibility(View.GONE);
+        }
+        if(dataModelArrayList.get(position).getStatus().equals("Dispatched")){
+         holder.cardView.setVisibility(View.GONE);
+
+        }
 
         Picasso.with(context1).load(dataModelArrayList.get(position).getImage()).into(holder.iv);
         holder.name.setText(dataModelArrayList.get(position).getName());
@@ -155,6 +166,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
 
 
 
+
                            }
                        });
 
@@ -173,24 +185,28 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
            }
        });
 
-       holder.cardView.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Intent intent=new Intent(context1,orderdetails.class);
-               intent.putExtra("pdtname",dataModelArrayList.get(position).getName());
-               intent.putExtra("pdtimage",dataModelArrayList.get(position).getImage());
-               intent.putExtra("id",dataModelArrayList.get(position).getId());
-               intent.putExtra("cusname",dataModelArrayList.get(position).getCusname());
-               intent.putExtra("phone",dataModelArrayList.get(position).getNumber());
-               intent.putExtra("house",dataModelArrayList.get(position).getHouse());
-               intent.putExtra("city",dataModelArrayList.get(position).getCity());
-               intent.putExtra("state",dataModelArrayList.get(position).getState());
-               intent.putExtra("landmark",dataModelArrayList.get(position).getLocation());
-               intent.putExtra("price",dataModelArrayList.get(position).getPrice());
-               intent.putExtra("pincode",dataModelArrayList.get(position).getPincode());
-               context1.startActivity(intent);
-           }
-       });
+        if(dataModelArrayList.get(position).getStatus().equals("Accepted")) {
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context1, orderdetails.class);
+                    intent.putExtra("pdtname", dataModelArrayList.get(position).getName());
+                    intent.putExtra("pdtimage", dataModelArrayList.get(position).getImage());
+                    intent.putExtra("id", dataModelArrayList.get(position).getId());
+                    intent.putExtra("cusname", dataModelArrayList.get(position).getCusname());
+                    intent.putExtra("phone", dataModelArrayList.get(position).getNumber());
+                    intent.putExtra("house", dataModelArrayList.get(position).getHouse());
+                    intent.putExtra("city", dataModelArrayList.get(position).getCity());
+                    intent.putExtra("state", dataModelArrayList.get(position).getState());
+                    intent.putExtra("landmark", dataModelArrayList.get(position).getLocation());
+                    intent.putExtra("price", dataModelArrayList.get(position).getPrice());
+                    intent.putExtra("pincode", dataModelArrayList.get(position).getPincode());
+                    context1.startActivity(intent);
+                }
+            });
+
+        }
 
 
      //   Picasso.with(context1).load(dataModelArrayList.get(position).getQty()).into(holder.iv);

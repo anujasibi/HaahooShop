@@ -95,6 +95,12 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                     context.startActivity(intent);
                 }
 
+                if (carTitle.equals("View Order History")){
+                    Intent intent=new Intent(context,orderhistory.class);
+                    context.startActivity(intent);
+                }
+
+
 
                 /*if (carTitle.equals("Manual Orders List")){
                     Intent intent=new Intent(context,orderlist.class);
@@ -153,6 +159,10 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 }
                 if (carTitle.equals("View Upcoming Orders")){
                     Intent intent=new Intent(context,UpcomingOrder.class);
+                    context.startActivity(intent);
+                }
+                if (carTitle.equals("View Order History")){
+                    Intent intent=new Intent(context,orderhistory.class);
                     context.startActivity(intent);
                 }
                /* if (carTitle.equals("Earnings")){

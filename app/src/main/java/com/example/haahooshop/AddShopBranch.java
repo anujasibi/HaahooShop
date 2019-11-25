@@ -86,6 +86,7 @@ public class AddShopBranch extends AppCompatActivity {
     SessionManager sessionManager;
     String device_id = null;
     public String source_lat,source_lng;
+    ImageView imagen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,7 @@ public class AddShopBranch extends AppCompatActivity {
         imageView = findViewById(R.id.img);
         show = findViewById(R.id.show);
         hide = findViewById(R.id.hide);
+        imagen=findViewById(R.id.imageView3);
 
         address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -113,6 +115,13 @@ public class AddShopBranch extends AppCompatActivity {
                 GeocodingLocation locationAddress = new GeocodingLocation();
                 locationAddress.getAddressFromLocation(address.getText().toString(),
                         getApplicationContext(), new AddShopBranch.GeocoderHandler());
+            }
+        });
+
+        imagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,MainUI.class));
             }
         });
 
@@ -489,5 +498,10 @@ public class AddShopBranch extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context,MainUI.class));
     }
 }

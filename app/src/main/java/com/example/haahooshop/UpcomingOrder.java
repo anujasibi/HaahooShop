@@ -2,11 +2,14 @@ package com.example.haahooshop;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class UpcomingOrder extends AppCompatActivity {
     SessionManager sessionManager;
     RecyclerView listView;
     ArrayList<upcomingrow> rowItems;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,15 @@ public class UpcomingOrder extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+
+        back=findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(UpcomingOrder.this,MainUI.class));
+            }
+        });
 
 
 
@@ -212,4 +225,8 @@ public class UpcomingOrder extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(UpcomingOrder.this,MainUI.class));
+    }
 }

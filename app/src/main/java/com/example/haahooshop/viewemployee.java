@@ -3,12 +3,14 @@ package com.example.haahooshop;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class viewemployee extends AppCompatActivity implements
     SessionManager sessionManager;
     ListView listView;
     List<RowItem> rowItems;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,14 @@ public class viewemployee extends AppCompatActivity implements
 
         rowItems = new ArrayList<RowItem>();
         listView = (ListView) findViewById(R.id.list);
+        imageView=findViewById(R.id.back);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,MainUI.class));
+            }
+        });
 
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -202,5 +213,10 @@ public class viewemployee extends AppCompatActivity implements
     @Override
     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context,MainUI.class));
     }
 }

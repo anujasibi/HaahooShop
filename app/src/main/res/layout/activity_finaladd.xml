@@ -173,6 +173,46 @@
                         android:text="No" />
 
 
+                    <TextView
+                        android:id="@+id/res"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="40dp"
+                        android:visibility="gone"
+                        android:gravity="center_vertical"
+                        android:text="Set the maximum resell price"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/ress"
+                        android:layout_marginTop="20dp"
+                        android:visibility="gone"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginBottom="5dp"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/resellprice"
+                            android:hint="Enter the Maximum Resell Price"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_height="match_parent" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
 
 
 

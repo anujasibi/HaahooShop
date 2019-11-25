@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class AddEmployee extends AppCompatActivity {
     private String Urline = Global.BASE_URL+"api_shop_app/employee_registration/";
     Context context=this;
     SessionManager sessionManager;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,17 @@ public class AddEmployee extends AppCompatActivity {
         phone=findViewById(R.id.phone);
         password=findViewById(R.id.password);
 
+
         show = findViewById(R.id.show);
         hide = findViewById(R.id.hide);
+        imageView=findViewById(R.id.imageView3);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,MainUI.class));
+            }
+        });
 
         sessionManager=new SessionManager(this);
 
@@ -156,5 +167,11 @@ public class AddEmployee extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context,MainUI.class));
+
     }
 }

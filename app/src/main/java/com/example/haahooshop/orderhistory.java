@@ -1,25 +1,21 @@
 package com.example.haahooshop;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,42 +35,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class viewbranchproducts extends AppCompatActivity {
-    ImageView imageView;
-    boolean doubleBackToExitPressedOnce = false;
-    CardView cardView;
+public class orderhistory extends AppCompatActivity {
+
+    ArrayList<upcomingrow> birdList=new ArrayList<>();
     Activity activity = this;
-    ImageView logout;
-    SessionManager sessionManager;
-    ImageView back;
     Context context=this;
-    public String image,pname,price,discount,descr,stock,email;
-
-
-    // private List<CardRecyclerViewItem> carItemList = null;
-    GridView simpleList;
-    ArrayList<Item> birdList=new ArrayList<>();
+    SessionManager sessionManager;
+    RecyclerView listView;
+    ImageView back;
+    ArrayList<upcomingrow> rowItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewproduct);
+        setContentView(R.layout.activity_orderhistory);
+        sessionManager=new SessionManager(this);
 
-        // imageView=findViewById(R.id.img);
-        sessionManager = new SessionManager(this);
+        rowItems = new ArrayList<upcomingrow>();
+        listView = (RecyclerView) findViewById(R.id.list);
 
-        cardView=findViewById(R.id.card);
-
-        back=findViewById(R.id.back);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(viewbranchproducts.this,viewbran.class));
-            }
-        });
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -82,23 +63,29 @@ public class viewbranchproducts extends AppCompatActivity {
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
-        simpleList = (GridView) findViewById(R.id.card_view_recycler_list);
+        back=findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(orderhistory.this,MainUI.class));
+            }
+        });
+
+
 
         submituser();
 
 
 
 
-
-
-
     }
     private void submituser(){
-        RequestQueue queue = Volley.newRequestQueue(viewbranchproducts.this);
+        RequestQueue queue = Volley.newRequestQueue(orderhistory.this);
 
         //this is the url where you want to send the request
 
-        String url = Global.BASE_URL+"api_shop_app/branch_pdt_details/";
+        String url = Global.BASE_URL+"virtual_order_management/shop_order_history/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -116,14 +103,14 @@ public class viewbranchproducts extends AppCompatActivity {
                             JSONArray dataArray  = obj.getJSONArray("data");
 
                             if(dataArray.length() == 0){
-                                Toast.makeText(viewbranchproducts.this,"Nothing to display",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(orderhistory.this,"Nothing to display",Toast.LENGTH_SHORT).show();
                             }
 
                             for (int i = 0; i < dataArray.length(); i++) {
 
-                                Item playerModel = new Item();
+                                upcomingrow playerModel = new upcomingrow();
                                 JSONObject dataobj = dataArray.getJSONObject(i);
-                                Global.spec_headers.clear();
+                              /*  Global.spec_headers.clear();
                                 Global.spec_values.clear();
                                 //   playerModel.setProductname(dataobj.optSt ring("name"));
                                 // ApiClient.productids.add(dataobj.optString("id"));
@@ -155,26 +142,38 @@ public class viewbranchproducts extends AppCompatActivity {
                                 playerModel.setCategoryid(catid);
                                 playerModel.setDescription(descr);
                                 playerModel.setDiscount(discount);
-                                playerModel.setStock(stock);
+                                playerModel.setStock(stock);*/
                                 //    playerModel.setEmail(email);
-                                playerModel.setName(dataobj.optString("name"));
+                                playerModel.setName(dataobj.optString("pdt_name"));
                                 Log.d("ssssd", "resp" + dataobj);
-                                playerModel.setPrice("₹ "+dataobj.optString("price"));
-                                String images1 = dataobj.getString("image");
+                                playerModel.setLocation(dataobj.optString("landmark"));
+                                playerModel.setId(dataobj.optString("id"));
+                                String images1 = dataobj.getString("pdt_image");
                                 String[] seperated = images1.split(",");
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
-                                image=Global.BASE_URL+split;
+                                playerModel.setCusname(dataobj.optString("cus_name"));
+                                playerModel.setNumber(dataobj.optString("cus_phone"));
+                                playerModel.setHouse(dataobj.optString("house_no"));
+                                playerModel.setCity(dataobj.optString("city"));
+                                playerModel.setState(dataobj.optString("state"));
+                                playerModel.setPincode(dataobj.optString("pin"));
+                                playerModel.setPrice(dataobj.optString("pdt_price"));
+                                playerModel.setStatus(dataobj.optString("status"));
 
-                                JSONObject jsonArray=dataobj.optJSONObject("specifications");
+
+
+                                //  image=Global.BASE_URL+split;
+
+                                /*JSONObject jsonArray=dataobj.optJSONObject("specifications");
                                 Log.d("specifications","mm"+jsonArray);
                                 String display=jsonArray.optString("Display");
                                 Log.d("specifications","mm"+display);
                                 String Memory=jsonArray.optString("Memory");
-                                Log.d("specifications","mm"+Memory);
+                                Log.d("specifications","mm"+Memory);*/
 
-                                playerModel.setDisplay(display);
-                                playerModel.setMemory(Memory);
+                                // playerModel.setDisplay(display);
+                                //playerModel.setMemory(Memory);
                                 /*   JSONObject jsonObject=jsonArray.getJSONObject(0);
 
 
@@ -186,12 +185,16 @@ public class viewbranchproducts extends AppCompatActivity {
                                 //  images.add(split);
                                 //  playerModel.setStatus("");
 
-
                                 birdList.add(playerModel);
 
+
+                                HistoryAdapter upcomingAdapter=new HistoryAdapter(context,birdList);
+                                listView.setAdapter(upcomingAdapter);
+                                listView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
+
+
                             }
-                            MyAdapter myAdapter=new MyAdapter(context,R.layout.grid_view_items,birdList);
-                            simpleList.setAdapter(myAdapter);
+
 
 
 
@@ -203,18 +206,11 @@ public class viewbranchproducts extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(viewbranchproducts.this,"Internal Server Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(orderhistory.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 
             }
         }) {
-
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("id",Global.id);
-                return params;
-            }
 
             @Override
             public Map<String, String> getHeaders()  {
@@ -231,7 +227,6 @@ public class viewbranchproducts extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(viewbranchproducts.this,viewbran.class));
-
+        startActivity(new Intent(orderhistory.this,MainUI.class));
     }
 }

@@ -109,7 +109,7 @@ public class branchprofile extends AppCompatActivity {
         io.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(branchprofile.this,viewproduct.class));
+                startActivity(new Intent(branchprofile.this,ViewBranches.class));
             }
         });
 
@@ -376,6 +376,6 @@ public class branchprofile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(branchprofile.this,viewproduct.class));
+        startActivity(new Intent(branchprofile.this,ViewBranches.class));
     }
 }

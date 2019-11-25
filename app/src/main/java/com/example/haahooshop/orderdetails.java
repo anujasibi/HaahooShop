@@ -4,6 +4,8 @@ package com.example.haahooshop;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
@@ -35,7 +38,7 @@ import java.util.Map;
 
 public class orderdetails extends AppCompatActivity {
 
-    ImageView imageView;
+    ImageView imageView,back;
     TextView pdtname,price,cusname,phn,hno,landmark,pincode,city,state;
     public String pdtnames,prices,cusnames,phns,hnos,landmarks,pincodes,citys,states,image,ids;
     Context context=this;
@@ -44,7 +47,7 @@ public class orderdetails extends AppCompatActivity {
     private String dat="null";
     private String tim="null";
     SessionManager sessionManager;
-    private String URLline = Global.BASE_URL+"api_shop_app/shop_update/";
+    private String URLline = Global.BASE_URL+"virtual_order_management/shop_order_dispatched/";
 
 
 
@@ -56,6 +59,7 @@ public class orderdetails extends AppCompatActivity {
         setContentView(R.layout.activity_orderdetails);
 
         imageView=findViewById(R.id.imageVie);
+        back=findViewById(R.id.imageView3);
         pdtname=findViewById(R.id.te);
         price=findViewById(R.id.tee);
         cusname=findViewById(R.id.location);
@@ -70,6 +74,13 @@ public class orderdetails extends AppCompatActivity {
         sub=findViewById(R.id.sub);
         submit=findViewById(R.id.submit);
         sessionManager=new SessionManager(this);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,UpcomingOrder.class));
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
 
@@ -164,7 +175,31 @@ public class orderdetails extends AppCompatActivity {
                     Toast.makeText(context,"Please choose dispatch date and time",Toast.LENGTH_SHORT).show();
                 }
                 if(!(dat.equals("null")||tim.equals("null"))){
-                    subuser();
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                    builder1.setMessage("Do you want to dispatch this product??");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    subuser();
+
+                                }
+                            });
+
+                    builder1.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+
                 }
             }
         });
@@ -192,6 +227,7 @@ public class orderdetails extends AppCompatActivity {
                             Log.d("code","mm"+status);
                             if(status.equals("200")&&(!(ot.equals("verify")))){
                                 Toast.makeText(context, "Successful", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(context,UpcomingOrder.class));
 
 
 
@@ -243,5 +279,10 @@ public class orderdetails extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context,UpcomingOrder.class));
     }
 }

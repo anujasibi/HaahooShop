@@ -46,6 +46,13 @@ public class SessionManager {
 
         return  sharedPreferences.getString("PdtName","");
     }
+    public void setreselprice(String resl){
+        sharedPreferences.edit().putString("resl",resl).commit();
+    }
+    public String getreselprice(){
+
+        return  sharedPreferences.getString("resl","");
+    }
 
     public void setPdtid(String Pdtid){
         sharedPreferences.edit().putString("Pdtid",Pdtid).commit();

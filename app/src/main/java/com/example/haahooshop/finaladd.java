@@ -28,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.haahooshop.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,8 +48,9 @@ public class finaladd extends AppCompatActivity {
     private RadioButton one,two,three;
     SessionManager sessionManager;
     ImageView imageView;
-
-    TextView save;
+    TextInputLayout ress;
+    TextInputEditText resell;
+    TextView save,res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,9 @@ public class finaladd extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finaladd);
+        res=findViewById(R.id.res);
+        ress=findViewById(R.id.ress);
+        resell=findViewById(R.id.resellprice);
         checkBox1 = findViewById(R.id.checkBox);
         checkBox2 = findViewById(R.id.checkBox1);
         checkBox3 = findViewById(R.id.checkBox2);
@@ -84,6 +89,10 @@ public class finaladd extends AppCompatActivity {
             public void onClick(View view) {
                 checkm.setChecked(false);
                 status="1";
+                res.setVisibility(View.VISIBLE);
+                ress.setVisibility(View.VISIBLE);
+
+
             }
         });
 
@@ -148,6 +157,8 @@ public class finaladd extends AppCompatActivity {
                     Toast.makeText(finaladd.this,"All are fields are required",Toast.LENGTH_SHORT).show();
                 }
                 if(!(distance.getText().length()==0||delivery_type.equals("null")||status.equals(""))) {
+                    sessionManager.setreselprice(resell.getText().toString());
+                    Log.d("mmmmmmmmmmmm","mm"+sessionManager.getreselprice());
                     sessionManager.setcatdistance(distance.getText().toString());
                     int selectedId = radioSexGroup.getCheckedRadioButtonId();
 

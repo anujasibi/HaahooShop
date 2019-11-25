@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class viewbran extends AppCompatActivity {
     Activity activity = this;
     Context context=this;
     SessionManager sessionManager;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,15 @@ public class viewbran extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_branches);
+
+        imageView=findViewById(R.id.back);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,MainUI.class));
+            }
+        });
+
 
         sessionManager=new SessionManager(this);
 
@@ -212,6 +223,10 @@ public class viewbran extends AppCompatActivity {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context,MainUI.class));
     }
 
 }

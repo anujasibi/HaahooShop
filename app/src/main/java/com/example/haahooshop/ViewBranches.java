@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class ViewBranches extends AppCompatActivity {
     Activity activity = this;
     Context context=this;
     SessionManager sessionManager;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,13 @@ public class ViewBranches extends AppCompatActivity {
         setContentView(R.layout.activity_view_branches);
 
         sessionManager=new SessionManager(this);
+        imageView=findViewById(R.id.back);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,MainUI.class));
+            }
+        });
 
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -214,4 +223,8 @@ public class ViewBranches extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context,MainUI.class));
+    }
 }

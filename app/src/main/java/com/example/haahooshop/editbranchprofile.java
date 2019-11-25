@@ -51,6 +51,7 @@ public class editbranchprofile extends AppCompatActivity {
         gst=findViewById(R.id.gst);
         email=findViewById(R.id.email);
 
+        back=findViewById(R.id.back);
 
 
 
@@ -65,12 +66,12 @@ public class editbranchprofile extends AppCompatActivity {
 
         submit=findViewById(R.id.submit);
 
-        /*back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+             startActivity(new Intent(context,branchprofile.class));
             }
-        });*/
+        });
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -148,5 +149,10 @@ public class editbranchprofile extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context,branchprofile.class));
     }
 }

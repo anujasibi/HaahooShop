@@ -110,6 +110,7 @@ public class MainUI extends AppCompatActivity {
             carItemList.add(new CardRecyclerViewItem("My Branches", R.drawable.branch));
             carItemList.add(new CardRecyclerViewItem("View Branch Products", R.drawable.view));
             carItemList.add(new CardRecyclerViewItem("View Upcoming Orders", R.drawable.ordersu));
+            carItemList.add(new CardRecyclerViewItem("View Order History", R.drawable.ordersu));
 
 
 
