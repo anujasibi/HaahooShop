@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.haahooshop.utils.SessionManager;
 import com.karumi.dexter.Dexter;
@@ -49,6 +50,7 @@ import retrofit2.Retrofit;
 
 public class viewpdtdetails extends AppCompatActivity {
     ImageView imageView,image,io;
+    ViewPager viewPager;
     Context context = this;
     TextView shopname,location,gstno,catgory,owner,edit;
     String id = "null";
@@ -57,6 +59,7 @@ public class viewpdtdetails extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
     String filePath;
     private Uri uri;
+    private ImagePagerAdapter imagePagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class viewpdtdetails extends AppCompatActivity {
         requestMultiplePermissions();
 
         imageView=findViewById(R.id.img);
+
+
         image=findViewById(R.id.imgg);
         image.setOnClickListener(new View.OnClickListener() {
             @Override

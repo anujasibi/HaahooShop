@@ -181,7 +181,6 @@ public class viewproduct extends AppCompatActivity {
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
                                 image=Global.BASE_URL+split;
-
                                 JSONObject jsonArray=dataobj.optJSONObject("specifications");
                                 Log.d("specifications","mm"+jsonArray);
                                 String display=jsonArray.optString("Display");

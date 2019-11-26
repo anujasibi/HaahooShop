@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".orderhistory"></activity>
+        <activity android:name=".subscriptionmode"></activity>
+        <activity android:name=".subscription" />
+        <activity android:name=".orderhistory" />
         <activity android:name=".orderdetails" />
         <activity android:name=".customerdetails" />
         <activity android:name=".viewbran" />
@@ -30,7 +32,7 @@
 
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_ILgsfZCZoFIKMb" />
+            android:value="rzp_test_Sc2QOgXEJcedKm" />
 
         <activity android:name=".addproductnew" />
         <activity android:name=".Payment" />

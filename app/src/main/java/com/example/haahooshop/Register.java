@@ -32,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.haahooshop.utils.Global;
+import com.example.haahooshop.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
@@ -52,7 +53,7 @@ public class Register extends AppCompatActivity {
     ArrayList<String> areas = new ArrayList<String>();
     ArrayList<String> areasid = new ArrayList<String>();
     boolean doubleBackToExitPressedOnce = false;
-
+    SessionManager sessionManager;
     String URL="https://testapi.creopedia.com/api_shop_app/list_shop_cat/ ";
     Context context=this;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_registeration/";
@@ -77,6 +78,7 @@ public class Register extends AppCompatActivity {
         show=findViewById(R.id.show);
         hide=findViewById(R.id.hide);
         device_id =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        sessionManager=new SessionManager(this);
 
 
         address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -212,8 +214,10 @@ public class Register extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String ot = jsonObject.optString("message");
                             String status=jsonObject.optString("code");
-                            String token=jsonObject.optString("Token");
-                            //    sessionManager.setTokens(token);
+                            String token=jsonObject.optString("token");
+                            String id=jsonObject.optString("id");
+                            sessionManager.setpayid(id);
+                            sessionManager.setTokens(token);
 
 
 
@@ -222,7 +226,9 @@ public class Register extends AppCompatActivity {
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
                                 Toast.makeText(Register.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Register.this, MainUI.class);
+                                Intent intent = new Intent(Register.this, Payment.class);
+                                intent.putExtra("email",email.getText().toString());
+                                intent.putExtra("number",phone.getText().toString());
                                 startActivity(intent);
                             }
                             else{
@@ -234,7 +240,7 @@ public class Register extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        //   Log.d("response","hhh"+response);
+                           Log.d("response","hhh"+response);
 
 
                     }

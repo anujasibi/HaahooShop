@@ -14,6 +14,7 @@ public class Global {
     public static String total="0";
     public static boolean flag = false;
     public static ArrayList<String>spec_headers = new ArrayList<>();
+    public static ArrayList<String>value = new ArrayList<>();
     public static ArrayList<String>spec_values = new ArrayList<>();
     public static List<Specpojo> specpojos = new ArrayList<>();
 

@@ -1,5 +1,7 @@
 package com.example.haahooshop;
 
+import java.util.ArrayList;
+
 public class Item {
     public String id;
     public  String name;
@@ -12,6 +14,8 @@ public class Item {
     public String Categoryid;
     public String display;
     public String memory;
+    ArrayList<String>img=new ArrayList<>();
+    public String ima;
 
 
     public String getStock() {
@@ -30,6 +34,14 @@ public class Item {
         this.discount = discount;
     }
 
+    public String getIma() {
+        return ima;
+    }
+
+    public void setIma(String ima) {
+        this.ima = ima;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -40,6 +52,14 @@ public class Item {
 
     public String getId() {
         return id;
+    }
+
+    public ArrayList<String> getImg() {
+        return img;
+    }
+
+    public void setImg(ArrayList<String> img) {
+        this.img = img;
     }
 
     public void setId(String id) {

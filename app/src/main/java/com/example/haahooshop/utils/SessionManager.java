@@ -176,5 +176,34 @@ public class SessionManager {
     public void setID(String ID) {
         sharedPreferences.edit().putString("ID",ID).commit();
     }
+    public String getsub(){
+
+        return  sharedPreferences.getString("sub","");
+    }
+    public void setsub(String sub){
+        sharedPreferences.edit().putString("sub",sub).commit();
+    }
+    public String getsubvalue(){
+
+        return  sharedPreferences.getString("subv","");
+    }
+    public void setsubvalue(String subv){
+        sharedPreferences.edit().putString("subv",subv).commit();
+    }
+    public String getpayid(){
+
+        return  sharedPreferences.getString("payid","");
+    }
+    public void setpayid(String payid){
+        sharedPreferences.edit().putString("payid",payid).commit();
+    }
+
+    public String getsubben(){
+
+        return  sharedPreferences.getString("ben","");
+    }
+    public void setsubben(String ben){
+        sharedPreferences.edit().putString("ben",ben).commit();
+    }
 
 }

@@ -91,6 +91,7 @@ public class finaladd extends AppCompatActivity {
                 status="1";
                 res.setVisibility(View.VISIBLE);
                 ress.setVisibility(View.VISIBLE);
+                sessionManager.setcheckn(status);
 
 
             }
@@ -101,6 +102,7 @@ public class finaladd extends AppCompatActivity {
             public void onClick(View view) {
                 check.setChecked(false);
                 status="0";
+                sessionManager.setcheckn(status);
             }
         });
 
@@ -147,7 +149,7 @@ public class finaladd extends AppCompatActivity {
         });
 
         sessionManager.setcheck(delivery_type);
-        sessionManager.setcheckn(status);
+
         Log.d("gvggxxsxsssxss","mm"+delivery_type);
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +172,7 @@ public class finaladd extends AppCompatActivity {
                     Toast.makeText(finaladd.this,
                             one.getText(), Toast.LENGTH_SHORT).show();
 
-                    startActivity(new Intent(finaladd.this, addimage.class));
+                    startActivity(new Intent(finaladd.this, subscription.class));
                 }
             }
         });
