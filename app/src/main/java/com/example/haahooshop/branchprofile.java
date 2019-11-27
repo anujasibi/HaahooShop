@@ -70,7 +70,8 @@ public class branchprofile extends AppCompatActivity {
         requestMultiplePermissions();
 
         imageView=findViewById(R.id.img);
-        Picasso.with(context).load(Global.image).into(imageView);
+     //   Picasso.with(context).load(Global.image).into(imageView);
+        Picasso.get().load(Global.image).into(imageView);
 
        /* Bundle bundle = getIntent().getExtras();
 

@@ -45,8 +45,8 @@ public class ImagePagerAdapter extends PagerAdapter {
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.image);
 
-        Picasso.with(context).load(arrayList.get(position)).into(imageView);
-
+       // Picasso.with(context).load(arrayList.get(position)).into(imageView);
+        Picasso.get().load(arrayList.get(position)).into(imageView);
         container.addView(itemView);
 
         return itemView;

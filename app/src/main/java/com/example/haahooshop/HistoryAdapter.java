@@ -74,7 +74,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
         id=dataModelArrayList.get(position).getId();
         holder.statuss.setText(dataModelArrayList.get(position).getStatus());
-        Picasso.with(context1).load(dataModelArrayList.get(position).getImage()).into(holder.iv);
+       // Picasso.with(context1).load(dataModelArrayList.get(position).getImage()).into(holder.iv);
+        Picasso.get().load(dataModelArrayList.get(position).getImage()).into(holder.iv);
         holder.name.setText(dataModelArrayList.get(position).getName());
         holder.location.setText(dataModelArrayList.get(position).getLocation());
 

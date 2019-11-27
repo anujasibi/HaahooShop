@@ -13,9 +13,19 @@ public class Item {
     public String email;
     public String Categoryid;
     public String display;
+
+    public String[] getImk() {
+        return imk;
+    }
+
+    public void setImk(String[] imk) {
+        this.imk = imk;
+    }
+
     public String memory;
     ArrayList<String>img=new ArrayList<>();
     public String ima;
+    public String[]imk;
 
 
     public String getStock() {

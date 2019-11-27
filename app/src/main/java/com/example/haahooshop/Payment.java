@@ -79,7 +79,7 @@ public class Payment extends Activity implements PaymentResultListener {
             //You can omit the image option to fetch the image from dashboard
 
             options.put("currency", "INR");
-            options.put("amount", "100");
+            options.put("amount", "100000");
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", email);
@@ -168,7 +168,7 @@ public class Payment extends Activity implements PaymentResultListener {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("shop_id", sessionManager.getpayid());
                 Log.d("driver","mm"+sessionManager.getpayid());
-                params.put("payment_amount","100");
+                params.put("payment_amount","100000");
                 params.put("payment_id",razorid);
                 Log.d("paymentid",razorid);
                 return params;

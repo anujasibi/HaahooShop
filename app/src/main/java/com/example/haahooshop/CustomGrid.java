@@ -53,7 +53,8 @@ public class CustomGrid extends ArrayAdapter {
             TextView textView = (TextView) grid.findViewById(R.id.textView);
             ImageView imageView = (ImageView)grid.findViewById(R.id.profile_image);
             textView.setText(birdList.get(position).getName());
-            Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);
+          //  Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);
+            Picasso.get().load(birdList.get(position).getImage()).into(imageView);
             final  CheckBox checkBox=(CheckBox)grid.findViewById(R.id.checkBox3);
 /*checkBox.setOnClickListener(new View.OnClickListener() {
     @Override

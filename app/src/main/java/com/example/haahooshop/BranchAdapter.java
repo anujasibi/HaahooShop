@@ -60,7 +60,8 @@ public class BranchAdapter extends ArrayAdapter {
         ImageView imageView = (ImageView) v.findViewById(R.id.profile_image);
         ImageView delete = (ImageView) v.findViewById(R.id.delete);
         textView.setText(birdList.get(position).getName());
-        Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);
+      //  Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);
+        Picasso.get().load(birdList.get(position).getImage()).into(imageView);
         textView1.setText(birdList.get(position).getLocation());
         ids=birdList.get(position).getId();
 

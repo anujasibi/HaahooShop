@@ -24,6 +24,7 @@ public class Global {
     public static String id;
     public static String email;
     public static String gst;
+    public static String[] imj;
 
 
 

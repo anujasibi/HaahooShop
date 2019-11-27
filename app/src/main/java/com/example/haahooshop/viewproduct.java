@@ -48,6 +48,7 @@ public class viewproduct extends AppCompatActivity {
     SessionManager sessionManager;
     ImageView back;
     Context context=this;
+    String[]ne;
     public String image,pname,price,discount,descr,stock,email;
 
 
@@ -92,6 +93,8 @@ public class viewproduct extends AppCompatActivity {
                 Intent intent=new Intent(viewproduct.this,viewpdtdetails.class);
                 intent.putExtra("pname",birdList.get(i).name);
                 intent.putExtra("image",birdList.get(i).getImage());
+                intent.putExtra("imagea",birdList.get(i).getImk());
+                Log.d("imagearray", String.valueOf(birdList.get(i).getImk()));
                 intent.putExtra("price",birdList.get(i).getPrice());
                 intent.putExtra("stock",birdList.get(i).getStock());
                 intent.putExtra("discount",birdList.get(i).getDiscount());
@@ -178,6 +181,9 @@ public class viewproduct extends AppCompatActivity {
                                 playerModel.setPrice("₹ "+dataobj.optString("price"));
                                 String images1 = dataobj.getString("image");
                                 String[] seperated = images1.split(",");
+                                ne=images1.split(",");
+                                playerModel.setImk(ne);
+                                Log.d("imagearray", String.valueOf(playerModel.getImk()));
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
                                 image=Global.BASE_URL+split;

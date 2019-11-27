@@ -96,7 +96,9 @@ public class orderdetails extends AppCompatActivity {
         states=bundle.getString("state");
         ids=bundle.getString("id");
 
-        Picasso.with(context).load(image).into(imageView);
+
+      //  Picasso.with(context).load(image).into(imageView);
+        Picasso.get().load(image).into(imageView);
         pdtname.setText(pdtnames);
         price.setText("₹ "+prices);
         cusname.setText(cusnames);
