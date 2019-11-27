@@ -16,6 +16,7 @@ public class Global {
     public static ArrayList<String>spec_headers = new ArrayList<>();
     public static ArrayList<String>value = new ArrayList<>();
     public static ArrayList<String>spec_values = new ArrayList<>();
+    public static ArrayList<String>ik = new ArrayList<>();
     public static List<Specpojo> specpojos = new ArrayList<>();
 
     public static String name;
@@ -25,6 +26,8 @@ public class Global {
     public static String email;
     public static String gst;
     public static String[] imj;
+    public static String idd;
+
 
 
 

@@ -36,6 +36,7 @@ import com.example.haahooshop.utils.SessionManager;
 import com.ncorti.slidetoact.SlideToActView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,8 +49,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
     public String status="0";
     public String stat="0";
     public String id;
-    private String URLline = Global.BASE_URL+"virtual_order_management/shop_order_accpt/";
+
+    private String URLlin = Global.BASE_URL+"api_shop_app/shop_pdt_img_remove/";
     SessionManager sessionManager;
+
+    public String idim;
 
     public ImageAdapter(Context ctx, ArrayList<Imagepojo> dataModelArrayList){
 
@@ -72,11 +76,49 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
     public void onBindViewHolder(final ImageAdapter.MyViewHolder holder, final int position) {
 
 
+
+
         //Picasso.with(context1).load(dataModelArrayList.get(position).getImage()).into(holder.iv);
 
 Log.d("yugyug","yghfghf"+Global.imj[position]);
             String split = Global.imj[position].replace("[", "").replace("]","").trim();
             Picasso.get().load(Global.BASE_URL+split).into(holder.iv);
+
+            holder.img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(context1);
+                    builder1.setMessage("Do you want to dispatch this product??");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    idim=Global.ik.get(position);
+                                    Log.d("dwnfwnf","mm"+Global.ik.get(position));
+                                    removenew();
+
+                                }
+                            });
+
+                    builder1.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+
+
+
+                }
+            });
 
 
 
@@ -91,7 +133,8 @@ Log.d("yugyug","yghfghf"+Global.imj[position]);
     class MyViewHolder extends RecyclerView.ViewHolder{
 
 
-        ImageView iv;
+        ImageView iv,img;
+        CardView cardView;
 
 
         public MyViewHolder(View itemView) {
@@ -99,6 +142,8 @@ Log.d("yugyug","yghfghf"+Global.imj[position]);
 
 
             iv = itemView.findViewById(R.id.imgg);
+            img = itemView.findViewById(R.id.img);
+            cardView=itemView.findViewById(R.id.card);
 
 
 //            qty = (TextView) itemView.findViewById(R.id.non);
@@ -106,9 +151,9 @@ Log.d("yugyug","yghfghf"+Global.imj[position]);
 
     }
 
-    /*private void accept(){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+    private void removenew(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLlin,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -120,6 +165,7 @@ Log.d("yugyug","yghfghf"+Global.imj[position]);
                             String ot = jsonObject.optString("message");
                             String status=jsonObject.optString("code");
                             String token=jsonObject.optString("Token");
+
                             //    sessionManager.setTokens(token);
 
 
@@ -127,8 +173,9 @@ Log.d("yugyug","yghfghf"+Global.imj[position]);
 
                             Log.d("otp","mm"+token);
                             Log.d("code","mm"+status);
-                            if(status.equals("200")&&(!(ot.equals("verify")))){
+                            if(status.equals("200")){
                                 Toast.makeText(context1, "Successful", Toast.LENGTH_LONG).show();
+                                context1.startActivity(new Intent(context1,viewproduct.class));
 
 
 
@@ -158,9 +205,9 @@ Log.d("yugyug","yghfghf"+Global.imj[position]);
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("order_id",id);
-                params.put("accepted",status);
-                Log.d("idlllll","mm"+status);
+                params.put("image_id",idim);
+
+                Log.d("idlllll","mm"+idim);
 
                 return params;
             }
@@ -177,7 +224,8 @@ Log.d("yugyug","yghfghf"+Global.imj[position]);
         RequestQueue requestQueue = Volley.newRequestQueue(context1);
         requestQueue.add(stringRequest);
 
-    }*/
+
+    }
 
 
 }

@@ -25,6 +25,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.haahooshop.utils.Global;
 import com.example.haahooshop.utils.SessionManager;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -34,13 +41,19 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -59,12 +72,13 @@ public class viewimages extends AppCompatActivity {
     ArrayList<upcomingrow> rowItems;
     ImageView back;
     TextView add;
-
+    private String URLline = Global.BASE_URL+"api_shop_app/shop_pdt_img_list/";
     private static final String IMAGE_DIRECTORY = "/demonuts";
     private int GALLERY = 1, CAMERA = 2;
     String filePath;
     private Uri uri;
     public String id;
+    ArrayList<String>ik=new ArrayList<>();
 
 
     @Override
@@ -77,17 +91,19 @@ public class viewimages extends AppCompatActivity {
         add=findViewById(R.id.add);
         back=findViewById(R.id.back);
         sessionManager=new SessionManager(this);
+        remove();
+
 
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
+
             }
         });
-
-        Bundle bundle = getIntent().getExtras();
-        id=bundle.getString("id");
+       /* Bundle bundle = getIntent().getExtras();
+       id=bundle.getString("id");
+        Global.idd=id;*/
         Log.d("mnjbkjbkbj","hjghjghg"+id);
 
         Window window = activity.getWindow();
@@ -319,7 +335,7 @@ public class viewimages extends AppCompatActivity {
             MultipartBody.Part part1 = MultipartBody.Part.createFormData("pdt_image", immm.getName(), photob);
             Log.d("image","mm"+part1);
             Log.d("image","mm"+immm.getName());
-            RequestBody id1 = RequestBody.create(MediaType.parse("text/plain"),id );
+            RequestBody id1 = RequestBody.create(MediaType.parse("text/plain"),Global.idd );
 
 
 
@@ -331,6 +347,7 @@ public class viewimages extends AppCompatActivity {
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                     Toast.makeText(context,"Successful"+response,Toast.LENGTH_SHORT).show();
                     Log.d("recyfvggbhh","mm"+response);
+                    startActivity(new Intent(context,viewproduct.class));
 
                 }
 
@@ -348,5 +365,92 @@ public class viewimages extends AppCompatActivity {
     @Override
     public void onBackPressed() {
       super.onBackPressed();
+    }
+    private void remove(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // dialog.dismiss();
+                        //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+                            String token=jsonObject.optString("Token");
+                            JSONArray dataArray  = jsonObject.getJSONArray("data");
+
+                            for (int i = 0; i < dataArray.length(); i++) {
+                                Imagepojo playerModel = new Imagepojo();
+                                JSONObject dataobj = dataArray.getJSONObject(i);
+                                String IM=dataobj.getString("id");
+                                playerModel.setId(dataobj.getString("id"));
+                                ik.add(IM);
+                                Global.ik=ik;
+                                Log.d("imageid","mm"+ik);
+                                String image=dataobj.getString("image"+i);
+                                Log.d("imageid","mm"+image);
+
+                            }
+                            //    sessionManager.setTokens(token);
+
+
+
+
+                            Log.d("otp","mm"+token);
+                            Log.d("code","mm"+status);
+                            if(status.equals("200")){
+                                Toast.makeText(context, "Successful", Toast.LENGTH_LONG).show();
+                                //startActivity(new Intent(context,viewimages.class));
+
+
+
+                            }
+
+
+                            if(!(status.equals("200"))){
+                                Toast.makeText(context, "Failed."+ot, Toast.LENGTH_LONG).show();
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("pdt_id",Global.idd);
+
+                Log.d("idlllll","mm"+Global.idd);
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders()  {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token " + sessionManager.getTokens());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
     }
 }

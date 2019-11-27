@@ -93,6 +93,7 @@ public class viewpdtdetails extends AppCompatActivity {
                Intent intent=new Intent(context,viewimages.class);
                intent.putExtra("imagesa",imagt);
                 intent.putExtra("id",id);
+                Global.idd=id;
                startActivity(intent);
 
 
