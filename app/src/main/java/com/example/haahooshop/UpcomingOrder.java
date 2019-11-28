@@ -1,6 +1,7 @@
 package com.example.haahooshop;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class UpcomingOrder extends AppCompatActivity {
     RecyclerView listView;
     ArrayList<upcomingrow> rowItems;
     ImageView back;
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,10 @@ public class UpcomingOrder extends AppCompatActivity {
             }
         });
 
+        dialog=new ProgressDialog(UpcomingOrder.this,R.style.MyAlertDialogStyle);
+        dialog.setMessage("Loading");
+        dialog.show();
+
 
 
        submituser();
@@ -91,7 +97,7 @@ public class UpcomingOrder extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //dialog.dismiss();
+                        dialog.dismiss();
 
                         try {
 
@@ -199,6 +205,7 @@ public class UpcomingOrder extends AppCompatActivity {
 
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                     }
@@ -206,6 +213,7 @@ public class UpcomingOrder extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
                 Toast.makeText(UpcomingOrder.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 

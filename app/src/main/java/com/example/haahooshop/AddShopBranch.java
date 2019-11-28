@@ -457,6 +457,7 @@ public class AddShopBranch extends AppCompatActivity {
                 try {
                     Log.d("ressssssssss","mm"+response);
                     JSONObject jsonObject = new JSONObject(response);
+                    areas.add("Please Select Your Category");
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -536,8 +537,8 @@ public class AddShopBranch extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, retrofit2.Response response) {
                     dialog.dismiss();
-                    Toast.makeText(context, "Successfully updated" + response, Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(context, "Successfully updated" , Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(context,MainUI.class));
                 }
 
                 @Override

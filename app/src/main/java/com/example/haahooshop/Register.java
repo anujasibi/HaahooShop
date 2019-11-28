@@ -226,11 +226,11 @@ public class Register extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               // register();
                 if(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||gstno.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0){
                     Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
                 }
-                if(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||gstno.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0) {
-
+                if(!(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||gstno.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0)) {
                     dialog.setMessage("Loading");
                     dialog.show();
                     register();

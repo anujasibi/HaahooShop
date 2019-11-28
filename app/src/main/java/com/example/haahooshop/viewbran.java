@@ -2,6 +2,7 @@ package com.example.haahooshop;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class viewbran extends AppCompatActivity {
     Context context=this;
     SessionManager sessionManager;
     ImageView imageView;
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,9 @@ public class viewbran extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialog=new ProgressDialog(viewbran.this,R.style.MyAlertDialogStyle);
+        dialog.setMessage("Loading");
+        dialog.show();
 
         simpleList = (GridView) findViewById(R.id.card_view_recycler_list);
         simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,7 +105,7 @@ public class viewbran extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //dialog.dismiss();
+                        dialog.dismiss();
 
                         try {
 
@@ -199,6 +204,7 @@ public class viewbran extends AppCompatActivity {
 
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                     }
@@ -206,6 +212,7 @@ public class viewbran extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
                 Toast.makeText(viewbran.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 

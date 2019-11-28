@@ -43,7 +43,7 @@ public class subscription extends AppCompatActivity {
         setContentView(R.layout.activity_subscription);
         check=findViewById(R.id.checkBo);
         checkm=findViewById(R.id.checkBo1);
-        checkBox1 = findViewById(R.id.checkBox);
+
         checkBox2 = findViewById(R.id.checkBox1);
         checkBox3 = findViewById(R.id.checkBox2);
         checkBox4=findViewById(R.id.checkBox3);
@@ -61,7 +61,7 @@ public class subscription extends AppCompatActivity {
                 checkm.setChecked(false);
                 status="1";
                 yp.setVisibility(View.VISIBLE);
-                checkBox1.setVisibility(View.VISIBLE);
+
                 checkBox2.setVisibility(View.VISIBLE);
                 checkBox3.setVisibility(View.VISIBLE);
                 checkBox4.setVisibility(View.VISIBLE);
@@ -78,27 +78,13 @@ public class subscription extends AppCompatActivity {
                 sub=checkm.getText().toString();
                 sessionManager.setsub(status);
                 yp.setVisibility(View.GONE);
-                checkBox1.setVisibility(View.GONE);
+
                 checkBox2.setVisibility(View.GONE);
                 checkBox3.setVisibility(View.GONE);
                 checkBox4.setVisibility(View.GONE);
             }
         });
 
-        checkBox1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (((CheckBox) view).isChecked()) {
-                    delivery_type = checkBox1.getText().toString();
-                    value.add(delivery_type);
-                   // sessionManager.setcheck(delivery_type);
-                    Toast.makeText(subscription.this,"bhnjv"+checkBox1.getText().toString(),Toast.LENGTH_SHORT).show();
-                }
-                if(!(((CheckBox) view).isChecked())){
-                    value.remove(delivery_type);
-                }
-            }
-        });
 
         checkBox2.setOnClickListener(new View.OnClickListener() {
             @Override

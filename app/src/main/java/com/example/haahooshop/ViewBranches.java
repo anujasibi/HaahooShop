@@ -2,6 +2,7 @@ package com.example.haahooshop;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class ViewBranches extends AppCompatActivity {
     Context context=this;
     SessionManager sessionManager;
     ImageView imageView;
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,10 @@ public class ViewBranches extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialog=new ProgressDialog(ViewBranches.this,R.style.MyAlertDialogStyle);
+        dialog.setMessage("Loading");
+        dialog.show();
+
 
         simpleList = (GridView) findViewById(R.id.card_view_recycler_list);
         simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -98,7 +104,7 @@ public class ViewBranches extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //dialog.dismiss();
+                        dialog.dismiss();
 
                         try {
 
@@ -110,7 +116,7 @@ public class ViewBranches extends AppCompatActivity {
                             JSONArray dataArray  = obj.getJSONArray("data");
 
                             if(dataArray.length() == 0){
-                                Toast.makeText(ViewBranches.this,"Nothing to display",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ViewBranches.this,"Nothing to display,Once approved all your registered branches are visible here ",Toast.LENGTH_SHORT).show();
                             }
 
                             for (int i = 0; i < dataArray.length(); i++) {
@@ -197,6 +203,7 @@ public class ViewBranches extends AppCompatActivity {
 
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                     }
@@ -204,6 +211,7 @@ public class ViewBranches extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
                 Toast.makeText(ViewBranches.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 

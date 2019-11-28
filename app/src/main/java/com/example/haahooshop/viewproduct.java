@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -50,6 +51,7 @@ public class viewproduct extends AppCompatActivity {
     Context context=this;
     String[]ne;
     public String image,pname,price,discount,descr,stock,email;
+    private ProgressDialog dialog ;
 
 
    // private List<CardRecyclerViewItem> carItemList = null;
@@ -82,6 +84,9 @@ public class viewproduct extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialog=new ProgressDialog(viewproduct.this,R.style.MyAlertDialogStyle);
+        dialog.setMessage("Loading");
+        dialog.show();
 
         simpleList = (GridView) findViewById(R.id.card_view_recycler_list);
 
@@ -123,7 +128,7 @@ public class viewproduct extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //dialog.dismiss();
+                        dialog.dismiss();
 
                         try {
 
@@ -217,6 +222,7 @@ public class viewproduct extends AppCompatActivity {
 
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                     }
@@ -224,6 +230,7 @@ public class viewproduct extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
                 Toast.makeText(viewproduct.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 

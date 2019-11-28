@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +68,7 @@ public class viewpdtdetails extends AppCompatActivity {
     private ImagePagerAdapter imagePagerAdapter;
     ImageSlider imageSlider;
     String[] imk;
+    Activity activity=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,12 @@ public class viewpdtdetails extends AppCompatActivity {
         requestMultiplePermissions();
         Bundle bundl = getIntent().getExtras();
         final String[] imagt=bundl.getStringArray("imagea");
+        Window window = activity.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
       //  imageView=findViewById(R.id.img);
 

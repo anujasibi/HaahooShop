@@ -44,8 +44,6 @@ public class SublistAdapter extends RecyclerView.Adapter<SublistAdapter.MyViewHo
     private LayoutInflater inflater;
     private ArrayList<sublistpojo> dataModelArrayList;
     public Context context1 ;
-    public String status="0";
-    public String stat="0";
     public String id;
     SessionManager sessionManager;
 
@@ -60,7 +58,7 @@ public class SublistAdapter extends RecyclerView.Adapter<SublistAdapter.MyViewHo
     @Override
     public SublistAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.subrow, parent, false);
+        View view = inflater.inflate(R.layout.sublist, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
 
         return holder;
@@ -70,26 +68,16 @@ public class SublistAdapter extends RecyclerView.Adapter<SublistAdapter.MyViewHo
     public void onBindViewHolder(final SublistAdapter.MyViewHolder holder, final int position) {
 
 
-
-        id=dataModelArrayList.get(position).getId();
       //  holder.statuss.setText(dataModelArrayList.get(position).getStatus());
-        // Picasso.with(context1).load(dataModelArrayList.get(position).getImage()).into(holder.iv);
-       // Picasso.get().load(dataModelArrayList.get(position).getImage()).into(holder.iv);
-    //    holder.name.setText(dataModelArrayList.get(position).getName());
-        holder.location.setText(dataModelArrayList.get(position).getLocation());
 
+        holder.name.setText(dataModelArrayList.get(position).getPdtname());
+        holder.statuss.setText(dataModelArrayList.get(position).getMode());
+        holder.uname.setText(dataModelArrayList.get(position).getUname());
+        holder.area.setText(dataModelArrayList.get(position).getLocation());
+        holder.amount.setText(dataModelArrayList.get(position).getAmount());
+        holder.date.setText(dataModelArrayList.get(position).getOrderdate());
+        Picasso.get().load(dataModelArrayList.get(position).getImage()).into(holder.iv);
 
-        //   Picasso.with(context1).load(dataModelArrayList.get(position).getQty()).into(holder.iv);
-       /* holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context1,Orderdetails.class);
-                intent.putExtra("order_id",dataModelArrayList.get(position).getProductid());
-                ApiClient.sh_order_id = dataModelArrayList.get(position).getShid();
-                intent.putExtra("virtual",ApiClient.virtual_order.get(position));
-                context1.startActivity(intent);
-            }
-        });*/
     }
 
     @Override
@@ -99,23 +87,26 @@ public class SublistAdapter extends RecyclerView.Adapter<SublistAdapter.MyViewHo
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name, location;
-        // LinearLayout linearLayout;
+        TextView name;
         ImageView iv;
-        TextView status,statuss;
+        TextView status,statuss,mode,uname,area,amount,date;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.title);
-            location = (TextView) itemView.findViewById(R.id.desc);
+
             iv = itemView.findViewById(R.id.profile_image);
 
            // cardView=itemView.findViewById(R.id.card);
 
             status=itemView.findViewById(R.id.status);
             statuss=itemView.findViewById(R.id.statuse);
-//            qty = (TextView) itemView.findViewById(R.id.non);
+            uname=itemView.findViewById(R.id.namee);
+            area=itemView.findViewById(R.id.areaa);
+            amount=itemView.findViewById(R.id.amountt);
+            date=itemView.findViewById(R.id.datee);
+//
         }
 
     }
