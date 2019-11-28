@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewimages"></activity>
+        <activity android:name=".Subscriptionlist"></activity>
+        <activity android:name=".addshopim" />
+        <activity android:name=".viewimages" />
         <activity android:name=".viewpdtnew" />
         <activity android:name=".subscriptionmode" />
         <activity android:name=".subscription" />

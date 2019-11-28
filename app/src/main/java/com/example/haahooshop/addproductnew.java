@@ -56,6 +56,7 @@ public class addproductnew extends AppCompatActivity {
         name=findViewById(R.id.name);
         sessionManager.setcatid("");
 
+
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 

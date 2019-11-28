@@ -3,6 +3,7 @@ package com.example.haahooshop;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,11 +17,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -87,6 +91,9 @@ public class AddShopBranch extends AppCompatActivity {
     String device_id = null;
     public String source_lat,source_lng;
     ImageView imagen;
+    private ProgressDialog dialog ;
+    Activity activity = this;
+    String emailPattern = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +101,20 @@ public class AddShopBranch extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_shop_branch);
+
+
+        Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialog=new ProgressDialog(AddShopBranch.this,R.style.MyAlertDialogStyle);
+
 
         sessionManager = new SessionManager(this);
 
@@ -108,6 +129,34 @@ public class AddShopBranch extends AppCompatActivity {
         show = findViewById(R.id.show);
         hide = findViewById(R.id.hide);
         imagen=findViewById(R.id.imageView3);
+
+        gst.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (gst.getText().toString().matches(emailPattern) && gst.getText().toString().length() > 0)
+                {
+                    //Toast.makeText(getApplicationContext(),"valid gst no",Toast.LENGTH_SHORT).show();
+
+                }
+                if (!(gst.getText().toString().matches(emailPattern) && gst.getText().toString().length() > 0))
+                {
+                    //Toast.makeText(getApplicationContext(),"Invalid GST Number",Toast.LENGTH_SHORT).show();
+                    gst.setError("Invalid GST Number");
+
+                }
+
+            }
+        });
 
         address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -174,6 +223,8 @@ public class AddShopBranch extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.setMessage("Loading");
+                dialog.show();
                 submituser();
             }
         });
@@ -484,13 +535,14 @@ public class AddShopBranch extends AppCompatActivity {
             call.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, retrofit2.Response response) {
-
+                    dialog.dismiss();
                     Toast.makeText(context, "Successfully updated" + response, Toast.LENGTH_SHORT).show();
 
                 }
 
                 @Override
                 public void onFailure(Call call, Throwable t) {
+                    dialog.dismiss();
                 }
             });
 

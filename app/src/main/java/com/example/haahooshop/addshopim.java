@@ -1,5 +1,8 @@
 package com.example.haahooshop;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -21,10 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.haahooshop.utils.Global;
 import com.example.haahooshop.utils.SessionManager;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -33,7 +32,6 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -50,32 +48,32 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-public class branchprofile extends AppCompatActivity {
-    ImageView imageView,image,io;
-    Context context = this;
-    TextView shopname,location,gstno,catgory,owner,edit;
-
-    SessionManager sessionManager;
+public class addshopim extends AppCompatActivity {
+    ImageView imh;
     private static final String IMAGE_DIRECTORY = "/demonuts";
     private int GALLERY = 1, CAMERA = 2;
     String filePath;
     private Uri uri;
-    String pname ="null";
+    SessionManager sessionManager;
+    Context context=this;
+    public String phone_no,email;
+    TextView save;
     private ProgressDialog dialog ;
     Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_branchprofile);
+        setContentView(R.layout.activity_addshopim);
+        sessionManager=new SessionManager(this);
+        imh=findViewById(R.id.img);
 
-        requestMultiplePermissions();
-
-        imageView=findViewById(R.id.img);
-     //   Picasso.with(context).load(Global.image).into(imageView);
-        Picasso.get().load(Global.image).into(imageView);
+        Bundle bundle = getIntent().getExtras();
+        phone_no = bundle.getString("number");
+        email = bundle.getString("email");
         Window window = activity.getWindow();
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -86,80 +84,37 @@ public class branchprofile extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
-        dialog=new ProgressDialog(branchprofile.this,R.style.MyAlertDialogStyle);
-
-       /* Bundle bundle = getIntent().getExtras();
-
-        assert bundle != null;
-//        pname = bundle.getString("shopname");
-        final String image1 = bundle.getString("image");
-
-        final String price = bundle.getString("price");
-        final String email=bundle.getString("email");
+        dialog=new ProgressDialog(addshopim.this,R.style.MyAlertDialogStyle);
 
 
-        id=bundle.getString("id");
-        Log.d("mnjbkjbkbj","hjghjghg"+id);*/
-
-
-
-        image=findViewById(R.id.imgg);
-        image.setOnClickListener(new View.OnClickListener() {
+        imh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 showPictureDialog();
-
-
-            }
-        });
-        shopname=findViewById(R.id.sname);
-        location=findViewById(R.id.location);
-        owner=findViewById(R.id.owner);
-        gstno=findViewById(R.id.gstno);
-        edit=findViewById(R.id.edit);
-        io=findViewById(R.id.io);
-
-        sessionManager=new SessionManager(this);
-
-        io.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(branchprofile.this,ViewBranches.class));
             }
         });
 
-
-        //  final String ema=bundle.getString("email");
-
-        shopname.setText(Global.name);
-        location.setText(Global.location);
-        owner.setText(Global.email);
-        gstno.setText(Global.gst);
-
-
-        edit.setOnClickListener(new View.OnClickListener() {
+        save=findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(context,editbranchprofile.class);
-
-
-
-                //   intent.putExtra("email",ema);
+                Intent intent = new Intent(addshopim.this, Payment.class);
+                intent.putExtra("email",email);
+                intent.putExtra("number",phone_no);
                 startActivity(intent);
-
-                //startActivity(new Intent(viewpdtdetails.this,edit_product.class));
             }
         });
+
+
+
 
     }
-    private void showPictureDialog(){
+    private void showPictureDialog() {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action");
         String[] pictureDialogItems = {
                 "Select photo from gallery",
-                "Capture photo from camera" };
+                "Capture photo from camera"};
         pictureDialog.setItems(pictureDialogItems,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -199,31 +154,32 @@ public class branchprofile extends AppCompatActivity {
         if (requestCode == GALLERY) {
             if (data != null) {
                 Uri contentURI = data.getData();
-                uri=data.getData();
-                filePath = getRealPathFromURIPath(uri, branchprofile.this);
+                uri = data.getData();
+                filePath = getRealPathFromURIPath(uri, addshopim.this);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     bitmap = getResizedBitmap(bitmap, 400);
                     String path = saveImage(bitmap);
-                    Toast.makeText(branchprofile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
-                    imageView.setImageBitmap(bitmap);
+                 //   Toast.makeText(addshopim.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    imh.setImageBitmap(bitmap);
                     uploadToServer(filePath);
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(branchprofile.this, "Failed!", Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(addshopim.this, "Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(thumbnail);
+            imh.setImageBitmap(thumbnail);
             saveImage(thumbnail);
-            Toast.makeText(branchprofile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(addshopim.this, "Image Saved!", Toast.LENGTH_SHORT).show();
             Uri tempUri = getImageUri(getApplicationContext(), thumbnail);
-            filePath= (getRealPathFromURI(tempUri));
+            filePath = (getRealPathFromURI(tempUri));
             uploadToServer(filePath);
-            Log.d("filepath","mm"+filePath);
+            Log.d("filepath", "mm" + filePath);
         }
     }
 
@@ -249,12 +205,11 @@ public class branchprofile extends AppCompatActivity {
     }
 
 
-
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
 
-        float bitmapRatio = (float)width / (float) height;
+        float bitmapRatio = (float) width / (float) height;
         if (bitmapRatio > 1) {
             width = maxSize;
             height = (int) (width / bitmapRatio);
@@ -264,7 +219,6 @@ public class branchprofile extends AppCompatActivity {
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-
 
 
     public String saveImage(Bitmap myBitmap) {
@@ -296,7 +250,7 @@ public class branchprofile extends AppCompatActivity {
         return "";
     }
 
-    private void  requestMultiplePermissions(){
+    private void requestMultiplePermissions() {
         Dexter.withActivity(this)
                 .withPermissions(
                         Manifest.permission.CAMERA,
@@ -307,7 +261,7 @@ public class branchprofile extends AppCompatActivity {
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(getApplicationContext(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
+                       //     Toast.makeText(getApplicationContext(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
                         }
 
                         // check for permanent denial of any permission
@@ -333,6 +287,7 @@ public class branchprofile extends AppCompatActivity {
                 .onSameThread()
                 .check();
     }
+
     private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
         Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
         if (cursor == null) {
@@ -344,6 +299,8 @@ public class branchprofile extends AppCompatActivity {
         }
     }
 
+
+
     private void uploadToServer(String filePath) {
         Retrofit retrofit = NetworkClient.getRetrofitClient(this);
         UploadImage uploadAPI = retrofit.create(UploadImage.class);
@@ -351,7 +308,7 @@ public class branchprofile extends AppCompatActivity {
 //        Log.d("url","mmm"+filePath);
         //Create a file object using file path
         if (filePath == null){
-            Toast.makeText(branchprofile.this,"Please Upload Image",Toast.LENGTH_SHORT).show();
+            Toast.makeText(addshopim.this,"Please Upload Image",Toast.LENGTH_SHORT).show();
         }
         if (filePath != null) {
             File immm = new File(filePath);
@@ -364,17 +321,16 @@ public class branchprofile extends AppCompatActivity {
             MultipartBody.Part part1 = MultipartBody.Part.createFormData("shop_image", immm.getName(), photob);
             Log.d("image","mm"+part1);
             Log.d("image","mm"+immm.getName());
-            RequestBody id1 = RequestBody.create(MediaType.parse("text/plain"),Global.id );
 
 
 
             //Create request body with text description and text media type
             //
-            Call<ResponseBody> call = uploadAPI.uploadIma(part1,"Token "+ sessionManager.getTokens(),id1);
+            Call<ResponseBody> call = uploadAPI.uploadImage(part1,"Token "+ sessionManager.getTokens());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                    Toast.makeText(context,"Successful"+response,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"Successful",Toast.LENGTH_SHORT).show();
                     Log.d("recyfvggbhh","mm"+response);
 
                 }
@@ -388,10 +344,5 @@ public class branchprofile extends AppCompatActivity {
 
             });
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(branchprofile.this,ViewBranches.class));
     }
 }

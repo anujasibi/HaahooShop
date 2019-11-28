@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -67,6 +69,8 @@ public class addimage extends AppCompatActivity {
     private Uri uri;
     String imageEncoded;
     List<String> imagesEncodedList;
+    private ProgressDialog dialog ;
+    Activity activity = this;
 
     public static final String GridViewDemo_ImagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GridViewDemo/";
 
@@ -77,6 +81,18 @@ public class addimage extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addimage);
+
+        Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialog=new ProgressDialog(addimage.this,R.style.MyAlertDialogStyle);
 
         sessionManager=new SessionManager(this);
 
@@ -96,6 +112,8 @@ public class addimage extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.setMessage("Loading");
+                dialog.show();
                 submituser();
             }
         });
@@ -443,12 +461,15 @@ public class addimage extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                Toast.makeText(context,"Successfully Added The Product"+response,Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                Toast.makeText(context,"Successfully Added The Product",Toast.LENGTH_SHORT).show();
+                Log.d("RESPONSERTTT","MM"+response);
                 startActivity(new Intent(addimage.this,MainUI.class));
 
             }
             @Override
             public void onFailure(Call call, Throwable t) {
+                dialog.dismiss();
             }
         });
 

@@ -45,7 +45,7 @@
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
                 android:textSize="12sp"
-                android:text="RS 1.00"
+                android:text="₹ 1000.00"
                 android:textColor="#000"
                 />
 

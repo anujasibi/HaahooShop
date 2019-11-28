@@ -1,20 +1,34 @@
 package com.example.haahooshop;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -34,14 +48,35 @@ import com.android.volley.toolbox.Volley;
 import com.example.haahooshop.utils.Global;
 import com.example.haahooshop.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 public class Register extends AppCompatActivity {
     EditText shopname,owner,gstno,phone,email,password,distance;
@@ -50,6 +85,11 @@ public class Register extends AppCompatActivity {
     String device_id = null;
     Spinner spinner;
     public String idsp;
+    Activity activity = this;
+    private static final String IMAGE_DIRECTORY = "/demonuts";
+    private int GALLERY = 1, CAMERA = 2;
+    String filePath;
+    private Uri uri;
     ArrayList<String> areas = new ArrayList<String>();
     ArrayList<String> areasid = new ArrayList<String>();
     boolean doubleBackToExitPressedOnce = false;
@@ -58,6 +98,10 @@ public class Register extends AppCompatActivity {
     Context context=this;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_registeration/";
     public String source_lat,source_lng;
+    ImageView imh;
+    public String  phone_no;
+    String emailPattern = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +111,20 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialog=new ProgressDialog(Register.this,R.style.MyAlertDialogStyle);
+
         shopname=findViewById(R.id.shopname);
+
         owner=findViewById(R.id.owner);
         gstno=findViewById(R.id.gst);
         phone=findViewById(R.id.phone);
@@ -79,6 +136,39 @@ public class Register extends AppCompatActivity {
         hide=findViewById(R.id.hide);
         device_id =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         sessionManager=new SessionManager(this);
+
+        gstno.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (gstno.getText().toString().matches(emailPattern) && gstno.getText().toString().length() > 0)
+                {
+                    //Toast.makeText(getApplicationContext(),"valid gst no",Toast.LENGTH_SHORT).show();
+
+                }
+                if (!(gstno.getText().toString().matches(emailPattern) && gstno.getText().toString().length() > 0))
+                {
+                    //Toast.makeText(getApplicationContext(),"Invalid GST Number",Toast.LENGTH_SHORT).show();
+                    gstno.setError("Invalid GST Number");
+
+                }
+
+            }
+        });
+
+        Bundle bundle = getIntent().getExtras();
+        phone_no = bundle.getString("phone_no");
+
+        phone.setText(phone_no);
 
 
         address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -113,6 +203,8 @@ public class Register extends AppCompatActivity {
 
 
 
+
+
         spinner = findViewById(R.id.spinner);
         loadSpinnerData(URL);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -120,7 +212,7 @@ public class Register extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String country= spinner.getItemAtPosition(spinner.getSelectedItemPosition()).toString();
                 idsp=areasid.get(spinner.getSelectedItemPosition());
-                Toast.makeText(getApplicationContext(),country,Toast.LENGTH_LONG).show();
+            //    Toast.makeText(getApplicationContext(),country,Toast.LENGTH_LONG).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -134,7 +226,15 @@ public class Register extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              register();
+                if(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||gstno.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0){
+                    Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
+                }
+                if(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||gstno.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0) {
+
+                    dialog.setMessage("Loading");
+                    dialog.show();
+                    register();
+                }
             }
         });
     }
@@ -156,7 +256,7 @@ public class Register extends AppCompatActivity {
                     Log.d("longitude","mm"+lonh);
                     source_lat = lat;
                     source_lng = lonh;
-                    Toast.makeText(Register.this,source_lat+source_lng,Toast.LENGTH_SHORT).show();
+             //       Toast.makeText(Register.this,source_lat+source_lng,Toast.LENGTH_SHORT).show();
                     //  sessionManager.setDestLong(lonh);
                     break;
                 default:
@@ -176,11 +276,13 @@ public class Register extends AppCompatActivity {
             public void onResponse(String response) {
                 try{
                     JSONObject jsonObject=new JSONObject(response);
+                    areas.add("Please Select Your Category");
                         JSONArray jsonArray=jsonObject.getJSONArray("data");
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject jsonObject1=jsonArray.getJSONObject(i);
                             String country=jsonObject1.getString("name");
                             String id=jsonObject1.getString("id");
+
                             areas.add(country);
                             areasid.add(id);
 
@@ -207,7 +309,7 @@ public class Register extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // dialog.dismiss();
+                        dialog.dismiss();
                         //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -226,7 +328,7 @@ public class Register extends AppCompatActivity {
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
                                 Toast.makeText(Register.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Register.this, Payment.class);
+                                Intent intent = new Intent(Register.this, addshopim.class);
                                 intent.putExtra("email",email.getText().toString());
                                 intent.putExtra("number",phone.getText().toString());
                                 startActivity(intent);
@@ -238,6 +340,7 @@ public class Register extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                            Log.d("response","hhh"+response);
@@ -248,6 +351,7 @@ public class Register extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        dialog.dismiss();
                         Toast.makeText(Register.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
@@ -308,4 +412,7 @@ public class Register extends AppCompatActivity {
             }
         }, 2000);
     }
+
+
+
 }

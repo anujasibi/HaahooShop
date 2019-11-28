@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -38,6 +40,7 @@ public class editbranchprofile extends AppCompatActivity {
     Context context=this;
     ImageView back;
     private ProgressDialog dialog ;
+    String emailPattern = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,34 @@ public class editbranchprofile extends AppCompatActivity {
         shopname.setText(Global.name);
      gst.setText(Global.gst);
         email.setText(Global.email);
+
+        gst.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (gst.getText().toString().matches(emailPattern) && gst.getText().toString().length() > 0)
+                {
+                    //Toast.makeText(getApplicationContext(),"valid gst no",Toast.LENGTH_SHORT).show();
+
+                }
+                if (!(gst.getText().toString().matches(emailPattern) && gst.getText().toString().length() > 0))
+                {
+                    //Toast.makeText(getApplicationContext(),"Invalid GST Number",Toast.LENGTH_SHORT).show();
+                    gst.setError("Invalid GST Number");
+
+                }
+
+            }
+        });
 
         dialog=new ProgressDialog(editbranchprofile.this,R.style.MyAlertDialogStyle);
 

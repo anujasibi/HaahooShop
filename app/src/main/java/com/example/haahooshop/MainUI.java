@@ -82,6 +82,7 @@ public class MainUI extends AppCompatActivity {
             public void onClick(View v) {
                 sessionManager.setTokens(null);
                 startActivity(new Intent(MainUI.this, MainActivity.class));
+                Toast.makeText(getApplicationContext(),"Successfully logged out",Toast.LENGTH_SHORT).show();
                 finish();
 
 

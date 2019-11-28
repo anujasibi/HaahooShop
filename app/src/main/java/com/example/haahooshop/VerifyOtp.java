@@ -3,6 +3,7 @@ package com.example.haahooshop;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class VerifyOtp extends AppCompatActivity {
     String phone_no = null;
     Context context=this;
     public String otp;
+    private ProgressDialog dialog ;
 
     private String URLline = Global.BASE_URL+"api_shop_app/shop_phone_verify/";
 
@@ -56,6 +58,7 @@ public class VerifyOtp extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialog=new ProgressDialog(VerifyOtp.this,R.style.MyAlertDialogStyle);
         Bundle bundle = getIntent().getExtras();
         phone_no = bundle.getString("phone_no");
         otp=bundle.getString("otp");
@@ -70,6 +73,8 @@ public class VerifyOtp extends AppCompatActivity {
                     editText.setError("Please enter the otp to proceed");
                 }
                 if(editText.getText().toString().length() == 4) {
+                    dialog.setMessage("Loading");
+                    dialog.show();
 
                     verifyotp();
                 }
@@ -83,7 +88,7 @@ public class VerifyOtp extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // dialog.dismiss();
+                         dialog.dismiss();
                         //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -101,6 +106,7 @@ public class VerifyOtp extends AppCompatActivity {
                             if(status.equals("200")){
                                 Toast.makeText(VerifyOtp.this, "Successful", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(VerifyOtp.this, Register.class);
+                                intent.putExtra("phone_no",phone_no);
                                 startActivity(intent);
                             }
                             else{
@@ -110,6 +116,7 @@ public class VerifyOtp extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                         //   Log.d("response","hhh"+response);
@@ -120,6 +127,7 @@ public class VerifyOtp extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        dialog.dismiss();
                         Toast.makeText(VerifyOtp.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
@@ -136,5 +144,10 @@ public class VerifyOtp extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(VerifyOtp.this,MainActivity.class));
     }
 }

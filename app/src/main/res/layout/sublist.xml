@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardElevation="5dp"
+        android:id="@+id/card"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/person"
+                app:civ_border_width="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:civ_border_color="#FF000000"/>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:text="Product Name"
+                android:layout_toEndOf="@+id/profile_image"
+                android:textAlignment="center"
+                android:textColor="#CC0033"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="40dp"
+                android:layout_toEndOf="@+id/profile_image"
+                android:text="Mode :"
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <TextView
+                android:id="@+id/statuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:layout_marginTop="40dp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/status"
+                android:text="Status "
+
+                android:textAlignment="center"
+                android:textColor="#007f00"
+                />
+
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="70dp"
+                android:layout_toEndOf="@+id/profile_image"
+                android:text="User :"
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <TextView
+                android:id="@+id/namee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:layout_marginTop="70dp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/status"
+                android:text="Status "
+
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <TextView
+                android:id="@+id/area"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="100dp"
+                android:layout_toEndOf="@+id/profile_image"
+                android:text="Location :"
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <TextView
+                android:id="@+id/areaa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:layout_marginTop="100dp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/status"
+                android:text="Status "
+
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="130dp"
+                android:layout_toEndOf="@+id/profile_image"
+                android:text="Amount :"
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <TextView
+                android:id="@+id/amountt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:layout_marginTop="130dp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/status"
+                android:text="Status "
+
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="160dp"
+                android:layout_toEndOf="@+id/profile_image"
+                android:text="OrderDate:"
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <TextView
+                android:id="@+id/datee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:layout_marginTop="160dp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/status"
+                android:text="Status "
+
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+
+
+
+
+
+
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

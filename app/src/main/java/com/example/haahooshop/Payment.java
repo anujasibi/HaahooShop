@@ -31,7 +31,7 @@ public class Payment extends Activity implements PaymentResultListener {
     private static final String TAG = Payment.class.getSimpleName();
     private String number,email;
     String razorid="null";
-    private String URLlin = "https://testapi.creopedia.com/api_shop_app/shop_payment/";
+    private String URLlin = "https://testapi.creopedia.com/api_shop_app/shop_payment_det/";
     SessionManager sessionManager;
     Context context=this;
 
@@ -104,7 +104,7 @@ public class Payment extends Activity implements PaymentResultListener {
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
-            Toast.makeText(this, "Payment Successful: " + razorpayPaymentID, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Payment Successful: ", Toast.LENGTH_SHORT).show();
             Log.d("paymentidmmmm","mm"+razorpayPaymentID);
 
             razorid=razorpayPaymentID;

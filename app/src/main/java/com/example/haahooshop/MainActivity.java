@@ -2,6 +2,8 @@ package com.example.haahooshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private String token_firebase;
     Context context=this;
     String device_id = null;
+    private ProgressDialog dialog ;
+    Activity activity = this;
     SessionManager sessionManager;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_otp_generation/";
     private String URLli = Global.BASE_URL+"api_shop_app/shop_login/";
@@ -51,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Window window = activity.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+
         sessionManager = new SessionManager(this);
 
         phoneno=findViewById(R.id.uname);
@@ -62,11 +75,14 @@ public class MainActivity extends AppCompatActivity {
         firebaseAnalytics = FirebaseAnalytics.getInstance(context);
         token_firebase = FirebaseInstanceId.getInstance().getToken();
         Log.d("tokkkken","lhykhiyh"+token_firebase);
+        dialog=new ProgressDialog(MainActivity.this,R.style.MyAlertDialogStyle);
 
 
         continuetologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.setMessage("Loading");
+                dialog.show();
                 submit();
             }
         });
@@ -76,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       // dialog.dismiss();
+                       dialog.dismiss();
                         //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -119,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                           Log.d("response","hhh"+response);
@@ -129,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        dialog.dismiss();
                         Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
@@ -205,5 +223,10 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(context,"Press again to exit",Toast.LENGTH_SHORT).show();
     }
 }
