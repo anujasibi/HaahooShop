@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -17,10 +18,23 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.haahooshop.utils.Global;
 import com.example.haahooshop.utils.SessionManager;
+import com.nex3z.notificationbadge.NotificationBadge;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +51,10 @@ public class MainUI extends AppCompatActivity {
     Activity activity = this;
     ImageView logout;
     SessionManager sessionManager;
+    TextView mBadge;
+    ImageView not;
+    public String data,order,sub;
+    public int num;
 
     private List<CardRecyclerViewItem> carItemList = null;
 
@@ -50,6 +68,19 @@ public class MainUI extends AppCompatActivity {
 
       //  imageView=findViewById(R.id.);
        sessionManager = new SessionManager(this);
+       mBadge=findViewById(R.id.badge);
+       not=findViewById(R.id.noti);
+
+       not.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent=new Intent(MainUI.this,notification.class);
+               intent.putExtra("subcount",sub);
+               intent.putExtra("order",order);
+               startActivity(intent);
+
+           }
+       });
 
         cardView=findViewById(R.id.card);
         Window window = activity.getWindow();
@@ -58,6 +89,13 @@ public class MainUI extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        notif();
+
+       // num= Integer.parseInt(data);
+
+
+        //mBadge.setNumber(num);
+
 
 
 
@@ -142,4 +180,62 @@ public class MainUI extends AppCompatActivity {
             }
         }, 2000);
     }
+
+    private void notif(){
+        RequestQueue queue = Volley.newRequestQueue(MainUI.this);
+
+        //this is the url where you want to send the request
+
+        String url = Global.BASE_URL+"virtual_order_management/shop_order_count/";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                       // dialog.dismiss();
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+
+                            // amount.setText(obj.optString("total"));
+                            String total=obj.optString("total");
+                            data=obj.optString("total_count");
+                            sub=obj.optString("sub_count");
+                            order=obj.optString("vir_count");
+                            mBadge.setText(data);
+                            Log.d("notify","mm"+response);
+
+
+
+                        } catch (JSONException e) {
+                           // dialog.dismiss();
+                            e.printStackTrace();
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+               // dialog.dismiss();
+                Toast.makeText(MainUI.this,"Internal Server Error",Toast.LENGTH_LONG).show();
+
+
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders()  {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token " + sessionManager.getTokens());
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
+
 }

@@ -77,7 +77,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_toEndOf="@+id/status"
                 android:text="Status "
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
 
                 android:textColor="#007f00"
                 android:textStyle="bold" />
@@ -104,7 +104,7 @@
                 android:layout_marginTop="70dp"
                 android:layout_toEndOf="@+id/status"
                 android:text="Status "
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
 
                 android:textColor="#000"
                 android:textStyle="bold" />
@@ -130,7 +130,7 @@
                 android:layout_marginTop="100dp"
                 android:layout_toEndOf="@+id/status"
                 android:text="Status "
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
 
                 android:textColor="#000"
                 android:textStyle="bold" />
@@ -156,7 +156,7 @@
                 android:layout_marginTop="130dp"
                 android:layout_toEndOf="@+id/status"
                 android:text="Status "
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
 
                 android:textColor="#000"
                 android:textStyle="bold" />
@@ -183,7 +183,7 @@
                 android:layout_marginTop="160dp"
                 android:layout_toEndOf="@+id/status"
                 android:text="Status "
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
 
                 android:textColor="#000"
                 android:textStyle="bold" />

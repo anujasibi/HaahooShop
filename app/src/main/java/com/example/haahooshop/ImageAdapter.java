@@ -89,7 +89,7 @@ Log.d("yugyug","yghfghf"+Global.imj[position]);
                 public void onClick(View view) {
 
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context1);
-                    builder1.setMessage("Do you want to dispatch this product??");
+                    builder1.setMessage("Do you want to delete this image??");
                     builder1.setCancelable(true);
 
                     builder1.setPositiveButton(
