@@ -97,7 +97,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
        holder.location.setText(dataModelArrayList.get(position).getLocation());
        holder.sta.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
            @Override
-           public void onSlideComplete(@NonNull SlideToActView view) {
+           public void onSlideComplete(@NonNull final SlideToActView view) {
                Toast.makeText(context1,"Accepted the request",Toast.LENGTH_SHORT).show();
 
                AlertDialog.Builder builder1 = new AlertDialog.Builder(context1);
@@ -136,6 +136,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
                        new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
                                dialog.cancel();
+                               view.resetSlider();
                            }
                        });
 
@@ -147,7 +148,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
 
        holder.sta1.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
            @Override
-           public void onSlideComplete(SlideToActView slideToActView) {
+           public void onSlideComplete(final SlideToActView slideToActView) {
 
                Toast.makeText(context1,"Rejected the request",Toast.LENGTH_SHORT).show();
 
@@ -164,9 +165,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
                                accept();
                                holder.sta.setVisibility(View.GONE);
                                holder.sta1.setVisibility(View.GONE);
-
-
-
+                               context1.startActivity(new Intent(context1,UpcomingOrder.class));
 
                            }
                        });
@@ -176,6 +175,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
                        new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
                                dialog.cancel();
+                               slideToActView.resetSlider();
                            }
                        });
 

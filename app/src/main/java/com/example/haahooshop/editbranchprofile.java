@@ -133,7 +133,7 @@ public class editbranchprofile extends AppCompatActivity {
                             Log.d("otp","mm"+ot);
                             if(status.equals("200")){
                                 Toast.makeText(editbranchprofile.this, "Successfully Updated", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(editbranchprofile.this,branchprofile.class));
+                                startActivity(new Intent(editbranchprofile.this,ViewBranches.class));
                             }
                             else{
                                 Toast.makeText(editbranchprofile.this, "Failed."+ot, Toast.LENGTH_LONG).show();

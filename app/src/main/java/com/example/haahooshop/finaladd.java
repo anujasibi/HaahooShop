@@ -2,11 +2,13 @@ package com.example.haahooshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -51,6 +53,7 @@ public class finaladd extends AppCompatActivity {
     TextInputLayout ress;
     TextInputEditText resell;
     TextView save,res;
+    Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,17 @@ public class finaladd extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finaladd);
+
+        Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
         res=findViewById(R.id.res);
         ress=findViewById(R.id.ress);
         resell=findViewById(R.id.resellprice);
@@ -75,6 +89,7 @@ public class finaladd extends AppCompatActivity {
         distance=findViewById(R.id.name);
         sessionManager=new SessionManager(this);
         imageView=findViewById(R.id.imageView3);
+
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +118,9 @@ public class finaladd extends AppCompatActivity {
                 check.setChecked(false);
                 status="0";
                 sessionManager.setcheckn(status);
+                res.setVisibility(View.GONE);
+                ress.setVisibility(View.GONE);
+                resell.setText("0");
             }
         });
 
@@ -115,7 +133,7 @@ public class finaladd extends AppCompatActivity {
                     checkBox3.setChecked(false);
                     delivery_type = checkBox1.getText().toString();
                     sessionManager.setcheck(delivery_type);
-                    Toast.makeText(finaladd.this,"bhnjv"+checkBox1.getText().toString(),Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(finaladd.this,"bhnjv"+checkBox1.getText().toString(),Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -128,7 +146,7 @@ public class finaladd extends AppCompatActivity {
                     checkBox3.setChecked(false);
                     delivery_type = checkBox2.getText().toString();
                     sessionManager.setcheck(delivery_type);
-                    Toast.makeText(finaladd.this,"bhnjv"+checkBox2.getText().toString(),Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(finaladd.this,"bhnjv"+checkBox2.getText().toString(),Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -142,7 +160,7 @@ public class finaladd extends AppCompatActivity {
                     checkBox2.setChecked(false);
                     delivery_type = checkBox3.getText().toString();
                     sessionManager.setcheck(delivery_type);
-                    Toast.makeText(finaladd.this,"bhnjv"+checkBox3.getText().toString(),Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(finaladd.this,"bhnjv"+checkBox3.getText().toString(),Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -155,24 +173,26 @@ public class finaladd extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(distance.getText().length()==0||delivery_type.equals("null")||status.equals("")){
-                    Toast.makeText(finaladd.this,"All are fields are required",Toast.LENGTH_SHORT).show();
+                if(distance.getText().length()==0||delivery_type.equals("null")||status.equals("")||(resell.getText().toString().length() == 0)) {
+                    Toast.makeText(finaladd.this, "All are fields are required", Toast.LENGTH_SHORT).show();
                 }
                 if(!(distance.getText().length()==0||delivery_type.equals("null")||status.equals(""))) {
-                    sessionManager.setreselprice(resell.getText().toString());
-                    Log.d("mmmmmmmmmmmm","mm"+sessionManager.getreselprice());
-                    sessionManager.setcatdistance(distance.getText().toString());
-                    int selectedId = radioSexGroup.getCheckedRadioButtonId();
+                    if (!(resell.getText().toString().length() == 0)) {
+                        sessionManager.setreselprice(resell.getText().toString());
+                        Log.d("mmmmmmmmmmmm", "mm" + sessionManager.getreselprice());
+                        sessionManager.setcatdistance(distance.getText().toString());
+                        int selectedId = radioSexGroup.getCheckedRadioButtonId();
 
-                    // find the radiobutton by returned id
-                    one = (RadioButton) findViewById(selectedId);
+                        // find the radiobutton by returned id
+                        one = (RadioButton) findViewById(selectedId);
 
-                    sessionManager.setradio(one.getText().toString());
+                        sessionManager.setradio(one.getText().toString());
 
-                    Toast.makeText(finaladd.this,
-                            one.getText(), Toast.LENGTH_SHORT).show();
+                     /*   Toast.makeText(finaladd.this,
+                                one.getText(), Toast.LENGTH_SHORT).show();*/
 
-                    startActivity(new Intent(finaladd.this, subscription.class));
+                        startActivity(new Intent(finaladd.this, subscription.class));
+                    }
                 }
             }
         });

@@ -2,6 +2,7 @@ package com.example.haahooshop;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +59,8 @@ public class edit_product extends AppCompatActivity {
     String filePath;
     private Uri uri;
     public String ids,catid,display,memory;
+    private ProgressDialog dialogs ;
+    Activity activity = this;
 
 
     @Override
@@ -74,6 +78,18 @@ public class edit_product extends AppCompatActivity {
                 finish();
             }
         });
+
+        Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialogs=new ProgressDialog(edit_product.this,R.style.MyAlertDialogStyle);
 
 
 
@@ -127,6 +143,8 @@ public class edit_product extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialogs.setMessage("Loading");
+                dialogs.show();
                 upload(filePath);
             }
         });
@@ -340,8 +358,8 @@ public class edit_product extends AppCompatActivity {
             call.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) {
-
-                    Toast.makeText(context, "Successfully updated"+response, Toast.LENGTH_SHORT).show();
+                    dialogs.dismiss();
+                    Toast.makeText(context, "Successfully updated", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                     builder1.setMessage("Do you want to edit your added product specification??");
                     builder1.setCancelable(true);

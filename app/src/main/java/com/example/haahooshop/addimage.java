@@ -104,7 +104,7 @@ public class addimage extends AppCompatActivity {
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context,finaladd.class));
+                startActivity(new Intent(context,subscription.class));
             }
         });
 
@@ -114,7 +114,13 @@ public class addimage extends AppCompatActivity {
             public void onClick(View view) {
                 dialog.setMessage("Loading");
                 dialog.show();
-                submituser();
+
+                if(listOfImagesPath.size()==0){
+                    Toast.makeText(getApplicationContext(),"Please add images",Toast.LENGTH_SHORT).show();
+                }
+                if(!(listOfImagesPath.size()==0)) {
+                    submituser();
+                }
             }
         });
 
@@ -478,6 +484,6 @@ public class addimage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,finaladd.class));
+        startActivity(new Intent(context,subscription.class));
     }
 }

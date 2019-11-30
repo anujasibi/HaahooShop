@@ -61,7 +61,7 @@ public class addprod extends AppCompatActivity {
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
+                startActivity(new Intent(getApplicationContext(),AddProduct.class));
             }
         });
 
@@ -98,6 +98,6 @@ public class addprod extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-       finish();
+        startActivity(new Intent(getApplicationContext(),AddProduct.class));
     }
 }

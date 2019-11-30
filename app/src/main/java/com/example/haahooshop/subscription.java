@@ -1,12 +1,15 @@
 package com.example.haahooshop;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -25,13 +28,15 @@ public class subscription extends AppCompatActivity {
 
     RelativeLayout re;
     TextView save;
-    private String status="0";
+    private String status="";
     private String sub="null";
     SessionManager sessionManager;
     CheckBox checkBox1,checkBox2,checkBox3,checkBox4;
     private String delivery_type;
     ArrayList<String>value=new ArrayList<>();
     TextView yp;
+    Activity activity = this;
+    ImageView imageView;
 
 
     @Override
@@ -41,6 +46,18 @@ public class subscription extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription);
+
+        Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        imageView=findViewById(R.id.imageView3);
         check=findViewById(R.id.checkBo);
         checkm=findViewById(R.id.checkBo1);
 
@@ -53,6 +70,12 @@ public class subscription extends AppCompatActivity {
         re=findViewById(R.id.ret);
         sessionManager=new SessionManager(this);
         save=findViewById(R.id.save);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(subscription.this,finaladd.class));
+            }
+        });
 
 
         check.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +101,7 @@ public class subscription extends AppCompatActivity {
                 sub=checkm.getText().toString();
                 sessionManager.setsub(status);
                 yp.setVisibility(View.GONE);
-
+                value.add("0");
                 checkBox2.setVisibility(View.GONE);
                 checkBox3.setVisibility(View.GONE);
                 checkBox4.setVisibility(View.GONE);
@@ -140,13 +163,18 @@ public class subscription extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("valuebkjbhkbhk","mm"+value);
-                if(status.equals("0")){
-                    startActivity(new Intent(subscription.this,addimage.class));
+                if(status.equals("")||value.size()==0){
+                    Toast.makeText(getApplicationContext(),"All fields are required",Toast.LENGTH_SHORT).show();
                 }
-                if(status.equals("1")){
-                    Global.value=value;
-                    Log.d("valueeeee","mm"+value);
-                    startActivity((new Intent(subscription.this,subscriptionmode.class)));
+                if(!(status.equals("")||value.size()==0)) {
+                    if (status.equals("0")) {
+                        startActivity(new Intent(subscription.this, addimage.class));
+                    }
+                    if (status.equals("1")) {
+                        Global.value = value;
+                        Log.d("valueeeee", "mm" + value);
+                        startActivity((new Intent(subscription.this, subscriptionmode.class)));
+                    }
                 }
             }
         });

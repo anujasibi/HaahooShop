@@ -1,7 +1,9 @@
 package com.example.haahooshop;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +51,8 @@ public class orderdetails extends AppCompatActivity {
     private String tim="null";
     SessionManager sessionManager;
     private String URLline = Global.BASE_URL+"virtual_order_management/shop_order_dispatched/";
+    private ProgressDialog dialogs ;
+    Activity activity = this;
 
 
 
@@ -108,6 +113,17 @@ public class orderdetails extends AppCompatActivity {
         pincode.setText(pincodes);
         city.setText(citys);
         state.setText(states);
+        Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialogs=new ProgressDialog(orderdetails.this,R.style.MyAlertDialogStyle);
 
         sub.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +202,8 @@ public class orderdetails extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    dialogs.setMessage("Loading");
+                                    dialogs.show();
                                     subuser();
 
                                 }
@@ -212,7 +230,7 @@ public class orderdetails extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // dialog.dismiss();
+                        dialogs.dismiss();
                         //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -243,6 +261,7 @@ public class orderdetails extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
+                            dialogs.dismiss();
                             e.printStackTrace();
                         }
                         Log.d("response","hhh"+response);
@@ -253,6 +272,7 @@ public class orderdetails extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        dialogs.dismiss();
                         Toast.makeText(context,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){

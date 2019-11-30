@@ -203,7 +203,7 @@ public class AddShopBranch extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String country = spinner.getItemAtPosition(spinner.getSelectedItemPosition()).toString();
                 idsp = areasid.get(spinner.getSelectedItemPosition());
-                Toast.makeText(getApplicationContext(), country, Toast.LENGTH_LONG).show();
+            //    Toast.makeText(getApplicationContext(), country, Toast.LENGTH_LONG).show();
             }
 
             @Override

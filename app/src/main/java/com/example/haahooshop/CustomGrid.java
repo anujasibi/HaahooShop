@@ -103,7 +103,7 @@ public class CustomGrid extends ArrayAdapter {
                         selected_position= position;
                         sessionManager.setPid(birdList.get(position).getId());
                         sessionManager.setcatid(birdList.get(position).getId());
-                        Toast.makeText(getContext(),"Checkedname"+sessionManager.getPid(),Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getContext(),"Checkedname"+sessionManager.getPid(),Toast.LENGTH_SHORT).show();
 
 
                     }
