@@ -103,6 +103,10 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                     Intent intent=new Intent(context,Subscriptionlist.class);
                     context.startActivity(intent);
                 }
+                if (carTitle.equals("Cancelled Subscription List")){
+                    Intent intent=new Intent(context,cancelsub.class);
+                    context.startActivity(intent);
+                }
 
 
 
@@ -171,6 +175,10 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 }
                 if (carTitle.equals("View Subscription List")){
                     Intent intent=new Intent(context,Subscriptionlist.class);
+                    context.startActivity(intent);
+                }
+                if (carTitle.equals("Cancelled Subscription List")){
+                    Intent intent=new Intent(context,cancelsub.class);
                     context.startActivity(intent);
                 }
                /* if (carTitle.equals("Earnings")){

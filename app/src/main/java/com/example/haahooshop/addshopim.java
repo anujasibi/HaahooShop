@@ -49,10 +49,11 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class addshopim extends AppCompatActivity {
-    ImageView imh;
+    ImageView imh,imgp;
     private static final String IMAGE_DIRECTORY = "/demonuts";
-    private int GALLERY = 1, CAMERA = 2;
+    private int GALLERY = 1, CAMERA = 2,CGALLERY=3,CCAMERA=4;
     String filePath;
+    String files;
     private Uri uri;
     SessionManager sessionManager;
     Context context=this;
@@ -70,6 +71,7 @@ public class addshopim extends AppCompatActivity {
         setContentView(R.layout.activity_addshopim);
         sessionManager=new SessionManager(this);
         imh=findViewById(R.id.img);
+        imgp=findViewById(R.id.imgp);
 
         Bundle bundle = getIntent().getExtras();
         phone_no = bundle.getString("number");
@@ -91,6 +93,13 @@ public class addshopim extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showPictureDialog();
+            }
+        });
+
+        imgp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPictureDialo();
             }
         });
 
@@ -131,6 +140,28 @@ public class addshopim extends AppCompatActivity {
                 });
         pictureDialog.show();
     }
+    private void showPictureDialo() {
+        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+        pictureDialog.setTitle("Select Action");
+        String[] pictureDialogItems = {
+                "Select photo from gallery",
+                "Capture photo from camera"};
+        pictureDialog.setItems(pictureDialogItems,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                choosePhotoFromGallar();
+                                break;
+                            case 1:
+                                takePhotoFromCamer();
+                                break;
+                        }
+                    }
+                });
+        pictureDialog.show();
+    }
 
     public void choosePhotoFromGallary() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -142,6 +173,17 @@ public class addshopim extends AppCompatActivity {
     private void takePhotoFromCamera() {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAMERA);
+    }
+    public void choosePhotoFromGallar() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, CGALLERY);
+    }
+
+    private void takePhotoFromCamer() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CCAMERA);
     }
 
     @Override
@@ -171,7 +213,10 @@ public class addshopim extends AppCompatActivity {
                 }
             }
 
-        } else if (requestCode == CAMERA) {
+        }
+
+
+        else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             imh.setImageBitmap(thumbnail);
             saveImage(thumbnail);
@@ -181,6 +226,38 @@ public class addshopim extends AppCompatActivity {
             uploadToServer(filePath);
             Log.d("filepath", "mm" + filePath);
         }
+        else if (requestCode == CCAMERA) {
+            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            imgp.setImageBitmap(thumbnail);
+            saveImage(thumbnail);
+            //   Toast.makeText(addshopim.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+            Uri tempUri = getImageUri(getApplicationContext(), thumbnail);
+            files = (getRealPathFromURI(tempUri));
+            uploadToServe(files);
+            Log.d("filepath", "mm" + files);
+        }
+        else if (requestCode == CGALLERY) {
+            Uri contentURI = data.getData();
+            uri = data.getData();
+            files = getRealPathFromURIPath(uri, addshopim.this);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                bitmap = getResizedBitmap(bitmap, 400);
+                String path = saveImage(bitmap);
+                //   Toast.makeText(addshopim.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                imgp.setImageBitmap(bitmap);
+                uploadToServe(files);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                //    Toast.makeText(addshopim.this, "Failed!", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+
+
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
@@ -327,6 +404,52 @@ public class addshopim extends AppCompatActivity {
             //Create request body with text description and text media type
             //
             Call<ResponseBody> call = uploadAPI.uploadImage(part1,"Token "+ sessionManager.getTokens());
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    Toast.makeText(context,"Successful",Toast.LENGTH_SHORT).show();
+                    Log.d("recyfvggbhh","mm"+response);
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+
+                }
+
+
+            });
+        }
+    }
+
+    private void uploadToServe(String files) {
+        Retrofit retrofit = NetworkClient.getRetrofitClient(this);
+        UploadImage uploadAPI = retrofit.create(UploadImage.class);
+
+//        Log.d("url","mmm"+filePath);
+        //Create a file object using file path
+        if (files == null){
+            Toast.makeText(addshopim.this,"Please Upload Image",Toast.LENGTH_SHORT).show();
+        }
+        if (files != null) {
+            File immm = new File(files);
+            Log.d("mmmmmmm", "mmm" + immm.length());
+            // Create a request body with file and image media type
+
+
+            RequestBody photob = RequestBody.create(MediaType.parse("image/*"), immm);
+            RequestBody shop_id = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getpayid());
+            // Create MultipartBody.Part using file request-body,file name and part name
+            MultipartBody.Part part1 = MultipartBody.Part.createFormData("shop_image", immm.getName(), photob);
+            Log.d("image","mm"+part1);
+            Log.d("image","mm"+immm.getName());
+
+
+
+            //Create request body with text description and text media type
+            //
+            Call<ResponseBody> call = uploadAPI.uploadI(part1,"Token "+ sessionManager.getTokens(),shop_id);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
