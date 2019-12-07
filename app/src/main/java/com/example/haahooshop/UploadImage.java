@@ -17,6 +17,9 @@ public interface UploadImage {
     @POST("api_shop_app/shop_cover_img/")
     Call<ResponseBody> uploadI(@Part MultipartBody.Part  shop_image, @Header("Authorization")String Token,@Part("id") RequestBody id);
     @Multipart
+    @POST("api_shop_app/branch_cover_img/")
+    Call<ResponseBody> upload(@Part MultipartBody.Part  shop_image, @Header("Authorization")String Token,@Part("id") RequestBody id);
+    @Multipart
     @POST("api_shop_app/shop_pdt_img/")
     Call<ResponseBody> uploadImag(@Part MultipartBody.Part pdt_image, @Header("Authorization")String Token,@Part("id") RequestBody id);
     @Multipart
