@@ -75,13 +75,14 @@ import retrofit2.Retrofit;
 public class AddShopBranch extends AppCompatActivity {
 
     EditText shopname, gst, phone, email, distance, address, password;
-    ImageView imageView;
+    ImageView imageView,imgp;
     Context context=this;
     TextView submit, show, hide;
     public String idsp;
+    String files;
     Spinner spinner;
     private static final String IMAGE_DIRECTORY = "/demonuts";
-    private int GALLERY = 1, CAMERA = 2;
+    private int GALLERY = 1, CAMERA = 2,CGALLERY=3,CCAMERA=4;;
     String filePath;
     private Uri uri;
     ArrayList<String> areas = new ArrayList<String>();
@@ -117,6 +118,7 @@ public class AddShopBranch extends AppCompatActivity {
 
 
         sessionManager = new SessionManager(this);
+        imgp=findViewById(R.id.imgp);
 
         shopname = findViewById(R.id.shopname);
         gst = findViewById(R.id.gst);
@@ -129,6 +131,13 @@ public class AddShopBranch extends AppCompatActivity {
         show = findViewById(R.id.show);
         hide = findViewById(R.id.hide);
         imagen=findViewById(R.id.imageView3);
+
+        imgp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPictureDialo();
+            }
+        });
 
         gst.addTextChangedListener(new TextWatcher() {
             @Override
@@ -259,6 +268,29 @@ public class AddShopBranch extends AppCompatActivity {
         }
 
     }
+    private void showPictureDialo() {
+        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+        pictureDialog.setTitle("Select Action");
+        String[] pictureDialogItems = {
+                "Select photo from gallery",
+                "Capture photo from camera"};
+        pictureDialog.setItems(pictureDialogItems,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                choosePhotoFromGallar();
+                                break;
+                            case 1:
+                                takePhotoFromCamer();
+                                break;
+                        }
+                    }
+                });
+        pictureDialog.show();
+    }
+
 
 
     private void showPictureDialog() {
@@ -295,6 +327,18 @@ public class AddShopBranch extends AppCompatActivity {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAMERA);
     }
+    public void choosePhotoFromGallar() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, CGALLERY);
+    }
+
+    private void takePhotoFromCamer() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CCAMERA);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -331,7 +375,35 @@ public class AddShopBranch extends AppCompatActivity {
             filePath = (getRealPathFromURI(tempUri));
             Log.d("filepath", "mm" + filePath);
         }
-    }
+        else if (requestCode == CCAMERA) {
+            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            imgp.setImageBitmap(thumbnail);
+            saveImage(thumbnail);
+            //   Toast.makeText(addshopim.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+            Uri tempUri = getImageUri(getApplicationContext(), thumbnail);
+            files = (getRealPathFromURI(tempUri));
+            Log.d("filepath", "mm" + files);
+        }
+        else if (requestCode == CGALLERY) {
+            Uri contentURI = data.getData();
+            uri = data.getData();
+            files = getRealPathFromURIPath(uri, AddShopBranch.this);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                bitmap = getResizedBitmap(bitmap, 400);
+                String path = saveImage(bitmap);
+                //   Toast.makeText(addshopim.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                imgp.setImageBitmap(bitmap);
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                //    Toast.makeText(addshopim.this, "Failed!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -495,7 +567,9 @@ public class AddShopBranch extends AppCompatActivity {
         }
         if (filePath != null) {
             File immm = new File(filePath);
+            File im=new File(files);
             Log.d("mmmmmmm", "mmm" + immm.length());
+            Log.d("mmmmmmm", "mmm" + im.length());
             // Create a request body with file and image media type
 
 
@@ -504,6 +578,11 @@ public class AddShopBranch extends AppCompatActivity {
             MultipartBody.Part part1 = MultipartBody.Part.createFormData("shop_image", immm.getName(), photob);
             Log.d("image", "mm" + part1);
             Log.d("image", "mm" + immm.getName());
+            RequestBody photobv = RequestBody.create(MediaType.parse("image/*"), im);
+            // Create MultipartBody.Part using file request-body,file name and part name
+            MultipartBody.Part part2 = MultipartBody.Part.createFormData("cover_image", im.getName(), photobv);
+            Log.d("image", "mm" + part2);
+            Log.d("image", "mm" + im.getName());
 
 
             //Create request body with text description and text media type
@@ -532,7 +611,7 @@ public class AddShopBranch extends AppCompatActivity {
             Log.d("nameee","mm"+device_id);
 
             //
-            Call call = uploadAPIs.uploadI("Token " + sessionManager.getTokens(),part1, name, gst_no, emails, passwords, phone_no, addresss,lat,log,category,distances,device);
+            Call call = uploadAPIs.uploadI("Token " + sessionManager.getTokens(),part1,part2, name, gst_no, emails, passwords, phone_no, addresss,lat,log,category,distances,device);
             call.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, retrofit2.Response response) {

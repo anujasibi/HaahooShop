@@ -51,7 +51,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class branchprofile extends AppCompatActivity {
-    ImageView imageView,image,io;
+    ImageView imageView,image,io,im;
     Context context = this;
     TextView shopname,location,gstno,catgory,owner,edit;
 
@@ -74,8 +74,10 @@ public class branchprofile extends AppCompatActivity {
         requestMultiplePermissions();
 
         imageView=findViewById(R.id.img);
+        im=findViewById(R.id.base);
      //   Picasso.with(context).load(Global.image).into(imageView);
         Picasso.get().load(Global.image).into(imageView);
+        Picasso.get().load(Global.cover).into(im);
         Window window = activity.getWindow();
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -100,6 +102,8 @@ public class branchprofile extends AppCompatActivity {
 
         id=bundle.getString("id");
         Log.d("mnjbkjbkbj","hjghjghg"+id);*/
+
+
 
 
 

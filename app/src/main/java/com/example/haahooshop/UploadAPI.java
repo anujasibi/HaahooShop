@@ -23,7 +23,7 @@ public interface  UploadAPI {
 
     @Multipart
     @POST("api_shop_app/branch_registration/")
-    Call<ResponseBody> uploadI(@Header("Authorization") String token, @Part MultipartBody.Part shop_image, @Part("name") RequestBody name, @Part("gst_no") RequestBody gst_no, @Part("email") RequestBody email, @Part("password") RequestBody password, @Part("phone_no") RequestBody phone_no, @Part("address") RequestBody address, @Part("lat") RequestBody lat, @Part("log") RequestBody log, @Part("category") RequestBody category, @Part("distance") RequestBody distance, @Part("device_id") RequestBody device_id);
+    Call<ResponseBody> uploadI(@Header("Authorization") String token, @Part MultipartBody.Part shop_image,@Part MultipartBody.Part cover_image, @Part("name") RequestBody name, @Part("gst_no") RequestBody gst_no, @Part("email") RequestBody email, @Part("password") RequestBody password, @Part("phone_no") RequestBody phone_no, @Part("address") RequestBody address, @Part("lat") RequestBody lat, @Part("log") RequestBody log, @Part("category") RequestBody category, @Part("distance") RequestBody distance, @Part("device_id") RequestBody device_id);
 
 }
 

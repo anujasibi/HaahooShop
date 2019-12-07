@@ -66,7 +66,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class profile extends AppCompatActivity {
-    ImageView imageView,image;
+    ImageView imageView,image,im;
     TextView shopname,location,gstno,catgory,owner,edit;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_details_show/";
     SessionManager sessionManager;
@@ -79,6 +79,7 @@ public class profile extends AppCompatActivity {
     public String em;
     ImageView io;
     Activity activity = this;
+    public String  split1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,8 @@ public class profile extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+
+        im=findViewById(R.id.base);
 
         imageView=findViewById(R.id.img);
         image=findViewById(R.id.imgg);
@@ -143,6 +146,7 @@ public class profile extends AppCompatActivity {
                 intent.putExtra("owner",owner.getText().toString());
                 intent.putExtra("gstno",gstno.getText().toString());
                 intent.putExtra("email",em);
+                intent.putExtra("image",split1);
                 startActivity(intent);
                 //
 
@@ -424,21 +428,25 @@ public class profile extends AppCompatActivity {
                             Log.d("imagesddd","mm"+split);
                       //      Picasso.with(context).load(Global.BASE_URL+split).into(imageView)
                             Picasso.get().load(Global.BASE_URL+split).into(imageView);
+                            String images2 = jsonObject1.getString("cover_img");
+                            String[] seperated1 = images2.split(",");
+                             split1 = seperated1[0].replace("[", "").replace("]","");
+                            Log.d("imagesddd","mm"+split1);
+                            //      Picasso.with(context).load(Global.BASE_URL+split).into(imageView)
+                            Picasso.get().load(Global.BASE_URL+split1).into(im);
 
 
 
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
                                 dialog.dismiss();
-                             //   Toast.makeText(profile.this, "Successful", Toast.LENGTH_LONG).show();
+                             //Toast.makeText(profile.this, "Successful", Toast.LENGTH_LONG).show();
                                // Intent intent = new Intent(pasteaddress.this, ordersummary.class);
                                // startActivity(intent);
                             }
                             else{
                                 dialog.dismiss();
                                 Toast.makeText(profile.this, "Failed."+ot, Toast.LENGTH_LONG).show();
-
-
                             }
 
                         } catch (JSONException e) {

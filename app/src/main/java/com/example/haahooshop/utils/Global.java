@@ -27,6 +27,7 @@ public class Global {
     public static String gst;
     public static String[] imj;
     public static String idd;
+    public static String cover;
 
 
 

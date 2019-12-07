@@ -7,6 +7,7 @@ public class Itembranch {
     public String location;
     public  String email;
     public String gst;
+    public String cover;
 
     public String getId() {
         return id;
@@ -54,5 +55,13 @@ public class Itembranch {
 
     public void setGst(String gst) {
         this.gst = gst;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 }

@@ -19,6 +19,10 @@
         <activity android:name=".notification" />
         <activity android:name=".Orderfrag" />
         <activity android:name=".Subscriptionlist" />
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".forgototp" />
+        <activity android:name=".ResetPassword" />
+        <activity android:name=".changepassword" />
         <activity android:name=".addshopim" />
         <activity android:name=".viewimages" />
         <activity android:name=".viewpdtnew" />

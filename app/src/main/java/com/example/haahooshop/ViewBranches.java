@@ -87,6 +87,7 @@ public class ViewBranches extends AppCompatActivity {
                 intent.putExtra("email",birdList.get(i).getEmail());
                 Global.email=birdList.get(i).getEmail();
                 Global.gst=birdList.get(i).getGst();
+                Global.cover=birdList.get(i).getCover();
                 startActivity(intent);
             }
         });
@@ -164,6 +165,11 @@ public class ViewBranches extends AppCompatActivity {
                                 String[] seperated = images1.split(",");
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
+                                String images2 = dataobj.getString("cover_img");
+                                String[] seperated1 = images2.split(",");
+                                String split1 = seperated1[0].replace("[", "").replace("]","");
+                                Log.d("imagesddd","mm"+split1);
+                                playerModel.setCover(Global.BASE_URL+split1);
                                 String id=dataobj.getString("id");
                                 playerModel.setId(id);
                                 String email=dataobj.getString("mail");

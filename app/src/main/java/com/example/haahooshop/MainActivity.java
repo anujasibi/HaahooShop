@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog dialog ;
     Activity activity = this;
     SessionManager sessionManager;
+    TextView forgot;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_otp_generation/";
     private String URLli = Global.BASE_URL+"api_shop_app/shop_login/";
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
         sessionManager = new SessionManager(this);
-
+        forgot=findViewById(R.id.forgot);
         phoneno=findViewById(R.id.uname);
         pwdlayout=findViewById(R.id.pwdlayout);
         password=findViewById(R.id.pwd);
@@ -77,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d("tokkkken","lhykhiyh"+token_firebase);
         dialog=new ProgressDialog(MainActivity.this,R.style.MyAlertDialogStyle);
 
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,ForgotPassword.class));
+            }
+        });
 
         continuetologin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                                 password.setVisibility(View.VISIBLE);
                                 pwdlayout.setVisibility(View.VISIBLE);
                                 login.setVisibility(View.VISIBLE);
+                                forgot.setVisibility(View.VISIBLE);
                                 continuetologin.setVisibility(View.GONE);
 
                                 login.setOnClickListener(new View.OnClickListener() {
