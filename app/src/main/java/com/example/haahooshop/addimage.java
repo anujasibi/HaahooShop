@@ -462,8 +462,10 @@ public class addimage extends AppCompatActivity {
         Log.d("resell","mm"+sessionManager.getreselprice());
         RequestBody sub_mode = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getsubvalue() );
         Log.d("resell","mm"+sessionManager.getreselprice());
+        RequestBody product_owner = RequestBody.create(MediaType.parse("text/plain"),sessionManager.gettype() );
+        Log.d("resell","mm"+sessionManager.gettype());
         //
-        Call call = uploadAPIs.uploadImage("Token "+sessionManager.getTokens(),part,pdt_name,pdt_cat_id,pdt_spec,pdt_price,pdt_return_period,pdt_discount,stock,pdt_description,delivery_mode,distance,type,resell,max_price,subscription,sub_mode);
+        Call call = uploadAPIs.uploadImage("Token "+sessionManager.getTokens(),part,pdt_name,pdt_cat_id,pdt_spec,pdt_price,pdt_return_period,pdt_discount,stock,pdt_description,delivery_mode,distance,type,resell,max_price,subscription,sub_mode,product_owner);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {

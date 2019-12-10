@@ -78,6 +78,13 @@ public class SessionManager {
 
         return  sharedPreferences.getString("price","");
     }
+    public void settype(String type){
+        sharedPreferences.edit().putString("type",type).commit();
+    }
+    public String gettype(){
+
+        return  sharedPreferences.getString("type","");
+    }
     public void setret(String ret){
         sharedPreferences.edit().putString("ret",ret).commit();
     }

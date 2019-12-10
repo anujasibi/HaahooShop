@@ -57,7 +57,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 snackbar.show();
 
                 if (carTitle.equals("Add Products")){
-                    Intent intent=new Intent(context,addproductnew.class);
+                    Intent intent=new Intent(context,productnew.class);
                     context.startActivity(intent);
                 }
 
@@ -133,7 +133,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 snackbar.show();
 
                 if (carTitle.equals("Add Products")){
-                    Intent intent=new Intent(context,addproductnew.class);
+                    Intent intent=new Intent(context,productnew.class);
                     context.startActivity(intent);
                 }
 
