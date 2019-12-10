@@ -40,7 +40,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:src="@drawable/haahoologo"
                 android:id="@+id/logo"
                 android:gravity="center_vertical|center_horizontal|center"
                 android:textColor="#fff" />

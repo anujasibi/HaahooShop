@@ -373,6 +373,7 @@ public class editbranchprofile extends AppCompatActivity {
 
 
             RequestBody photob = RequestBody.create(MediaType.parse("image/*"), immm);
+
             RequestBody shop_id = RequestBody.create(MediaType.parse("text/plain"),Global.id);
             // Create MultipartBody.Part using file request-body,file name and part name
             MultipartBody.Part part1 = MultipartBody.Part.createFormData("shop_image", immm.getName(), photob);

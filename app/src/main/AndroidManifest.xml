@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".cancelsub"></activity>
+        <activity android:name=".productnew"></activity>
+        <activity android:name=".cancelsub" />
         <activity android:name=".neww" />
         <activity android:name=".notification" />
         <activity android:name=".Orderfrag" />

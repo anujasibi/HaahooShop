@@ -97,7 +97,8 @@ public class Register extends AppCompatActivity {
     String URL="https://testapi.creopedia.com/api_shop_app/list_shop_cat/ ";
     Context context=this;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_registeration/";
-    public String source_lat,source_lng;
+    public String source_lat="0";
+    String source_lng="0";
     ImageView imh;
     public String  phone_no;
     String emailPattern = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
@@ -171,6 +172,8 @@ public class Register extends AppCompatActivity {
         phone.setText(phone_no);
 
 
+
+
         address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -226,14 +229,26 @@ public class Register extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                // register();
-                if(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||gstno.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0){
+                if(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0){
                     Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
                 }
-                if(!(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||gstno.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0)) {
-                    dialog.setMessage("Loading");
-                    dialog.show();
-                    register();
+                if(source_lng.equals("0")||source_lat.equals("0")){
+                    //
+                    GeocodingLocation locationAddress = new GeocodingLocation();
+                    locationAddress.getAddressFromLocation(address.getText().toString(),
+                            getApplicationContext(), new Register.GeocoderHandler());
+                    Toast.makeText(context,"Please enter the complete address",Toast.LENGTH_SHORT).show();
+
+                }
+                if(!(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0||address.getText().toString().length()==0||distance.getText().toString().length()==0)||source_lng.equals("0")||source_lat.equals("0")) {
+
+                    if (!(source_lng.equals("0") && (source_lat.equals("0")))) {
+                        dialog.setMessage("Loading");
+                        dialog.show();
+                        register();
+                    }
                 }
             }
         });
@@ -254,8 +269,14 @@ public class Register extends AppCompatActivity {
                     lonh=bundle.getString("long");
                     Log.d("source","mm"+lat);
                     Log.d("longitude","mm"+lonh);
-                    source_lat = lat;
-                    source_lng = lonh;
+                    if (lat == null){
+                        source_lat="0";
+                        source_lng="0";
+                    }
+                    if (lat != null) {
+                        source_lat = lat;
+                        source_lng = lonh;
+                    }
              //       Toast.makeText(Register.this,source_lat+source_lng,Toast.LENGTH_SHORT).show();
                     //  sessionManager.setDestLong(lonh);
                     break;

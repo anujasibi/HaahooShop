@@ -80,7 +80,7 @@ public class editcategory extends AppCompatActivity {
 
         Log.d("VVGHHHBH","LLL"+ids);
         final String category = bundle.getString("category");
-       // loadspecs(category);
+        // loadspecs(category);
 
         ArrayList<String> vals = new ArrayList<>();
 
@@ -131,7 +131,7 @@ public class editcategory extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       // dialog.dismiss();
+                        // dialog.dismiss();
                         // Toast.makeText(ManualOrders.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -207,7 +207,7 @@ public class editcategory extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
                             Log.d("objfdfddf","hjbhjb"+response);
                             // amount.setText(obj.optString("total"));
-                         //   birdList = new ArrayList<>();
+                            //   birdList = new ArrayList<>();
                             String total=obj.optString("total");
                             JSONArray dataArray  = obj.getJSONArray("data");
 
@@ -265,13 +265,9 @@ public class editcategory extends AppCompatActivity {
                                 Log.d("specifications","mm"+display);
                                 String Memory=jsonArray.optString("Memory");
                                 Log.d("specifications","mm"+Memory);
-
                                 playerModel.setDisplay(display);
                                 playerModel.setMemory(Memory);*/
                                 /*   JSONObject jsonObject=jsonArray.getJSONObject(0);
-
-
-
                                  */
 
 
@@ -280,7 +276,7 @@ public class editcategory extends AppCompatActivity {
                                 //  playerModel.setStatus("");
 
 
-                               // birdList.add(playerModel);
+                                // birdList.add(playerModel);
 
                             }
                             specad = new Specad(Global.spec_headers,context);

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     Activity activity = this;
     SessionManager sessionManager;
     TextView forgot;
+    ImageView logo;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_otp_generation/";
     private String URLli = Global.BASE_URL+"api_shop_app/shop_login/";
 
@@ -70,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         phoneno=findViewById(R.id.uname);
         pwdlayout=findViewById(R.id.pwdlayout);
         password=findViewById(R.id.pwd);
+        logo=findViewById(R.id.logo);
+        Picasso.get().load(Global.BASE_URL+"media/files/events_add/extra_pic/haahoo_logo1.png").into(logo);
         login=findViewById(R.id.login);
         continuetologin=findViewById(R.id.continuetologin);
         device_id =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);

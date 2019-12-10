@@ -70,5 +70,4 @@ public class splashscreen extends AppCompatActivity {
     }
 
 
-    }
-
+}
