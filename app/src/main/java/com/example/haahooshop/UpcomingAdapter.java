@@ -165,7 +165,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
                                accept();
                                holder.sta.setVisibility(View.GONE);
                                holder.sta1.setVisibility(View.GONE);
-                               context1.startActivity(new Intent(context1,UpcomingOrder.class));
+                               context1.startActivity(new Intent(context1,Uporder.class));
 
                            }
                        });
@@ -246,7 +246,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyView
 
             cardView=itemView.findViewById(R.id.card);
 
-        sta  = (SlideToActView) itemView.findViewById(R.id.example);
+            sta  = (SlideToActView) itemView.findViewById(R.id.example);
             sta1  = (SlideToActView) itemView.findViewById(R.id.examplen);
             status=itemView.findViewById(R.id.status);
             statuss=itemView.findViewById(R.id.statuse);
