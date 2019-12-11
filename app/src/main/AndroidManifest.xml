@@ -14,7 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".productnew"></activity>
+        <activity android:name=".Tab5Fragment"></activity>
+        <activity android:name=".Tab4Fragment" />
+        <activity android:name=".viewallproduct" />
+        <activity android:name=".Tab3Fragment" />
+        <activity android:name=".Tab2Fragment" />
+        <activity android:name=".Tab1Fragment" />
+        <activity android:name=".Uporder" />
+        <activity android:name=".productnew" />
         <activity android:name=".cancelsub" />
         <activity android:name=".neww" />
         <activity android:name=".notification" />

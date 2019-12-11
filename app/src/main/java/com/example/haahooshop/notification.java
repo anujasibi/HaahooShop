@@ -71,7 +71,7 @@ public class notification extends AppCompatActivity {
         not.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context,UpcomingOrder.class));
+                startActivity(new Intent(context,Uporder.class));
             }
         });
 

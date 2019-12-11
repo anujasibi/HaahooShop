@@ -247,7 +247,7 @@ public class orderdetails extends AppCompatActivity {
                             Log.d("code","mm"+status);
                             if(status.equals("200")&&(!(ot.equals("verify")))){
                                 Toast.makeText(context, "Successful", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(context,UpcomingOrder.class));
+                                startActivity(new Intent(context,Uporder.class));
 
 
 
@@ -305,6 +305,6 @@ public class orderdetails extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,UpcomingOrder.class));
+        startActivity(new Intent(context,Uporder.class));
     }
 }

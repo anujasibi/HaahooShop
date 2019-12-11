@@ -62,7 +62,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 }
 
                 if (carTitle.equals("View/Modify Products")){
-                    Intent intent=new Intent(context,viewproduct.class);
+                    Intent intent=new Intent(context,viewallproduct.class);
                     context.startActivity(intent);
                 }
                 if (carTitle.equals("View/Modify Profile")){
@@ -91,7 +91,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                     context.startActivity(intent);
                 }
                 if (carTitle.equals("View Upcoming Orders")){
-                    Intent intent=new Intent(context,UpcomingOrder.class);
+                    Intent intent=new Intent(context,Uporder.class);
                     context.startActivity(intent);
                 }
 
@@ -138,7 +138,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 }
 
                 if (carTitle.equals("View/Modify Products")){
-                    Intent intent=new Intent(context,viewproduct.class);
+                    Intent intent=new Intent(context,viewallproduct.class);
                     context.startActivity(intent);
                 }
                 if (carTitle.equals("View/Modify Profile")){
@@ -166,7 +166,7 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                     context.startActivity(intent);
                 }
                 if (carTitle.equals("View Upcoming Orders")){
-                    Intent intent=new Intent(context,UpcomingOrder.class);
+                    Intent intent=new Intent(context,Uporder.class);
                     context.startActivity(intent);
                 }
                 if (carTitle.equals("View Order History")){
