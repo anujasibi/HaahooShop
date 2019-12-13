@@ -14,7 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Tab5Fragment"></activity>
+        <activity android:name=".activation"></activity>
+        <activity android:name=".shpcategory" />
+        <activity android:name=".choose" />
+        <activity android:name=".stepper" />
+        <activity android:name=".Login" />
+        <activity android:name=".registernew" />
+        <activity android:name=".Tab5Fragment" />
         <activity android:name=".Tab4Fragment" />
         <activity android:name=".viewallproduct" />
         <activity android:name=".Tab3Fragment" />

@@ -213,4 +213,69 @@ public class SessionManager {
         sharedPreferences.edit().putString("ben",ben).commit();
     }
 
+    public String getshopname(){
+
+        return  sharedPreferences.getString("sna","");
+    }
+    public void setshopname(String sna){
+        sharedPreferences.edit().putString("sna",sna).commit();
+    }
+    public String getown(){
+
+        return  sharedPreferences.getString("own","");
+    }
+    public void setown(String own){
+        sharedPreferences.edit().putString("own",own).commit();
+    }
+    public String getgst(){
+
+        return  sharedPreferences.getString("gst","");
+    }
+    public void setgst(String gst){
+        sharedPreferences.edit().putString("gst",gst).commit();
+    }
+    public String getadd(){
+
+        return  sharedPreferences.getString("add","");
+    }
+    public void setadd(String add){
+        sharedPreferences.edit().putString("add",add).commit();
+    }
+    public String getdisid(){
+
+        return  sharedPreferences.getString("disid","");
+    }
+    public void setdisid(String disid){
+        sharedPreferences.edit().putString("disid",disid).commit();
+    }
+    public String getlat(){
+
+        return  sharedPreferences.getString("lat","");
+    }
+    public void setlat(String lat){
+        sharedPreferences.edit().putString("lat",lat).commit();
+    }
+    public String getlog(){
+
+        return  sharedPreferences.getString("log","");
+    }
+    public void setlog(String log){
+        sharedPreferences.edit().putString("log",log).commit();
+    }
+    public String getshopid(){
+
+        return  sharedPreferences.getString("shopid","");
+    }
+    public void setshopid(String shopid){
+        sharedPreferences.edit().putString("shopid",shopid).commit();
+    }
+    public String getrole(){
+
+        return  sharedPreferences.getString("role","");
+    }
+    public void setrole(String role){
+        sharedPreferences.edit().putString("role",role).commit();
+    }
+
+
 }

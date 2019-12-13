@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.haahooshop.utils.Global;
+import com.example.haahooshop.utils.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VerifyOtp extends AppCompatActivity {
+public class activation extends AppCompatActivity {
     EditText editText;
     TextView textView;
     Activity activity = this;
@@ -37,8 +38,8 @@ public class VerifyOtp extends AppCompatActivity {
     Context context=this;
     public String otp;
     private ProgressDialog dialog ;
-
-    private String URLline = Global.BASE_URL+"api_shop_app/shop_phone_verify/";
+    SessionManager sessionManager;
+    private String URLline = Global.BASE_URL+"api_shop_app/shop_activation/";
 
 
     @Override
@@ -46,7 +47,7 @@ public class VerifyOtp extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_otp);
+        setContentView(R.layout.activity_activation);
 
         Window window = activity.getWindow();
 
@@ -58,10 +59,9 @@ public class VerifyOtp extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
-        dialog=new ProgressDialog(VerifyOtp.this,R.style.MyAlertDialogStyle);
-        Bundle bundle = getIntent().getExtras();
-        phone_no = bundle.getString("phone_no");
-        otp=bundle.getString("otp");
+        dialog=new ProgressDialog(activation.this,R.style.MyAlertDialogStyle);
+        sessionManager=new SessionManager(this);
+
 
         editText = findViewById(R.id.otp);
         textView = findViewById(R.id.verifyotp);
@@ -69,10 +69,10 @@ public class VerifyOtp extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editText.getText().toString().length() < 4 ){
-                    editText.setError("Please enter the otp to proceed");
+                if(editText.getText().toString().length() == 0 ){
+                    editText.setError("Please enter the activation code to proceed");
                 }
-                if(editText.getText().toString().length() == 4) {
+                if(!(editText.getText().toString().length() == 0)) {
                     dialog.setMessage("Loading");
                     dialog.show();
 
@@ -88,7 +88,7 @@ public class VerifyOtp extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                         dialog.dismiss();
+                        dialog.dismiss();
                         //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -104,13 +104,12 @@ public class VerifyOtp extends AppCompatActivity {
                             Log.d("otp","mm"+token);
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
-                                Toast.makeText(VerifyOtp.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(VerifyOtp.this, registernew.class);
-                                intent.putExtra("phone_no",phone_no);
+                                Toast.makeText(activation.this, "Successful", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(activation.this, Login.class);
                                 startActivity(intent);
                             }
                             else{
-                                Toast.makeText(VerifyOtp.this, "Failed."+ot, Toast.LENGTH_LONG).show();
+                                Toast.makeText(activation.this, "Failed."+ot, Toast.LENGTH_LONG).show();
 
 
                             }
@@ -119,7 +118,7 @@ public class VerifyOtp extends AppCompatActivity {
                             dialog.dismiss();
                             e.printStackTrace();
                         }
-                        //   Log.d("response","hhh"+response);
+                           Log.d("response","hhh"+response);
 
 
                     }
@@ -128,17 +127,23 @@ public class VerifyOtp extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         dialog.dismiss();
-                        Toast.makeText(VerifyOtp.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(activation.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("phone_no",phone_no);
-                params.put("otp",otp);
+                params.put("act_key",editText.getText().toString());
 
                 return params;
             }
+            @Override
+            public Map<String, String> getHeaders()  {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token " + sessionManager.getTokens());
+                return params;
+            }
+
 
         };
 
@@ -148,6 +153,6 @@ public class VerifyOtp extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(VerifyOtp.this,MainActivity.class));
+        startActivity(new Intent(activation.this,Login.class));
     }
 }

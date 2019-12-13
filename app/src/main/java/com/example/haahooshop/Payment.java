@@ -40,9 +40,7 @@ public class Payment extends Activity implements PaymentResultListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle bundle= getIntent().getExtras();
-        email=bundle.getString("email");
-        number=bundle.getString("number");
+
 
         setContentView(R.layout.activity_payment);
         sessionManager=new SessionManager(this);
@@ -82,8 +80,8 @@ public class Payment extends Activity implements PaymentResultListener {
             options.put("amount", "100000");
 
             JSONObject preFill = new JSONObject();
-            preFill.put("email", email);
-            preFill.put("contact",number);
+            preFill.put("email", "");
+            preFill.put("contact","");
 
             options.put("prefill", preFill);
 
@@ -146,7 +144,7 @@ public class Payment extends Activity implements PaymentResultListener {
                           //  Log.d("otp","mm"+ot);
                             if(code.equals("200")) {
                                 Toast.makeText(Payment.this, ot, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(Payment.this,MainActivity.class));
+                                startActivity(new Intent(Payment.this,Login.class));
                             }
                             else{
                                 Toast.makeText(Payment.this, ot, Toast.LENGTH_LONG).show();

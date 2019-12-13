@@ -24,6 +24,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.haahooshop.utils.Global;
 import com.example.haahooshop.utils.SessionManager;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -33,12 +40,17 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -52,8 +64,8 @@ public class addshopim extends AppCompatActivity {
     ImageView imh,imgp;
     private static final String IMAGE_DIRECTORY = "/demonuts";
     private int GALLERY = 1, CAMERA = 2,CGALLERY=3,CCAMERA=4;
-    String filePath;
-    String files;
+    String filePath="";
+    String files="";
     private Uri uri;
     SessionManager sessionManager;
     Context context=this;
@@ -61,6 +73,7 @@ public class addshopim extends AppCompatActivity {
     TextView save;
     private ProgressDialog dialog ;
     Activity activity = this;
+    private String URLline = Global.BASE_URL+"api_shop_app/shop_det_reg/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +86,9 @@ public class addshopim extends AppCompatActivity {
         imh=findViewById(R.id.img);
         imgp=findViewById(R.id.imgp);
 
-        Bundle bundle = getIntent().getExtras();
+        /*Bundle bundle = getIntent().getExtras();
         phone_no = bundle.getString("number");
-        email = bundle.getString("email");
+        email = bundle.getString("email");*/
         Window window = activity.getWindow();
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -107,10 +120,17 @@ public class addshopim extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(addshopim.this, Payment.class);
+               /* Intent intent = new Intent(addshopim.this, Payment.class);
                 intent.putExtra("email",email);
                 intent.putExtra("number",phone_no);
-                startActivity(intent);
+                startActivity(intent);*/
+               if(filePath.equals("")||files.equals("")){
+                   Toast.makeText(context,"Please Choose Cover Image and Profile Image",Toast.LENGTH_SHORT).show();
+               }
+               if(!(filePath.equals("")||files.equals(""))){
+                   submituser();
+               }
+
             }
         });
 
@@ -467,5 +487,86 @@ public class addshopim extends AppCompatActivity {
 
             });
         }
+    }
+
+    private void submituser(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog.dismiss();
+                        //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+
+                            Log.d("code","mm"+status);
+                            if(status.equals("200")){
+                                Toast.makeText(addshopim.this, "Successful", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(addshopim.this, Payment.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(addshopim.this, "Failed."+ot, Toast.LENGTH_LONG).show();
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            dialog.dismiss();
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dialog.dismiss();
+                        Toast.makeText(addshopim.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+
+                params.put("name",sessionManager.getshopname());
+                Log.d("name","mm"+sessionManager.getshopname());
+                params.put("owner_name",sessionManager.getown());
+                Log.d("owener","mm"+sessionManager.getown());
+                params.put("gst_no",sessionManager.getgst());
+                Log.d("gstno","mm"+sessionManager.getgst());
+                params.put("address",sessionManager.getadd());
+                Log.d("address","mm"+sessionManager.getadd());
+                params.put("lat",sessionManager.getlat());
+                Log.d("lat","mm"+sessionManager.getlat());
+                params.put("log",sessionManager.getlog());
+                Log.d("long","mm"+sessionManager.getlog());
+                params.put("distance",sessionManager.getdis());
+                Log.d("long","mm"+sessionManager.getdis());
+                params.put("category",sessionManager.getshopid());
+                Log.d("category","mm"+sessionManager.getshopid());
+                params.put("role",sessionManager.getrole());
+                Log.d("category","mm"+sessionManager.getrole());
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders()  {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token " + sessionManager.getTokens());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
     }
 }
