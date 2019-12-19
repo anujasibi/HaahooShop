@@ -79,9 +79,15 @@ public class Login extends AppCompatActivity {
         continuetologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.setMessage("Loading");
-                dialog.show();
-                submit();
+                if(phoneno.getText().toString().length()==0||password.getText().toString().length()==0){
+                    Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
+                }
+                if(!(phoneno.getText().toString().length()==0||password.getText().toString().length()==0)){
+
+                    dialog.setMessage("Loading");
+                    dialog.show();
+                    submit();
+                }
             }
         });
     }
@@ -100,9 +106,13 @@ public class Login extends AppCompatActivity {
                             String token=jsonObject.optString("Token");
                             String payment=jsonObject.getString("payment_status");
                             String activation=jsonObject.getString("activation_status");
+                            String code=jsonObject.optString("code");
                             //    sessionManager.setTokens(token);
                             Log.d("otp","mm"+token);
                             Log.d("code","mm"+status);
+                            if(code.equals("203")){
+                                Toast.makeText(Login.this, ot+" Something went wrong", Toast.LENGTH_LONG).show();
+                            }
                             if(status.equals("")){
                                 Toast.makeText(Login.this, "Successful", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(Login.this, choose.class);
@@ -147,6 +157,14 @@ public class Login extends AppCompatActivity {
                 Log.d("token","mm"+sessionManager.getTokens());
                 return params;
             }
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("phone_no",phoneno.getText().toString());
+                params.put("password",password.getText().toString());
+                return params;
+            }
+
 
         };
 

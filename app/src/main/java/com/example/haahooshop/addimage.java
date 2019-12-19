@@ -3,6 +3,7 @@ package com.example.haahooshop;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -31,6 +32,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.haahooshop.utils.SessionManager;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -93,6 +101,7 @@ public class addimage extends AppCompatActivity {
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
         dialog=new ProgressDialog(addimage.this,R.style.MyAlertDialogStyle);
+        requestMultiplePermissions();
 
         sessionManager=new SessionManager(this);
 
@@ -311,7 +320,43 @@ public class addimage extends AppCompatActivity {
             return cursor.getString(idx);
         }
     }
+    private void  requestMultiplePermissions(){
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        // check if all permissions are granted
+                        if (report.areAllPermissionsGranted()) {
+                            Toast.makeText(getApplicationContext(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
+                        }
 
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            // show alert dialog navigating to Settings
+                            //openSettingsDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+
+
+                }).
+                withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError error) {
+                        Toast.makeText(getApplicationContext(), "Some Error! ", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onSameThread()
+                .check();
+    }
 
 
 
@@ -462,7 +507,7 @@ public class addimage extends AppCompatActivity {
         Log.d("resell","mm"+sessionManager.getreselprice());
         RequestBody sub_mode = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getsubvalue() );
         Log.d("resell","mm"+sessionManager.getreselprice());
-        RequestBody product_owner = RequestBody.create(MediaType.parse("text/plain"),sessionManager.gettype() );
+        RequestBody product_owner = RequestBody.create(MediaType.parse("text/plain"),"" );
         Log.d("resell","mm"+sessionManager.gettype());
         //
         Call call = uploadAPIs.uploadImage("Token "+sessionManager.getTokens(),part,pdt_name,pdt_cat_id,pdt_spec,pdt_price,pdt_return_period,pdt_discount,stock,pdt_description,delivery_mode,distance,type,resell,max_price,subscription,sub_mode,product_owner);

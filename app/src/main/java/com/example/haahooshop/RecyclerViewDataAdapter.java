@@ -57,12 +57,12 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 snackbar.show();
 
                 if (carTitle.equals("Add Products")){
-                    Intent intent=new Intent(context,productnew.class);
+                    Intent intent=new Intent(context,addproductnew.class);
                     context.startActivity(intent);
                 }
 
                 if (carTitle.equals("View/Modify Products")){
-                    Intent intent=new Intent(context,viewallproduct.class);
+                    Intent intent=new Intent(context,viewproduct.class);
                     context.startActivity(intent);
                 }
                 if (carTitle.equals("View/Modify Profile")){
@@ -107,6 +107,11 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                     Intent intent=new Intent(context,cancelsub.class);
                     context.startActivity(intent);
                 }
+                if (carTitle.equals("Earnings")){
+                    Intent intent=new Intent(context,Earnings.class);
+                    context.startActivity(intent);
+                }
+
 
 
 
@@ -133,12 +138,12 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                 snackbar.show();
 
                 if (carTitle.equals("Add Products")){
-                    Intent intent=new Intent(context,productnew.class);
+                    Intent intent=new Intent(context,addproductnew.class);
                     context.startActivity(intent);
                 }
 
                 if (carTitle.equals("View/Modify Products")){
-                    Intent intent=new Intent(context,viewallproduct.class);
+                    Intent intent=new Intent(context,viewproduct.class);
                     context.startActivity(intent);
                 }
                 if (carTitle.equals("View/Modify Profile")){
@@ -181,6 +186,11 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewIt
                     Intent intent=new Intent(context,cancelsub.class);
                     context.startActivity(intent);
                 }
+                if (carTitle.equals("Earnings")){
+                    Intent intent=new Intent(context,Earnings.class);
+                    context.startActivity(intent);
+                }
+
                /* if (carTitle.equals("Earnings")){
                     Intent intent=new Intent(context,Earnings.class);
                     context.startActivity(intent);

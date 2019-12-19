@@ -151,7 +151,9 @@ public class MainUI extends AppCompatActivity {
             carItemList.add(new CardRecyclerViewItem("View Upcoming Orders", R.drawable.ordersu));
             carItemList.add(new CardRecyclerViewItem("View Order History", R.drawable.orderhistory));
             carItemList.add(new CardRecyclerViewItem("View Subscription List", R.drawable.sublist));
-            carItemList.add(new CardRecyclerViewItem("Cancelled Subscription List", R.drawable.about));
+            carItemList.add(new CardRecyclerViewItem("Cancelled Subscription List", R.drawable.cancel));
+            carItemList.add(new CardRecyclerViewItem("Earnings", R.drawable.earnings));
+            carItemList.add(new CardRecyclerViewItem("About Us", R.drawable.about));
 
 
 

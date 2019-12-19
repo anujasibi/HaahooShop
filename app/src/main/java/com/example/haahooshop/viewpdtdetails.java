@@ -120,7 +120,7 @@ public class viewpdtdetails extends AppCompatActivity {
         io.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(viewpdtdetails.this,viewallproduct.class));
+                startActivity(new Intent(viewpdtdetails.this,viewproduct.class));
             }
         });
 
@@ -424,6 +424,6 @@ public class viewpdtdetails extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(viewpdtdetails.this,viewallproduct.class));
+        startActivity(new Intent(viewpdtdetails.this,viewproduct.class));
     }
 }

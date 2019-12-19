@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activation"></activity>
+        <activity android:name=".Earnings"></activity>
+        <activity android:name=".activation" />
         <activity android:name=".shpcategory" />
         <activity android:name=".choose" />
         <activity android:name=".stepper" />

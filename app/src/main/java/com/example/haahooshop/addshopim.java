@@ -100,7 +100,7 @@ public class addshopim extends AppCompatActivity {
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
         dialog=new ProgressDialog(addshopim.this,R.style.MyAlertDialogStyle);
-
+        requestMultiplePermissions();
 
         imh.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,10 +1,7 @@
 package com.example.haahooshop;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +10,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,34 +35,60 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-public class cancelsub extends AppCompatActivity {
-    ArrayList<CancelPojo> birdList=new ArrayList<>();
+public class Earnings extends AppCompatActivity {
+
+    ArrayList<upcomingrow> birdList=new ArrayList<>();
     Activity activity = this;
     Context context=this;
     SessionManager sessionManager;
+    TextView editsearch;
     RecyclerView listView;
     ImageView back;
-    ArrayList<CancelPojo> rowItems;
+    ArrayList<upcomingrow> rowItems;
     private ProgressDialog dialog ;
-    ArrayList<String>sdate=new ArrayList<>();
+    private Calendar myCalendar;
+    ImageView imageView;
+    TextView tex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subscriptionlist);
-        dialog=new ProgressDialog(cancelsub.this,R.style.MyAlertDialogStyle);
-        dialog.setMessage("Loading");
-        dialog.show();
-
+        setContentView(R.layout.activity_earnings);
         sessionManager=new SessionManager(this);
 
-        rowItems = new ArrayList<CancelPojo>();
+        tex=findViewById(R.id.tex);
+
+
+
+        myCalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+
+
+        rowItems = new ArrayList<upcomingrow>();
         listView = (RecyclerView) findViewById(R.id.list);
 
         Window window = activity.getWindow();
@@ -65,13 +97,20 @@ public class cancelsub extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        dialog=new ProgressDialog(Earnings.this,R.style.MyAlertDialogStyle);
+        dialog.setMessage("Loading");
+        dialog.show();
+
+
+
+
 
         back=findViewById(R.id.back);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(cancelsub.this,MainUI.class));
+                startActivity(new Intent(Earnings.this,MainUI.class));
             }
         });
 
@@ -82,13 +121,23 @@ public class cancelsub extends AppCompatActivity {
 
 
 
+
+
     }
+    private void updateLabel() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editsearch.setText(sdf.format(myCalendar.getTime()));
+    }
+
+
     private void submituser(){
-        RequestQueue queue = Volley.newRequestQueue(cancelsub.this);
+        RequestQueue queue = Volley.newRequestQueue(Earnings.this);
 
         //this is the url where you want to send the request
 
-        String url = Global.BASE_URL+"virtual_order_management/shop_subscription_cancel_list/";
+        String url = Global.BASE_URL+"virtual_order_management/shop_order_earnings/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -99,26 +148,20 @@ public class cancelsub extends AppCompatActivity {
                         try {
 
                             JSONObject obj = new JSONObject(response);
-                            Log.d("specifications","mm"+response);
 
                             // amount.setText(obj.optString("total"));
                             birdList = new ArrayList<>();
                             String total=obj.optString("total");
-                            String code=obj.optString("code");
-                            if(code.equals("203")){
-                                Toast.makeText(cancelsub.this,"Nothing to display",Toast.LENGTH_SHORT).show();
-                            }
-
+                            tex.setText("₹ "+total);
                             JSONArray dataArray  = obj.getJSONArray("data");
 
-
                             if(dataArray.length() == 0){
-                                Toast.makeText(cancelsub.this,"Nothing to display",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Earnings.this,"Nothing to display",Toast.LENGTH_SHORT).show();
                             }
 
                             for (int i = 0; i < dataArray.length(); i++) {
 
-                                CancelPojo playerModel = new CancelPojo();
+                                upcomingrow playerModel = new upcomingrow();
                                 JSONObject dataobj = dataArray.getJSONObject(i);
                               /*  Global.spec_headers.clear();
                                 Global.spec_values.clear();
@@ -154,27 +197,22 @@ public class cancelsub extends AppCompatActivity {
                                 playerModel.setDiscount(discount);
                                 playerModel.setStock(stock);*/
                                 //    playerModel.setEmail(email);
-                                playerModel.setPdtname(dataobj.optString("pdt_name"));
+                                playerModel.setName(dataobj.optString("pdt_name"));
                                 Log.d("ssssd", "resp" + dataobj);
-                                playerModel.setPhone(dataobj.optString("user_phone"));
-                                playerModel.setId(dataobj.optString("pdt_id"));
+                                playerModel.setLocation(dataobj.optString("landmark"));
+                                playerModel.setId(dataobj.optString("id"));
                                 String images1 = dataobj.getString("pdt_image");
                                 String[] seperated = images1.split(",");
                                 String split = seperated[0].replace("[", "").replace("]","");
                                 playerModel.setImage(Global.BASE_URL+split);
-                           //     playerModel.setMode(dataobj.optString("mode"));
-                                playerModel.setUname(dataobj.optString("user_name"));
-                          //      playerModel.setAmount(dataobj.optString("amount"));
-                                playerModel.setOrderdate(dataobj.optString("date"));
-
-                                playerModel.setPhone(dataobj.optString("user_phone"));
-                                playerModel.setReason(dataobj.optString("reason"));
-
-
-
-
-
-
+                                playerModel.setCusname(dataobj.optString("cus_name"));
+                                playerModel.setNumber(dataobj.optString("cus_phone"));
+                                playerModel.setHouse(dataobj.optString("house_no"));
+                                playerModel.setCity(dataobj.optString("city"));
+                                playerModel.setState(dataobj.optString("state"));
+                                playerModel.setPincode(dataobj.optString("pin"));
+                                playerModel.setPrice(dataobj.optString("pdt_price"));
+                                playerModel.setStatus(dataobj.optString("amount"));
 
 
 
@@ -185,7 +223,7 @@ public class cancelsub extends AppCompatActivity {
                                 String display=jsonArray.optString("Display");
                                 Log.d("specifications","mm"+display);
                                 String Memory=jsonArray.optString("Memory");
-
+                                Log.d("specifications","mm"+Memory);*/
 
                                 // playerModel.setDisplay(display);
                                 //playerModel.setMemory(Memory);
@@ -203,7 +241,7 @@ public class cancelsub extends AppCompatActivity {
                                 birdList.add(playerModel);
 
 
-                                CancelAdapter upcomingAdapter=new CancelAdapter(context, birdList);
+                                EarningAdapter upcomingAdapter=new EarningAdapter(context,birdList);
                                 listView.setAdapter(upcomingAdapter);
                                 listView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
 
@@ -223,7 +261,7 @@ public class cancelsub extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dialog.dismiss();
-                Toast.makeText(cancelsub.this,"Internal Server Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(Earnings.this,"Internal Server Error",Toast.LENGTH_LONG).show();
 
 
             }
@@ -244,8 +282,6 @@ public class cancelsub extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(cancelsub.this,MainUI.class));
+        startActivity(new Intent(Earnings.this,MainUI.class));
     }
 }
-
-
