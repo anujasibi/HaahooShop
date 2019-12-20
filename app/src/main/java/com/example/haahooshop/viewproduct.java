@@ -252,7 +252,7 @@ public class viewproduct extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(viewproduct.this,MainUI.class));
+        startActivity(new Intent(viewproduct.this,Navigation.class));
 
     }
 }

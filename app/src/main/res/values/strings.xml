@@ -7,4 +7,7 @@
         <item>Shipped</item>
         <item>Delivery</item>
     </string-array>
+
+    <string name="openDrawer">open</string>
+    <string name="closeDrawer">close</string>
 </resources>

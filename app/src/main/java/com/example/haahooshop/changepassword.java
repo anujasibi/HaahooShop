@@ -68,7 +68,7 @@ public class changepassword extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(changepassword.this,MainUI.class));
+                startActivity(new Intent(changepassword.this,Navigation.class));
 
             }
         });
@@ -117,7 +117,7 @@ public class changepassword extends AppCompatActivity {
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
                                 Toast.makeText(changepassword.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(changepassword.this, MainUI.class);
+                                Intent intent = new Intent(changepassword.this, Navigation.class);
                                 startActivity(intent);
                             }
                             else{
@@ -168,7 +168,7 @@ public class changepassword extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(changepassword.this,MainUI.class));
+        startActivity(new Intent(changepassword.this,Navigation.class));
 
     }
 }

@@ -65,7 +65,7 @@ public class viewemployee extends AppCompatActivity implements
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context,MainUI.class));
+                startActivity(new Intent(context,Navigation.class));
             }
         });
 
@@ -224,6 +224,6 @@ public class viewemployee extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,MainUI.class));
+        startActivity(new Intent(context,Navigation.class));
     }
 }

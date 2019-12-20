@@ -242,7 +242,7 @@ public class Tab5Fragment extends Fragment {
 
 
     public void onBackPressed() {
-        startActivity(new Intent(getContext(),MainUI.class));
+        startActivity(new Intent(getContext(),Navigation.class));
 
     }
 }

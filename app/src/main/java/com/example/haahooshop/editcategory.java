@@ -143,7 +143,7 @@ public class editcategory extends AppCompatActivity {
                             Log.d("otp","mm"+ot);
                             if(status.equals("200")){
                                 Toast.makeText(editcategory.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(editcategory.this, MainUI.class);
+                                Intent intent = new Intent(editcategory.this, Navigation.class);
                                 startActivity(intent);
                             }
                             else{

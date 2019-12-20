@@ -179,7 +179,7 @@ public class AddShopBranch extends AppCompatActivity {
         imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context,MainUI.class));
+                startActivity(new Intent(context,Navigation.class));
             }
         });
 
@@ -617,7 +617,7 @@ public class AddShopBranch extends AppCompatActivity {
                 public void onResponse(Call call, retrofit2.Response response) {
                     dialog.dismiss();
                     Toast.makeText(context, "Successfully updated" , Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(context,MainUI.class));
+                    startActivity(new Intent(context,Navigation.class));
                 }
 
                 @Override
@@ -634,6 +634,6 @@ public class AddShopBranch extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,MainUI.class));
+        startActivity(new Intent(context,Navigation.class));
     }
 }

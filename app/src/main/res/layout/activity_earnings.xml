@@ -80,9 +80,24 @@
 
                 </TextView>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/tex"
+                    android:layout_marginEnd="100dp"
+                    android:background="#5C25B7"
+                    android:layout_marginTop="10dp"
+                    android:text="Withdraw Earnings"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="100dp"
+                    android:id="@+id/texx"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list"
-                    android:layout_below="@+id/text"
+                    android:layout_below="@+id/texx"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

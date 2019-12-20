@@ -71,7 +71,7 @@ public class cancelsub extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(cancelsub.this,MainUI.class));
+                startActivity(new Intent(cancelsub.this,Navigation.class));
             }
         });
 
@@ -244,7 +244,7 @@ public class cancelsub extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(cancelsub.this,MainUI.class));
+        startActivity(new Intent(cancelsub.this,Navigation.class));
     }
 }
 

@@ -121,7 +121,7 @@ public class profile extends AppCompatActivity {
         io.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(profile.this,MainUI.class));
+                startActivity(new Intent(profile.this,Navigation.class));
             }
         });
 
@@ -482,6 +482,6 @@ public class profile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(profile.this,MainUI.class));
+        startActivity(new Intent(profile.this,Navigation.class));
     }
 }

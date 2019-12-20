@@ -38,7 +38,7 @@ public class viewallproduct extends AppCompatActivity {
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(viewallproduct.this,MainUI.class));
+                startActivity(new Intent(viewallproduct.this,Navigation.class));
             }
         });
 

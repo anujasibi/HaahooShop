@@ -129,7 +129,7 @@ public class Login extends AppCompatActivity {
                                 startActivity(intent);
                             }
                             if((!(status.equals("")))&&payment.equals("Payment done")&&activation.equals("activated")) {
-                                Intent intent = new Intent(Login.this, MainUI.class);
+                                Intent intent = new Intent(Login.this, Navigation.class);
                                 startActivity(intent);
                             }
 

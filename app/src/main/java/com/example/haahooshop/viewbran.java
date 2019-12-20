@@ -55,7 +55,7 @@ public class viewbran extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context,MainUI.class));
+                startActivity(new Intent(context,Navigation.class));
             }
         });
 
@@ -233,7 +233,7 @@ public class viewbran extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,MainUI.class));
+        startActivity(new Intent(context,Navigation.class));
     }
 
 }

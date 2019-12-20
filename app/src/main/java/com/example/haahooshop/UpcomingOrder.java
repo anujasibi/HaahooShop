@@ -70,7 +70,7 @@ public class UpcomingOrder extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(UpcomingOrder.this,MainUI.class));
+                startActivity(new Intent(UpcomingOrder.this,Navigation.class));
             }
         });
 
@@ -235,6 +235,6 @@ public class UpcomingOrder extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(UpcomingOrder.this,MainUI.class));
+        startActivity(new Intent(UpcomingOrder.this,Navigation.class));
     }
 }

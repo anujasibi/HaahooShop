@@ -30,7 +30,7 @@ public class Uporder extends AppCompatActivity {
         adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new Tab1Fragment(), "Today's Orders");
         adapter.addFragment(new Tab2Fragment(), "Last Week");
-        adapter.addFragment(new Tab3Fragment(), "Past Orders");
+       // adapter.addFragment(new Tab3Fragment(), "Past Orders");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -39,7 +39,7 @@ public class Uporder extends AppCompatActivity {
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Uporder.this,MainUI.class));
+                startActivity(new Intent(Uporder.this,Navigation.class));
             }
         });
     }

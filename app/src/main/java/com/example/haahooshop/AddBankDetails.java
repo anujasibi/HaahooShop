@@ -34,10 +34,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddEmployee extends AppCompatActivity {
+public class AddBankDetails extends AppCompatActivity {
     EditText empname,branch,phone,password;
     TextView submit,show,hide;
-    private String Urline = Global.BASE_URL+"api_shop_app/employee_registration/";
+    private String Urline = Global.BASE_URL+"shop_bank_details/shop_bank_det/";
     Context context=this;
     SessionManager sessionManager;
     ImageView imageView;
@@ -49,7 +49,7 @@ public class AddEmployee extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_employee);
+        setContentView(R.layout.activity_add_bank_details);
         Window window = activity.getWindow();
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -60,16 +60,13 @@ public class AddEmployee extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
-        dialog=new ProgressDialog(AddEmployee.this,R.style.MyAlertDialogStyle);
+        dialog=new ProgressDialog(AddBankDetails.this,R.style.MyAlertDialogStyle);
 
         empname=findViewById(R.id.shopname);
         branch=findViewById(R.id.distance);
         phone=findViewById(R.id.phone);
-        password=findViewById(R.id.password);
 
 
-        show = findViewById(R.id.show);
-        hide = findViewById(R.id.hide);
         imageView=findViewById(R.id.imageView3);
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -83,33 +80,14 @@ public class AddEmployee extends AppCompatActivity {
 
         submit = findViewById(R.id.submit);
 
-        show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                hide.setVisibility(View.VISIBLE);
-                show.setVisibility(View.GONE);
-
-            }
-        });
-
-        hide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                hide.setVisibility(View.GONE);
-                show.setVisibility(View.VISIBLE);
-            }
-        });
-
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(empname.getText().toString().length()==0||branch.getText().toString().length()==0||phone.getText().toString().length()==0||password.getText().toString().length()==0){
-                  Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
+                if(empname.getText().toString().length()==0||branch.getText().toString().length()==0||phone.getText().toString().length()==0){
+                    Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
                 }
-                if(!(empname.getText().toString().length()==0||branch.getText().toString().length()==0||phone.getText().toString().length()==0||password.getText().toString().length()==0))
+                if(!(empname.getText().toString().length()==0||branch.getText().toString().length()==0||phone.getText().toString().length()==0))
                 {
                     dialog.setMessage("Loading");
                     dialog.show();
@@ -138,12 +116,12 @@ public class AddEmployee extends AppCompatActivity {
                     Log.d("otp","mm"+token);
                     Log.d("code","mm"+status);
                     if(status.equals("200")){
-                        Toast.makeText(AddEmployee.this, "Successful", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(AddEmployee.this, Navigation.class);
+                        Toast.makeText(AddBankDetails.this, "Successful", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(AddBankDetails.this, Navigation.class);
                         startActivity(intent);
                     }
                     else{
-                        Toast.makeText(AddEmployee.this, "Failed."+ot, Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddBankDetails.this, "Failed."+ot, Toast.LENGTH_LONG).show();
 
 
                     }
@@ -152,7 +130,7 @@ public class AddEmployee extends AppCompatActivity {
                     dialog.dismiss();
                     e.printStackTrace();
                 }
-                //   Log.d("response","hhh"+response);
+                   Log.d("response","hhh"+response);
 
 
             }
@@ -161,21 +139,19 @@ public class AddEmployee extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         dialog.dismiss();
-                        Toast.makeText(AddEmployee.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddBankDetails.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-               // params.put("device_id",device_id);
-              //  Log.d("name","mm"+device_id);
-                params.put("name",empname.getText().toString());
+                // params.put("device_id",device_id);
+                //  Log.d("name","mm"+device_id);
+                params.put("acc_name",empname.getText().toString());
                 Log.d("name","mm"+empname.getText().toString());
-                params.put("branch_name",branch.getText().toString());
+                params.put("ifsc",branch.getText().toString());
                 Log.d("owener","mm"+branch.getText().toString());
-                params.put("password",password.getText().toString());
-                Log.d("pass","mm"+password.getText().toString());
-                params.put("phone",phone.getText().toString());
+                params.put("acc_no",phone.getText().toString());
                 Log.d("phone","mm"+phone.getText().toString());
 
 

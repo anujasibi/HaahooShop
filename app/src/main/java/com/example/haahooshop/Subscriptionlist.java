@@ -70,7 +70,7 @@ public class Subscriptionlist extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Subscriptionlist.this,MainUI.class));
+                startActivity(new Intent(Subscriptionlist.this,Navigation.class));
             }
         });
 
@@ -228,7 +228,7 @@ public class Subscriptionlist extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(Subscriptionlist.this,MainUI.class));
+        startActivity(new Intent(Subscriptionlist.this,Navigation.class));
     }
 }
 

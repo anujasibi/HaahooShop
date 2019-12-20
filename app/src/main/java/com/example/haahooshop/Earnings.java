@@ -110,7 +110,7 @@ public class Earnings extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Earnings.this,MainUI.class));
+                startActivity(new Intent(Earnings.this,Navigation.class));
             }
         });
 
@@ -282,6 +282,6 @@ public class Earnings extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(Earnings.this,MainUI.class));
+        startActivity(new Intent(Earnings.this,Navigation.class));
     }
 }

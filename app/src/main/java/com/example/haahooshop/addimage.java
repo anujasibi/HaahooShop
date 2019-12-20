@@ -517,7 +517,7 @@ public class addimage extends AppCompatActivity {
                 dialog.dismiss();
                 Toast.makeText(context,"Successfully Added The Product",Toast.LENGTH_SHORT).show();
                 Log.d("RESPONSERTTT","MM"+response);
-                startActivity(new Intent(addimage.this,MainUI.class));
+                startActivity(new Intent(addimage.this,Navigation.class));
 
             }
             @Override
