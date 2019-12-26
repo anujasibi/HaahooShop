@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -34,7 +36,7 @@ public class Payment extends Activity implements PaymentResultListener {
     private String URLlin = "https://testapi.creopedia.com/api_shop_app/shop_payment_det/";
     SessionManager sessionManager;
     Context context=this;
-
+    Activity activity = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,20 @@ public class Payment extends Activity implements PaymentResultListener {
 
 
 
+
         setContentView(R.layout.activity_payment);
         sessionManager=new SessionManager(this);
+
+        Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
         /*
          To ensure faster loading of the Checkout form,

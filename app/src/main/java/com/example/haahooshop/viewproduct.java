@@ -75,7 +75,7 @@ public class viewproduct extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(viewproduct.this,MainUI.class));
+                startActivity(new Intent(viewproduct.this,Navigation.class));
             }
         });
         Window window = activity.getWindow();

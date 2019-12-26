@@ -5,6 +5,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +48,7 @@ public class category extends AppCompatActivity {
   ImageView imageView3;
   BroadcastReceiver broadcastReceiver;
   TextView save;
+  Activity activity = this;
   String url = "https://testapi.creopedia.com/api_shop_app/list_pdt_cat_spec/";
 
   @Override
@@ -57,6 +60,17 @@ public class category extends AppCompatActivity {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_category);
+
+    Window window = activity.getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+    window.setStatusBarColor(activity.getResources().getColor(R.color.black));
     recyclerView = findViewById(R.id.recycle);
     imageView3=findViewById(R.id.imageView3);
     save=findViewById(R.id.save);

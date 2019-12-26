@@ -4,20 +4,25 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,7 +61,9 @@ public class Earnings extends AppCompatActivity {
     private ProgressDialog dialog ;
     private Calendar myCalendar;
     ImageView imageView;
-    TextView tex;
+    TextView tex,texx;
+    EditText input;
+    private String URLline = Global.BASE_URL+"shop_bank_details/shop_bank_withdrawal/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,61 @@ public class Earnings extends AppCompatActivity {
         sessionManager=new SessionManager(this);
 
         tex=findViewById(R.id.tex);
+        texx=findViewById(R.id.texx);
+
+        texx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                builder.setTitle("Withdraw Earnings");
+                builder.setMessage("Are you sure?");
+
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing but close the dialog
+
+
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Please enter the amount");
+
+                            input = new EditText(Earnings.this);
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.MATCH_PARENT);
+                            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                            input.setLayoutParams(lp);
+                            builder.setView(input);
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    withdraw();
+                                    Toast.makeText(getApplicationContext(), "Text entered is " + input.getText().toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            builder.show();
+
+
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
 
 
 
@@ -129,6 +191,76 @@ public class Earnings extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         editsearch.setText(sdf.format(myCalendar.getTime()));
+    }
+
+
+    private void withdraw(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog.dismiss();
+                        //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+                            String token=jsonObject.optString("Token");
+                            //    sessionManager.setTokens(token);
+
+
+
+
+                            Log.d("otp","mm"+token);
+                            Log.d("code","mm"+status);
+                            if(status.equals("200")){
+                                Toast.makeText(Earnings.this, "Successfully withdrawen", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(Earnings.this, Earnings.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(Earnings.this, "Failed."+ot, Toast.LENGTH_LONG).show();
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            dialog.dismiss();
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dialog.dismiss();
+                        Toast.makeText(Earnings.this,error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("pay",input.getText().toString());
+
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders()  {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token " + sessionManager.getTokens());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
     }
 
 
