@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:id="@+id/tr"
-            android:text="Welcome to HaahooShop"
+            android:text="HaaHoo Business"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#5C25B7"

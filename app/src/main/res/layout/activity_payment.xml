@@ -75,7 +75,7 @@
                 android:paddingLeft="20dp"
                 android:textSize="14sp"
                 android:textColor="#000"
-                android:text="Purchase"
+                android:text="Book Now"
                 />
 
         </LinearLayout>

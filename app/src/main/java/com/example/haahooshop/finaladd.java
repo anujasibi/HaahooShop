@@ -42,10 +42,11 @@ public class finaladd extends AppCompatActivity {
     TextInputEditText distance;
     Spinner spinner;
     public String status="";
+    public String status1="";
     ArrayList<String> areas = new ArrayList<String>();
     String delivery_type = "null";
     String URL="https://testapi.creopedia.com/api_shop_app/list_shop_cat/ ";
-    CheckBox checkBox1,checkBox2,checkBox3,check,checkm;
+    CheckBox checkBox1,checkBox2,checkBox3,check,checkm,checks1,checks2;
     private RadioGroup radioSexGroup;
     private RadioButton one,two,three;
     SessionManager sessionManager;
@@ -81,6 +82,8 @@ public class finaladd extends AppCompatActivity {
         checkBox3 = findViewById(R.id.checkBox2);
         check=findViewById(R.id.checkBo);
         checkm=findViewById(R.id.checkBo1);
+        checks1=findViewById(R.id.checkBot);
+        checks2=findViewById(R.id.checkBo1t);
         radioSexGroup = (RadioGroup) findViewById(R.id.radioSex);
         one=findViewById(R.id.radioMale);
         two=findViewById(R.id.radioFemale);
@@ -121,6 +124,21 @@ public class finaladd extends AppCompatActivity {
                 res.setVisibility(View.GONE);
                 ress.setVisibility(View.GONE);
                 resell.setText("0");
+            }
+        });
+
+        checks1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checks2.setChecked(false);
+                status1="1";
+            }
+        });
+        checks2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checks1.setChecked(false);
+                status1="0";
             }
         });
 
@@ -196,6 +214,7 @@ public class finaladd extends AppCompatActivity {
                 }
             }
         });
+
 
 //        if (checkBox1.isChecked()){
 //            delivery_type = checkBox1.getText().toString();

@@ -217,6 +217,7 @@
 
 
                 </LinearLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_marginEnd="3dp"
@@ -269,6 +270,35 @@
                     </RadioGroup>
 
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/yut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center_vertical"
+                    android:text="Do you want to add product to MyShop"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="18sp" />
+
+
+                <CheckBox
+                    android:id="@+id/checkBot"
+                    android:layout_width="130dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Yes" />
+
+                <CheckBox
+                    android:id="@+id/checkBo1t"
+                    android:layout_width="130dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:text="No" />
                 <TextView
                     android:id="@+id/save"
                     android:layout_width="match_parent"

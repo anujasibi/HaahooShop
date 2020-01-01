@@ -91,7 +91,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
     private TabLayout tabLayout;
     private ViewPager viewPager;
     Switch switchTop;
-    CardView carda,cardb,cardc,cardd,carde,cardf,cardg,cardh,cardi,cardj,cardk,cardl,cardm,cardn;
+    CardView carda,cardb,cardc,cardd,carde,cardf,cardg,cardh,cardi,cardj,cardk,cardl,cardm,cardn,card1,card2,card3;
     TextView ear,sub,ord;
 
     @Override
@@ -155,6 +155,10 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
         cardk=findViewById(R.id.cardk);
         cardl=findViewById(R.id.cardl);
         cardn=findViewById(R.id.cardn);
+        card1=findViewById(R.id.card1);
+        card2=findViewById(R.id.card2);
+        card3=findViewById(R.id.card3);
+
 
         carda.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,6 +248,30 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context,Earnings.class);
+                startActivity(intent);
+            }
+        });
+
+        card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,Earnings.class);
+                startActivity(intent);
+            }
+        });
+
+        card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,Uporder.class);
+                startActivity(intent);
+            }
+        });
+
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,Subscriptionlist.class);
                 startActivity(intent);
             }
         });

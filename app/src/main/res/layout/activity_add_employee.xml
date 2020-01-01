@@ -121,36 +121,7 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    app:cardCornerRadius="20dp"
-                    >
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:id="@+id/distance"
-                            android:layout_marginStart="10dp"
-                            android:background="@null"
-                            android:hint="Enter the Branch"
-                            android:layout_marginLeft="10dp" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-
-                <androidx.cardview.widget.CardView
+            <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -203,18 +174,91 @@
 
                     </RelativeLayout>
 
+
                 </androidx.cardview.widget.CardView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginStart="33dp"
+                android:layout_marginEnd="3dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="3dp">
+
+
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:id="@+id/spinner"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="50dp">
+
+                </Spinner>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:layout_marginRight="3dp">
+                <TextView
+                    android:id="@+id/yup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Choose Employment Type"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+
+
+
+                <RadioGroup
+                    android:id="@+id/radioSex"
+                    android:layout_below="@+id/yup"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <RadioButton
+                        android:id="@+id/radioMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Regular Employee"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/radioFemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delivery Boy" />
+
+                </RadioGroup>
+
+            </RelativeLayout>
 
 
 
 
 
-                <androidx.cardview.widget.CardView
+
+
+
+
+            <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
                     app:cardBackgroundColor="#5c25b7"
@@ -226,7 +270,7 @@
                         android:layout_height="50dp"
                         android:id="@+id/submit"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Submit"
+                        android:text="Continue"
                         android:textColor="#fff"
                         android:textSize="20sp" />
 

@@ -123,12 +123,12 @@ public class Login extends AppCompatActivity {
                                 Intent intent = new Intent(Login.this, Payment.class);
                                 startActivity(intent);
                             }
-                            if((!(status.equals("")))&&payment.equals("Payment done")&&activation.equals("not activated")){
+                           /* if((!(status.equals("")))&&payment.equals("Payment done")&&activation.equals("not activated")){
                                 Toast.makeText(Login.this, "Please Activate Your Account", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(Login.this, activation.class);
                                 startActivity(intent);
-                            }
-                            if((!(status.equals("")))&&payment.equals("Payment done")&&activation.equals("activated")) {
+                            }*/
+                            if((!(status.equals("")))&&payment.equals("Payment done")) {
                                 Intent intent = new Intent(Login.this, Navigation.class);
                                 startActivity(intent);
                             }

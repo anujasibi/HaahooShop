@@ -1,10 +1,10 @@
-package com.example;
+package com.example.haahooshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.haahooshop.R;
+
 
 public class productvariant extends AppCompatActivity {
 
