@@ -27,7 +27,7 @@ public class Dynamictext extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
         imageModelArrayList = eatFruits();
-        adapter = new FruitAdapter(this, imageModelArrayList);
+       // adapter = new FruitAdapter(this, imageModelArrayList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
 

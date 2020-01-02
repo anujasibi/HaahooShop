@@ -41,6 +41,7 @@ import java.util.Map;
 public class shpcategory extends AppCompatActivity {
     ArrayList<RowItem> birdList=new ArrayList<>();
     Activity activity = this;
+    ImageView imj;
     Context context=this;
     SessionManager sessionManager;
     RecyclerView listView;
@@ -57,7 +58,8 @@ public class shpcategory extends AppCompatActivity {
     private String[] myImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry","Watermelon"};
     private String[] phonelist = new String[]{"Xiaomi","Apple" ,"Samsung"};
 
-    ArrayList<FruitModel> list = new ArrayList<>();
+    ArrayList<String> list = new ArrayList<>();
+    ArrayList<String> id = new ArrayList<>();
     ArrayList<sublistpojo>pojo = new ArrayList<>();
     ArrayList<String> list1 = new ArrayList<>();
     ArrayList<String> list2 = new ArrayList<>();
@@ -68,6 +70,8 @@ public class shpcategory extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shpcategory);
+
+
 /*
         LinearLayout ll = (LinearLayout)findViewById(R.id.linearLayout2);
         TextView tv = new TextView(this);
@@ -79,8 +83,8 @@ public class shpcategory extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
-        imageModelArrayList = eatFruits();
-        adapter = new FruitAdapter(this, imageModelArrayList);
+      //  imageModelArrayList =   eatFruits();
+        adapter = new FruitAdapter(this, list,id);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -88,6 +92,22 @@ public class shpcategory extends AppCompatActivity {
 
         rowItems = new ArrayList<RowItem>();
         listView =  findViewById(R.id.list);
+
+        imj=findViewById(R.id.imj);
+        sessionManager.setcat("");
+
+        imj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(sessionManager.getcat().equals("")){
+                    Toast.makeText(context,"Please choose atleast one category",Toast.LENGTH_SHORT).show();
+                }
+                if(!(sessionManager.getcat().equals(""))){
+                    startActivity(new Intent(context,addshopim.class));
+                }
+
+            }
+        });
 
 
 
@@ -100,12 +120,14 @@ public class shpcategory extends AppCompatActivity {
         dialog=new ProgressDialog(shpcategory.this,R.style.MyAlertDialogStyle);
         dialog.setMessage("Loading");
         dialog.show();
+
+
         ItemClickSupport.addTo(listView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Toast.makeText(context,"clck",Toast.LENGTH_SHORT).show();
 //                list2.add(list1.get(position));
-                showphones(list1.get(position));
+                showphones(list1.get(position),list2.get(position));
                 adapter.notifyDataSetChanged();
             }
         });
@@ -113,7 +135,7 @@ public class shpcategory extends AppCompatActivity {
         submituser();
     }
 
-    private ArrayList<FruitModel> eatFruits(){
+    private ArrayList<String> eatFruits(){
 
 
 //        for(int i = 0; i < 1; i++){
@@ -129,16 +151,17 @@ public class shpcategory extends AppCompatActivity {
 
 
 
-    private ArrayList<FruitModel> showphones(String data){
+    private ArrayList<String> showphones(String data,String id1){
 
 
-
-
-            FruitModel fruitModel = new FruitModel();
-            fruitModel.setName(data);
-            fruitModel.setImage_drawable(myImageList[0]);
+            if (id.contains(id1)){
+                Toast.makeText(context,"exists",Toast.LENGTH_SHORT).show();
+            }
+        if (!(id.contains(id1))) {
+            id.add(id1);
+            String fruitModel = data;
             list.add(fruitModel);
-
+        }
 
         return list;
     }
@@ -204,11 +227,17 @@ public class shpcategory extends AppCompatActivity {
                                 String catid=dataobj.optString("category_id");
                                 playerModel.setCategoryid(catid);
                                 playerModel.setDescription(descr);
+
                                 playerModel.setDiscount(discount);
                                 playerModel.setStock(stock);*/
                                 //    playerModel.setEmail(email);
                                 playerModel.setTitle(dataobj.optString("name"));
+                                FruitModel fruitModel = new FruitModel();
+                                fruitModel.setId(dataobj.optString("id"));
+                                fruitModel.setName(dataobj.optString("name"));
+//                                list.add(fruitModel);
                                 list1.add(dataobj.optString("name"));
+                                list2.add(dataobj.optString("id"));
                                 Log.d("ssssd", "resp" + dataobj);
                               //  playerModel.setDesc(dataobj.optString("branch"));
                                 playerModel.setId(dataobj.optString("id"));

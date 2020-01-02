@@ -154,6 +154,15 @@
                     android:id="@+id/list"
                     android:layout_height="wrap_content"/>
 
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/list"
+                    android:id="@+id/imj"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/right"/>
+
 
 
 

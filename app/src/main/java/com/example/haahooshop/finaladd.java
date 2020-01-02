@@ -132,6 +132,7 @@ public class finaladd extends AppCompatActivity {
             public void onClick(View view) {
                 checks2.setChecked(false);
                 status1="1";
+                sessionManager.setaddshop(status1);
             }
         });
         checks2.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +140,7 @@ public class finaladd extends AppCompatActivity {
             public void onClick(View view) {
                 checks1.setChecked(false);
                 status1="0";
+                sessionManager.setaddshop(status1);
             }
         });
 

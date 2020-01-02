@@ -548,8 +548,8 @@ public class addshopim extends AppCompatActivity {
                 Log.d("long","mm"+sessionManager.getlog());
                 params.put("distance",sessionManager.getdis());
                 Log.d("long","mm"+sessionManager.getdis());
-                params.put("category",sessionManager.getshopid());
-                Log.d("category","mm"+sessionManager.getshopid());
+                params.put("category",sessionManager.getcat());
+                Log.d("category","mm"+sessionManager.getcat());
                 params.put("role",sessionManager.getrole());
                 Log.d("category","mm"+sessionManager.getrole());
 

@@ -19,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.haahooshop.utils.SessionManager;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -26,12 +28,14 @@ import com.razorpay.PaymentResultListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Payment extends Activity implements PaymentResultListener {
     private static final String TAG = Payment.class.getSimpleName();
     private String number,email;
+    ImageSlider imageSlider;
     String razorid="null";
     private String URLlin = "https://testapi.creopedia.com/api_shop_app/shop_payment_det/";
     SessionManager sessionManager;
@@ -49,6 +53,13 @@ public class Payment extends Activity implements PaymentResultListener {
         sessionManager=new SessionManager(this);
 
         Window window = activity.getWindow();
+
+        imageSlider=findViewById(R.id.img);
+        ArrayList<SlideModel>imagelist=new ArrayList<>();
+        imagelist.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
+        imagelist.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
+        imageSlider.setImageList(imagelist,false);
+        //    imageSlider.setImageList(R.drawable.person,false);
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
