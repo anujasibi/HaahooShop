@@ -21,15 +21,18 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.haahooshop.utils.Global;
 import com.example.haahooshop.utils.SessionManager;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Payment extends Activity implements PaymentResultListener {
@@ -38,9 +41,11 @@ public class Payment extends Activity implements PaymentResultListener {
     ImageSlider imageSlider;
     String razorid="null";
     private String URLlin = "https://testapi.creopedia.com/api_shop_app/shop_payment_det/";
+    private String URLli = "https://testapi.creopedia.com/api_shop_app/shop_offer_images/";
     SessionManager sessionManager;
     Context context=this;
     Activity activity = this;
+    List<SlideModel> array=new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,12 +58,14 @@ public class Payment extends Activity implements PaymentResultListener {
         sessionManager=new SessionManager(this);
 
         Window window = activity.getWindow();
+        offer();
 
         imageSlider=findViewById(R.id.img);
-        ArrayList<SlideModel>imagelist=new ArrayList<>();
+       /* ArrayList<SlideModel>imagelist=new ArrayList<>();
         imagelist.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
         imagelist.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
-        imageSlider.setImageList(imagelist,false);
+        imageSlider.setImageList(imagelist,false);*/
+
         //    imageSlider.setImageList(R.drawable.person,false);
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -152,6 +159,49 @@ public class Payment extends Activity implements PaymentResultListener {
             Log.e(TAG, "Exception in onPaymentError", e);
         }
     }
+    private void offer(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLli,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //  dialog.dismiss();
+                        //  Toast.makeText(Payment.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            String data= obj.optString("data");
+
+                                String[] seperated = data.split(",");
+                            for(int i = 0; i<seperated.length; i++){
+                                String split = seperated[i].replace("[", "").replace("]","").trim();
+                                array.add(new SlideModel(Global.BASE_URL+split));
+                                Log.d("sssds", "mm" + split);
+
+                            }
+
+                            imageSlider.setImageList(array,false);
+
+
+                            } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //  Log.d("response","hhh"+response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Payment.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+
+
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
+    }
     private void boouser(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLlin,
                 new Response.Listener<String>() {
@@ -169,7 +219,7 @@ public class Payment extends Activity implements PaymentResultListener {
                           //  Log.d("otp","mm"+ot);
                             if(code.equals("200")) {
                                 Toast.makeText(Payment.this, ot, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(Payment.this,Login.class));
+                                startActivity(new Intent(Payment.this,choose.class));
                             }
                             else{
                                 Toast.makeText(Payment.this, ot, Toast.LENGTH_LONG).show();

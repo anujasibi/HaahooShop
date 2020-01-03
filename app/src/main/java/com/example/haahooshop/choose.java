@@ -59,6 +59,6 @@ public class choose extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,Login.class));
+        startActivity(new Intent(context,MainActivity.class));
     }
 }

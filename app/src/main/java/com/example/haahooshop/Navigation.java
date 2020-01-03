@@ -372,6 +372,12 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
                         break;
 
 
+                    case R.id.nav_privacy_policy:
+                        sessionManager.setTokens("");
+                        startActivity(new Intent(Navigation.this,MainActivity.class));
+                        break;
+
+
                     default:
                         navItemIndex = 0;
                 }

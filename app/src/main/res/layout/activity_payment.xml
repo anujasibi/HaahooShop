@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#5C25B7">
+    android:background="#fff">
 
     <com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/img"
@@ -46,7 +46,7 @@
                 android:paddingBottom="5dp"
                 android:textSize="20sp"
                 android:text="Payment for Shop"
-                android:textColor="#000"
+                android:textColor="#5C25B7"
                 />
 
             <TextView
@@ -84,8 +84,9 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
+                android:background="#5c25b7"
                 android:textSize="14sp"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:text="Book Now"
                 />
 

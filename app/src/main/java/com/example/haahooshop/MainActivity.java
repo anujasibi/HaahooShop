@@ -191,7 +191,9 @@ public class MainActivity extends AppCompatActivity {
                             String ot = jsonObject.optString("message");
                             String status=jsonObject.optString("code");
                             String token=jsonObject.optString("Token");
-                         sessionManager.setTokens(token);
+                            String role_type=jsonObject.optString("role_type");
+                            String payment_status=jsonObject.optString("payment_status");
+                            sessionManager.setTokens(token);
 
 
 
@@ -203,11 +205,25 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, Navigation.class);
                                 startActivity(intent);
                             }
-                            else{
-                                Toast.makeText(MainActivity.this, "Login Failed."+ot, Toast.LENGTH_LONG).show();
-
+                            if(role_type.equals("")&&payment_status.equals("Payment not done")){
+                                Toast.makeText(MainActivity.this, "Login Failed.Please do payment", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(MainActivity.this, Payment.class);
+                                startActivity(intent);
 
                             }
+                            if(role_type.equals("")&&payment_status.equals("Payment done")){
+
+                                Toast.makeText(MainActivity.this, "Login Failed.Please choose your role for further process", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(MainActivity.this, choose.class);
+                                startActivity(intent);
+                            }
+                          /*  if((!role_type.equals(""))&&payment_status.equals("Payment not done")){
+
+                                Toast.makeText(MainActivity.this, "Login Failed.Please choose your role for further process", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(MainActivity.this, Payment.class);
+                                startActivity(intent);
+                            }
+*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Dynamictext"></activity>
+        <activity android:name=".AddVariant"></activity>
+        <activity android:name=".choosepdtcategory" />
+        <activity android:name=".Dynamictext" />
         <activity android:name=".addempnew" />
         <activity android:name=".productvariant" />
         <activity android:name=".chooseimages" />
