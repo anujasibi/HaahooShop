@@ -8,7 +8,7 @@
     <com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/img"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         app:corner_radius="20"
         app:placeholder="@drawable/loading"
         app:error_image="@drawable/error"
@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:orientation="vertical"
 
@@ -33,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:layout_marginTop="50dp"
             android:paddingTop="15dp"
             android:background="#f2f2f2"
 

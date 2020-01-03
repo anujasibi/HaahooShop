@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.haahooshop.utils.SessionManager;
+
 import java.util.List;
 
 public class choosepdtcategoryadapter extends
@@ -18,6 +20,8 @@ public class choosepdtcategoryadapter extends
 
     private List<OffersModel> offersList;
     private Context context;
+    public String id;
+    SessionManager sessionManager;
 
     private int lastSelectedPosition = -1;
 
@@ -25,6 +29,7 @@ public class choosepdtcategoryadapter extends
             , Context ctx) {
         offersList = offersListIn;
         context = ctx;
+        sessionManager=new SessionManager(ctx);
     }
 
     @Override
@@ -45,7 +50,11 @@ public class choosepdtcategoryadapter extends
         OffersModel offersModel = offersList.get(position);
 
         holder.offerAmount.setText("" + offersModel.getName());
+        holder.idn.setText(offersModel.getRadio());
+        sessionManager.setcatrid();
 
+
+       id=offersModel.getRadio();
         //since only one radio button is allowed to be selected,
         // this condition un-checks previous selections
         holder.selectionState.setChecked(lastSelectedPosition == position);
@@ -59,13 +68,14 @@ public class choosepdtcategoryadapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        public TextView offerAmount;
+        public TextView offerAmount,idn;
         public RadioButton selectionState;
 
         public ViewHolder(View view) {
             super(view);
             offerAmount = (TextView) view.findViewById(R.id.offer_amount_txt);
             selectionState = (RadioButton) view.findViewById(R.id.offer_select);
+            idn=(TextView) view.findViewById(R.id.id);
 
             selectionState.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,8 +84,12 @@ public class choosepdtcategoryadapter extends
                     notifyDataSetChanged();
 
                     Toast.makeText(choosepdtcategoryadapter.this.context,
-                            "selected offer is " + offerAmount.getText(),
+                            "selected offer is " + offerAmount.getText()+idn.getText(),
                             Toast.LENGTH_LONG).show();
+
+
+
+
                 }
             });
         }

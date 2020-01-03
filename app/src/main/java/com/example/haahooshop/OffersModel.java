@@ -4,11 +4,7 @@ class OffersModel {
     public  String name;
     public String radio;
 
-    public OffersModel(String s) {
 
-        this.name=s;
-
-    }
 
     public String getName() {
         return name;

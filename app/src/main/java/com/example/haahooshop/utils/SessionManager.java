@@ -291,6 +291,13 @@ public class SessionManager {
     public void setrole(String role){
         sharedPreferences.edit().putString("role",role).commit();
     }
+    public String getcatrid(){
+
+        return  sharedPreferences.getString("rid","");
+    }
+    public void setcatrid(String rid){
+        sharedPreferences.edit().putString("rid",rid).commit();
+    }
 
 
 }
