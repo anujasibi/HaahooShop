@@ -2,6 +2,8 @@ package com.example.haahooshop;
 
 import android.content.Context;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +53,7 @@ public class choosepdtcategoryadapter extends
 
         holder.offerAmount.setText("" + offersModel.getName());
         holder.idn.setText(offersModel.getRadio());
-        sessionManager.setcatrid();
+
 
 
        id=offersModel.getRadio();
@@ -71,7 +73,7 @@ public class choosepdtcategoryadapter extends
         public TextView offerAmount,idn;
         public RadioButton selectionState;
 
-        public ViewHolder(View view) {
+        public ViewHolder(final View view) {
             super(view);
             offerAmount = (TextView) view.findViewById(R.id.offer_amount_txt);
             selectionState = (RadioButton) view.findViewById(R.id.offer_select);
@@ -83,9 +85,14 @@ public class choosepdtcategoryadapter extends
                     lastSelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
 
-                    Toast.makeText(choosepdtcategoryadapter.this.context,
+                    /*Toast.makeText(choosepdtcategoryadapter.this.context,
                             "selected offer is " + offerAmount.getText()+idn.getText(),
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show();*/
+
+                    sessionManager.setcatrid(idn.getText().toString());
+                 //   Log.d("mmmmmmmmmm","mm"+sessionManager.getcatrid());
+
+                    context.startActivity(new Intent(context,addproductnew.class));
 
 
 

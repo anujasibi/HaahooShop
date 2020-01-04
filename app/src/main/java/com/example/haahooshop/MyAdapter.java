@@ -37,10 +37,12 @@ public class MyAdapter extends ArrayAdapter {
     private String URLline = Global.BASE_URL+"api_shop_app/remove_product/";
     public String ids;
     private SessionManager sessionManager;
+    Context context;
 
     public MyAdapter(Context context, int textViewResourceId, ArrayList<Item> objects) {
         super(context, textViewResourceId, objects);
         birdList = objects;
+        this.context=context;
         sessionManager=new SessionManager(getContext());
     }
 
@@ -57,6 +59,7 @@ public class MyAdapter extends ArrayAdapter {
         v = inflater.inflate(R.layout.grid_view_items, null);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView textView1=(TextView)v.findViewById(R.id.textView1);
+
         ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
         ImageView delete = (ImageView) v.findViewById(R.id.delete);
         textView.setText(birdList.get(position).getName());
@@ -65,6 +68,7 @@ public class MyAdapter extends ArrayAdapter {
         textView1.setText(birdList.get(position).getPrice());
 
         ids=birdList.get(position).getId();
+
 
 
 

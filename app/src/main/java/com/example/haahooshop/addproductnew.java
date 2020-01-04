@@ -114,7 +114,7 @@ public class addproductnew extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //dialog.dismiss();
+                        Log.d("response","mmmm"+response);
 
                         try {
 
@@ -161,6 +161,14 @@ public class addproductnew extends AppCompatActivity {
 
             }
         }) {
+
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("cat_id",sessionManager.getcatrid());
+                Log.d("gnmnbn","mm"+sessionManager.getcatrid());
+                return params;
+            }
 
             @Override
             public Map<String, String> getHeaders()  {

@@ -88,8 +88,16 @@ public class viewpdtdetails extends AppCompatActivity {
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
 
       //  imageView=findViewById(R.id.img);
-
+        TextView textView3=(TextView)findViewById(R.id.textView3);
         imageSlider=findViewById(R.id.img);
+
+        textView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,AddVariant.class));
+
+            }
+        });
 
 
         image=findViewById(R.id.imgg);

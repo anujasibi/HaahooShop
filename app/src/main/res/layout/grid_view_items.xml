@@ -43,5 +43,8 @@
         android:textColor="#000"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="13dp" />
+
+
 </RelativeLayout>
