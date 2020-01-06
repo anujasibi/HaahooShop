@@ -186,7 +186,7 @@
                                 android:layout_width="match_parent"
                                 android:textColor="#000"
                                 android:textAlignment="center"
-                                android:text="Product Manager"
+                                android:text="Add Product"
                                 android:layout_below="@+id/im"
                                 android:layout_marginTop="10dp"
                                 android:layout_height="wrap_content"/>

@@ -4,7 +4,7 @@
     android:id="@+id/grid_view_items"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".viewproduct">
+    tools:context="com.haahoo.haahooshop.viewproduct">
 
     <ImageView
         android:id="@+id/imageView"
@@ -43,6 +43,34 @@
         android:textColor="#000"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="13dp" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Avaliable Stock :"
+        android:layout_marginStart="30dp"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textAlignment="viewEnd"
+        android:layout_below="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="13dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#000"
+        android:textAlignment="viewStart"
+        android:layout_below="@+id/textView1"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/textView2"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="13dp" />
 

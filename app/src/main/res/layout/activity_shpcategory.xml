@@ -6,7 +6,7 @@
     android:fillViewport="true"
     android:layout_height="match_parent"
     android:background="#5C25B7"
-    tools:context=".choose">
+    tools:context="com.haahoo.haahooshop.choose">
 
 
 

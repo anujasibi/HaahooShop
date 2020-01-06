@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff">
 
-    <com.denzcoskun.imageslider.ImageSlider
+    <!--<com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
@@ -13,7 +13,7 @@
         app:placeholder="@drawable/loading"
         app:error_image="@drawable/error"
         app:period="1000"
-        app:delay="0"/>
+        app:delay="0"/>-->
 
 
 
@@ -58,7 +58,7 @@
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
                 android:textSize="12sp"
-                android:text="₹ 1000.00"
+                android:text="₹ 2000.00"
                 android:textColor="#000"
                 />
 
@@ -74,7 +74,7 @@
                 android:layout_marginEnd="16dp"
                 android:textColor="@android:color/holo_red_dark"
                 android:gravity="center_horizontal"
-                android:text="You have to pay an amount of Rs 1000 to continue using this app "
+                android:text="You have to pay an amount of Rs 2000 to continue using this app "
                 />
 
             <Button

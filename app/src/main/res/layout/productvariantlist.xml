@@ -4,7 +4,7 @@
     android:id="@+id/grid_view_items"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
-    tools:context=".viewproduct">
+    tools:context="com.haahoo.haahooshop.viewproduct">
 
 
 

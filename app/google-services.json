@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:672650695164:android:00bec63c9892f053c9a279",
         "android_client_info": {
-          "package_name": "com.example.haahooshop"
+          "package_name": "com.haahoo.haahooshop"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "672650695164-83rf6d2ilif3003u1r2ic6e2klutvsa8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.haahooshop",
+            "package_name": "com.haahoo.haahooshop",
             "certificate_hash": "d4a00eee469eb92e8e93d297b1d9fe48f7453cd8"
           }
         },
