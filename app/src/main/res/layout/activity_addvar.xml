@@ -116,6 +116,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:id="@+id/gst"
+                            android:inputType="number"
                             android:layout_marginStart="10dp"
                             android:background="@null"
                             android:hint="Enter Fixed Price"
@@ -144,6 +145,7 @@
                             android:id="@+id/email"
                             android:layout_marginStart="10dp"
                             android:background="@null"
+                            android:inputType="number"
                             android:hint="Enter Maximum Resale Price(Optional)"
                             android:layout_marginLeft="10dp" />
 

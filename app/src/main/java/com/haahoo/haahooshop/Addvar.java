@@ -83,6 +83,7 @@ public class Addvar extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        imageView3=findViewById(R.id.imageView3);
 
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,8 +364,8 @@ public class Addvar extends AppCompatActivity {
 
             //Create request body with text description and text media type
             RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
-            RequestBody pdt_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.getPid());
-            Log.d("nameee","mm"+sessionManager.getPid());
+            RequestBody pdt_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.getPdtaddvar());
+            Log.d("nameee","mm"+sessionManager.getPdtaddvar());
             RequestBody variant_name = RequestBody.create(MediaType.parse("text/plain"), varname.getText().toString());
             Log.d("nameee","mm"+varname.getText().toString());
             RequestBody variant_value = RequestBody.create(MediaType.parse("text/plain"), country);

@@ -90,13 +90,6 @@ public class viewpdtdetails extends AppCompatActivity {
         TextView textView3=(TextView)findViewById(R.id.textView3);
         imageSlider=findViewById(R.id.img);
 
-        textView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context,AddVariant.class));
-
-            }
-        });
 
 
         image=findViewById(R.id.imgg);
@@ -148,6 +141,7 @@ public class viewpdtdetails extends AppCompatActivity {
         final String display=bundle.getString("display");
         final String memory=bundle.getString("memory");
 
+
         assert imag != null;
         for(int i = 0; i<imag.length; i++){
             String split = imag[i].replace("[", "").replace("]","").trim();
@@ -160,8 +154,20 @@ public class viewpdtdetails extends AppCompatActivity {
         imageSlider.setImageList(array,false);
 
         id=bundle.getString("id");
+        sessionManager.setPdtaddvar(id);
         Log.d("mnjbkjbkbj","hjghjghg"+id);
-      //  final String ema=bundle.getString("email");
+
+        textView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,AddVariant.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+
+            }
+        });
+
+        //  final String ema=bundle.getString("email");
 
         shopname.setText(pname);
         location.setText(price);

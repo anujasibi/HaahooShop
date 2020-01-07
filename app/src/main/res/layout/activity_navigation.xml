@@ -186,7 +186,7 @@
                                 android:layout_width="match_parent"
                                 android:textColor="#000"
                                 android:textAlignment="center"
-                                android:text="Add Product"
+                                android:text="Product Manager"
                                 android:layout_below="@+id/im"
                                 android:layout_marginTop="10dp"
                                 android:layout_height="wrap_content"/>
@@ -670,7 +670,7 @@
                                 android:layout_width="match_parent"
                                 android:textColor="#000"
                                 android:textAlignment="center"
-                                android:text="About Us"
+                                android:text="Reviews"
                                 android:layout_below="@+id/immop"
                                 android:layout_marginTop="10dp"
                                 android:layout_height="wrap_content"/>

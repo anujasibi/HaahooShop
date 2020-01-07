@@ -46,6 +46,13 @@ public class SessionManager {
 
         return  sharedPreferences.getString("PdtName","");
     }
+    public void setPdtaddvar(String pdtaddvar){
+        sharedPreferences.edit().putString("pdtaddvar",pdtaddvar).commit();
+    }
+    public String getPdtaddvar(){
+
+        return  sharedPreferences.getString("pdtaddvar","");
+    }
     public void setvar(String var){
         sharedPreferences.edit().putString("var",var).commit();
     }

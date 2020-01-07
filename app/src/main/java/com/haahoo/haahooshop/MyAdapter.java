@@ -59,7 +59,7 @@ public class MyAdapter extends ArrayAdapter {
         v = inflater.inflate(R.layout.grid_view_items, null);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView textView1=(TextView)v.findViewById(R.id.textView1);
-        TextView textView3=(TextView)v.findViewById(R.id.textView3);
+     //   TextView textView3=(TextView)v.findViewById(R.id.textView3);
 
         ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
         ImageView delete = (ImageView) v.findViewById(R.id.delete);
@@ -67,7 +67,7 @@ public class MyAdapter extends ArrayAdapter {
       //  Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);
         Picasso.get().load(birdList.get(position).getImage()).into(imageView);
         textView1.setText(birdList.get(position).getPrice());
-        textView3.setText(birdList.get(position).getStock());
+       // textView3.setText(birdList.get(position).getStock());
 
         ids=birdList.get(position).getId();
 

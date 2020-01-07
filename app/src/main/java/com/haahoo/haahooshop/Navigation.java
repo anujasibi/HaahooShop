@@ -28,6 +28,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,7 +39,9 @@ import com.haahoo.haahooshop.utils.Global;
 import com.haahoo.haahooshop.utils.SessionManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,6 +61,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
     ActionBarDrawerToggle actionBarDrawerToggle;
     TextView status;
     SessionManager sessionManager;
+    public String shopname,location,gstno,catgory,owner,edit,em;
     Activity activity = this;
 
 
@@ -86,7 +90,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
     boolean doubleBackToExitPressedOnce = false;
     private Handler mHandler;
 
-
+    private String URLline = Global.BASE_URL+"api_shop_app/shop_details_show/";
     private TabLayout tabLayout;
     private ViewPager viewPager;
     Switch switchTop;
@@ -157,12 +161,13 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
         card1=findViewById(R.id.card1);
         card2=findViewById(R.id.card2);
         card3=findViewById(R.id.card3);
+        cardm=findViewById(R.id.cardm);
 
 
         carda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context,choosepdtcategory.class);
+                Intent intent=new Intent(context,Productmanager.class);
                 startActivity(intent);
             }
         });
@@ -274,6 +279,13 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(intent);
             }
         });
+        cardm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,review.class);
+                startActivity(intent);
+            }
+        });
 
         // imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
         //    imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
@@ -298,8 +310,8 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
      */
     private void loadNavHeader() {
         // name, website
-        txtName.setText("Anuja");
-        txtWebsite.setText("anuja@creopedia.com");
+      txtName.setText(shopname);
+      txtWebsite.setText(em);
 
         // loading header background image
       /*  Glide.with(this).load(urlNavHeaderBg)
@@ -331,6 +343,70 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
 
     private void selectNavMenu() {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+    }
+
+    private void submituser(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //   dialog.dismiss();
+                        //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+
+                            JSONArray jsonArray=jsonObject.optJSONArray("data");
+                            JSONObject jsonObject1 = jsonArray.optJSONObject(0);
+
+                             shopname=jsonObject1.optString("name");
+                             em=jsonObject1.optString("email");
+
+
+
+                            Log.d("code","mm"+status);
+                            if(status.equals("200")){
+
+                                //Toast.makeText(profile.this, "Successful", Toast.LENGTH_LONG).show();
+                                // Intent intent = new Intent(pasteaddress.this, ordersummary.class);
+                                // startActivity(intent);
+                            }
+                            else{
+
+                                Toast.makeText(Navigation.this, "Failed."+ot, Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Navigation.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token "+sessionManager.getTokens());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
+
     }
 
     private void setUpNavigationView() {

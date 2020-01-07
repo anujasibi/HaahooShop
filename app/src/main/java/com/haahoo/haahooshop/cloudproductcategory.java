@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,6 +40,7 @@ public class cloudproductcategory extends AppCompatActivity {
     GridView grid;
     Context context=this;
     SessionManager sessionManager;
+    ImageView back;
 
 
     @Override
@@ -58,6 +60,15 @@ public class cloudproductcategory extends AppCompatActivity {
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
         submituser();
+
+        back=findViewById(R.id.imageView3);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(cloudproductcategory.this,Productmanager.class));
+            }
+        });
 
 
     }
@@ -109,6 +120,8 @@ public class cloudproductcategory extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
+
+                                   startActivity(new Intent(context,cloudproductview.class));
                                     Toast.makeText(cloudproductcategory.this, "" + position, Toast.LENGTH_SHORT).show();
 
                                 }
@@ -153,7 +166,7 @@ public class cloudproductcategory extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(cloudproductcategory.this,choosepdtcategory.class));
+        startActivity(new Intent(cloudproductcategory.this,Productmanager.class));
 
     }
 }

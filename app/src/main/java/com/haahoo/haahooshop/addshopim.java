@@ -505,7 +505,7 @@ public class addshopim extends AppCompatActivity {
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
                                 Toast.makeText(addshopim.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(addshopim.this, Navigation.class);
+                                Intent intent = new Intent(addshopim.this, Login.class);
                                 startActivity(intent);
                             }
                             else{
