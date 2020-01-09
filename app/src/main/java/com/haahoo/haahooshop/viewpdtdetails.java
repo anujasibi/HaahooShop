@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -56,7 +57,8 @@ public class viewpdtdetails extends AppCompatActivity {
     ImageView imageView,io;
     ViewPager viewPager;
     Context context = this;
-    TextView shopname,location,gstno,catgory,owner,edit,image;
+    TextView shopname,location,gstno,catgory,owner,edit;
+    CardView image;
     String id = "null";
     SessionManager sessionManager;
     private static final String IMAGE_DIRECTORY = "/demonuts";
@@ -74,7 +76,7 @@ public class viewpdtdetails extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewpdtnew);
+        setContentView(R.layout.activity_demo);
 
         requestMultiplePermissions();
         Bundle bundl = getIntent().getExtras();
@@ -89,6 +91,16 @@ public class viewpdtdetails extends AppCompatActivity {
       //  imageView=findViewById(R.id.img);
         TextView textView3=(TextView)findViewById(R.id.textView3);
         imageSlider=findViewById(R.id.img);
+        TextView textView4=(TextView)findViewById(R.id.textView4);
+
+        textView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,addoffer.class));
+            }
+        });
+
+
 
 
 

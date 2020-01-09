@@ -21,8 +21,8 @@
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
-            android:scaleX=".75"
-            android:scaleY=".75"
+            android:scaleX=".70"
+            android:scaleY=".70"
             android:max="5"
             android:isIndicator="true"
             android:layout_height="wrap_content" />
@@ -36,6 +36,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:id="@+id/pdt"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#000"
             android:text="Product Name"/>
@@ -90,6 +91,8 @@
                 android:textColor="#000"
                 android:layout_marginBottom="10dp"
                 android:layout_below="@+id/cusname"/>
+
+
 
 
 

@@ -16,7 +16,7 @@
 
 
             <TextView
-                android:id="@+id/ui"
+                android:id="@+id/textView3"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
@@ -46,7 +46,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/offer"
+                android:id="@+id/textView4"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
@@ -65,6 +65,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_marginBottom="80dp"
         android:layout_height="match_parent">
 
 
@@ -130,7 +132,7 @@
                         android:layout_height="50dp"
                         android:id="@+id/imgg"
                         android:layout_margin="20dp"
-                      app:cardCornerRadius="30dp"
+                        app:cardCornerRadius="30dp"
 
 
                         >
@@ -166,6 +168,7 @@
                 android:layout_marginLeft="30dp"
                 app:cardBackgroundColor="#fff"
                 android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
                 app:cardElevation="50dp"
                 app:cardCornerRadius="30dp">
 
@@ -232,7 +235,7 @@
                         android:layout_marginLeft="40dp"
                         android:layout_marginTop="30dp"
                         android:gravity="center_vertical"
-                        android:text="Stock :"
+                        android:text="Discount :"
                         android:textColor="#000"
                         android:textStyle="bold" />
 

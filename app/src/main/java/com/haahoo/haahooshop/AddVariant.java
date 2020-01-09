@@ -76,7 +76,7 @@ public class AddVariant extends AppCompatActivity {
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AddVariant.this,viewpdtdetails.class));
+                startActivity(new Intent(AddVariant.this,viewproduct.class));
             }
         });
 
@@ -168,6 +168,6 @@ public class AddVariant extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(AddVariant.this,viewpdtdetails.class));
+        startActivity(new Intent(AddVariant.this,viewproduct.class));
     }
 }

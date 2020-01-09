@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".review"></activity>
+        <activity android:name=".DemoActivity"></activity>
+        <activity android:name=".addoffer" />
+        <activity android:name=".review" />
         <activity android:name=".cloudproductdetails" />
         <activity android:name=".cloudproductviewdetails" />
         <activity android:name=".cloudproductview" />
