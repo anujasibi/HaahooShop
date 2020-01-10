@@ -56,7 +56,7 @@ public class ViewBranches extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context,Navigation.class));
+                startActivity(new Intent(context,BranchManagement.class));
             }
         });
 
@@ -239,6 +239,6 @@ public class ViewBranches extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,Navigation.class));
+        startActivity(new Intent(context,BranchManagement.class));
     }
 }

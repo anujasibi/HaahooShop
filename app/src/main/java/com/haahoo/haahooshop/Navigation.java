@@ -174,7 +174,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
         cardb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context,AddEmployee.class);
+                Intent intent=new Intent(context,BranchManagement.class);
                 startActivity(intent);
             }
         });
@@ -202,7 +202,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
         cardf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context,AddShopBranch.class);
+                Intent intent=new Intent(context,OrderManagement.class);
                 startActivity(intent);
             }
         });

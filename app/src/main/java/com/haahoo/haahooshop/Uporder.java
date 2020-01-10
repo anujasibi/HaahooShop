@@ -39,8 +39,13 @@ public class Uporder extends AppCompatActivity {
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Uporder.this,Navigation.class));
+                startActivity(new Intent(Uporder.this,OrderManagement.class));
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Uporder.this,OrderManagement.class));
     }
 }

@@ -221,7 +221,7 @@
                                 android:layout_width="match_parent"
                                 android:textColor="#000"
                                 android:textAlignment="center"
-                                android:text="Add Employee"
+                                android:text="Branch Mangmement"
                                 android:layout_below="@+id/imm"
                                 android:layout_marginTop="10dp"
                                 android:layout_height="wrap_content"/>
@@ -258,7 +258,7 @@
                                 android:layout_width="match_parent"
                                 android:textColor="#000"
                                 android:textAlignment="center"
-                                android:text="Add Branches"
+                                android:text="Order Management"
                                 android:layout_below="@+id/imf"
                                 android:layout_marginTop="10dp"
                                 android:layout_height="wrap_content"/>
