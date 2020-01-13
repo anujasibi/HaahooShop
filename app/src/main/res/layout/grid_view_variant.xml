@@ -70,27 +70,21 @@
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/black"/>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:id="@+id/sr"
-
                 android:layout_below="@+id/textView1"
                 android:textAlignment="center"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="10dp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:text=""
-              android:layout_centerInParent="true"
-             />
-
+                android:text="Available Stock"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="15dp"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_below="@+id/sr"
-              android:layout_centerInParent="true"
+                android:layout_below="@+id/textView1"
+                android:layout_alignParentRight="true"
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 >
@@ -164,23 +158,6 @@
                 </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
-
-
-            <!--<TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="View Variants"
-                android:id="@+id/viewk"
-                android:layout_below="@+id/aval"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="20dp"
-                android:background="@color/blu"
-                android:textColor="@color/WHITE"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:layout_marginBottom="20dp"
-                android:gravity="center_vertical"
-                android:layout_marginRight="20dp"/>-->
 
         </RelativeLayout>
 

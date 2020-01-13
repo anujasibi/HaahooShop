@@ -15,7 +15,11 @@
         android:roundIcon="@mipmap/rounded"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".OrderManagement"></activity>
+        <activity android:name=".viewvariant"></activity>
+        <activity android:name=".ConfirmPin" />
+        <activity android:name=".PinRegister" />
+        <activity android:name=".Pincode" />
+        <activity android:name=".OrderManagement" />
         <activity android:name=".BranchManagement" />
         <activity android:name=".DemoActivity" />
         <activity android:name=".addoffer" />

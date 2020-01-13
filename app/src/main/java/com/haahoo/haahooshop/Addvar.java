@@ -52,7 +52,7 @@ import retrofit2.Retrofit;
 
 public class Addvar extends AppCompatActivity {
     Activity activity=this;
-    EditText varname,fprice,rprice;
+    EditText varname,fprice,rprice,counts;
     ImageView imgp,imageView3;
     Context context=this;
     Spinner spinner;
@@ -137,6 +137,7 @@ public class Addvar extends AppCompatActivity {
         fprice=findViewById(R.id.gst);
         rprice=findViewById(R.id.email);
         imgp=findViewById(R.id.imgp);
+        counts=findViewById(R.id.count);
         imageView3=findViewById(R.id.imageView3);
 
         imageView3.setOnClickListener(new View.OnClickListener() {
@@ -374,10 +375,12 @@ public class Addvar extends AppCompatActivity {
             Log.d("nameee","mm"+rprice.getText().toString());
             RequestBody fixed_price = RequestBody.create(MediaType.parse("text/plain"), fprice.getText().toString());
             Log.d("nameee","mm"+fprice.getText().toString());
+            RequestBody count = RequestBody.create(MediaType.parse("text/plain"), counts.getText().toString());
+            Log.d("nameee","mm"+counts.getText().toString());
 
 
             //
-            Call call = uploadAPIs.uploadoI("Token " + sessionManager.getTokens(),part1,pdt_id,variant_name,variant_value,retail_value,fixed_price);
+            Call call = uploadAPIs.uploadoI("Token " + sessionManager.getTokens(),part1,pdt_id,variant_name,variant_value,retail_value,fixed_price,count);
             call.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, retrofit2.Response response) {

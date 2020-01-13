@@ -57,7 +57,7 @@ public class viewpdtdetails extends AppCompatActivity {
     ImageView imageView,io;
     ViewPager viewPager;
     Context context = this;
-    TextView shopname,location,gstno,catgory,owner,edit;
+    TextView shopname,location,gstno,catgory,owner,edit,view;
     CardView image;
     String id = "null";
     SessionManager sessionManager;
@@ -119,6 +119,7 @@ public class viewpdtdetails extends AppCompatActivity {
 
             }
         });
+        view=findViewById(R.id.viewk);
         shopname=findViewById(R.id.sname);
         location=findViewById(R.id.location);
         owner=findViewById(R.id.owner);
@@ -126,6 +127,13 @@ public class viewpdtdetails extends AppCompatActivity {
         catgory=findViewById(R.id.category);
         edit=findViewById(R.id.edit);
         io=findViewById(R.id.io);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,viewvariant.class));
+            }
+        });
 
         sessionManager=new SessionManager(this);
 

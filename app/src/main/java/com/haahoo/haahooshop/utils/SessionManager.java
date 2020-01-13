@@ -37,6 +37,20 @@ public class SessionManager {
 
         return  sharedPreferences.getString("token","");
     }
+    public void setPins(String pins){
+        sharedPreferences.edit().putString("pins",pins).commit();
+    }
+    public String getPins(){
+
+        return  sharedPreferences.getString("pins","");
+    }
+    public void setSto(String sto){
+        sharedPreferences.edit().putString("sto",sto).commit();
+    }
+    public String getSto(){
+
+        return  sharedPreferences.getString("sto","");
+    }
 
 
     public void setPdtName(String PdtName){

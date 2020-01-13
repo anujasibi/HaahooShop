@@ -27,7 +27,7 @@ public interface  UploadAPI {
 
     @Multipart
     @POST("api_shop_app/add_variant/")
-    Call<ResponseBody> uploadoI(@Header("Authorization") String token, @Part MultipartBody.Part variant_img, @Part("pdt_id") RequestBody pdt_id, @Part("variant_name") RequestBody variant_name, @Part("variant_value") RequestBody variant_value, @Part("retail_value") RequestBody retail_value, @Part("fixed_price") RequestBody fixed_price);
+    Call<ResponseBody> uploadoI(@Header("Authorization") String token, @Part MultipartBody.Part variant_img, @Part("pdt_id") RequestBody pdt_id, @Part("variant_name") RequestBody variant_name, @Part("variant_value") RequestBody variant_value, @Part("retail_value") RequestBody retail_value, @Part("fixed_price") RequestBody fixed_price,@Part("count") RequestBody count);
 
 }
 

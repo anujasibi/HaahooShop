@@ -10,16 +10,34 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.haahoo.haahooshop.utils.Global;
 import com.haahoo.haahooshop.utils.SessionManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class splashscreen extends AppCompatActivity {
     Activity activity = this;
     SessionManager sessionManager;
     Handler handler;
+    String device_id = null;
+    private String Urline = Global.BASE_URL+"api_shop_app/shop_model_id_verification/";
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -34,15 +52,16 @@ public class splashscreen extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        device_id =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+       checkdeviceid();
 
 
 
 
 
 
-
-
-        if (sessionManager.getTokens().length() == 0){
+       /* if (sessionManager.getTokens().length() == 0){
 
             handler=new Handler();
             handler.postDelayed(new Runnable() {
@@ -68,12 +87,11 @@ public class splashscreen extends AppCompatActivity {
                 }
             },3000);
 
-        }
+        }*/
 
     }
-   /*
-    private  void checktype(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+    private  void checkdeviceid(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Urline,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -83,28 +101,28 @@ public class splashscreen extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String ot = jsonObject.optString("message");
-                            String status=jsonObject.optString("role_type");
-                            String token=jsonObject.optString("Token");
+                            /*String status=jsonObject.optString("role_type");
+                            String token=jsonObject.optString("Token");*/
                             //    sessionManager.setTokens(token);
-                            Log.d("otp","mm"+token);
-                            Log.d("code","mm"+status);
-                            if(status.equals("")){
+                         /*   Log.d("otp","mm"+token);
+                            Log.d("code","mm"+status);*/
+                            if(ot.equals("Device already exist")){
                                 handler=new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent intent=new Intent(splashscreen.this,choose.class);
+                                        Intent intent=new Intent(splashscreen.this,Pincode.class);
                                         startActivity(intent);
                                         finish();
                                     }
                                 },3000);
                             }
-                            if(!(status.equals(""))){
+                            if(!(ot.equals("Device already exist"))){
                                 handler=new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent intent=new Intent(splashscreen.this,MainUI.class);
+                                        Intent intent=new Intent(splashscreen.this,MainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -130,18 +148,21 @@ public class splashscreen extends AppCompatActivity {
                     }
                 }){
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Token "+sessionManager.getTokens());
-                Log.d("token","mm"+sessionManager.getTokens());
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("device_id",device_id);
+                Log.d("name","mm"+device_id);
                 return params;
             }
 
+
+
+
+
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        RequestQueue requestQueue = Volley.newRequestQueue(splashscreen.this);
         requestQueue.add(stringRequest);
     }
-*/
 
 }

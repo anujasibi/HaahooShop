@@ -31,17 +31,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyAdapter extends ArrayAdapter {
+public class varaadapter extends ArrayAdapter {
 
     ArrayList<Item> birdList = new ArrayList<>();
-    private String URLline = Global.BASE_URL+"api_shop_app/remove_product/";
-    private String URLlin = Global.BASE_URL+"api_shop_app/shop_pdt_count_update/";
+    private String URLlin = Global.BASE_URL+"api_shop_app/shop_pdt_var_count_update/";
     public String ids;
     private SessionManager sessionManager;
     Context context;
     public int quantity = 0;
 
-    public MyAdapter(Context context, int textViewResourceId, ArrayList<Item> objects) {
+    public varaadapter(Context context, int textViewResourceId, ArrayList<Item> objects) {
         super(context, textViewResourceId, objects);
         birdList = objects;
         this.context=context;
@@ -53,9 +52,6 @@ public class MyAdapter extends ArrayAdapter {
         return super.getCount();
     }
 
-
-
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -66,32 +62,21 @@ public class MyAdapter extends ArrayAdapter {
         v = inflater.inflate(R.layout.grid_view_items, null);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView textView1=(TextView)v.findViewById(R.id.textView1);
-       final TextView viewk=v.findViewById(R.id.sr);
         TextView minus = v.findViewById(R.id.minus);
         final TextView addD = v.findViewById(R.id.add);
         TextView plus = v.findViewById(R.id.plus);
-     //   TextView textView3=(TextView)v.findViewById(R.id.textView3);
+        //   TextView textView3=(TextView)v.findViewById(R.id.textView3);
 
         ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
         ImageView delete = (ImageView) v.findViewById(R.id.delete);
         textView.setText(birdList.get(position).getName());
-      //  Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);
+        //  Picasso.with(getContext()).load(birdList.get(position).getImage()).into(imageView);
         Picasso.get().load(birdList.get(position).getImage()).into(imageView);
         textView1.setText(birdList.get(position).getPrice());
-
-        viewk.setText("Stock : "+birdList.get(position).getStock());
-       // textView3.setText(birdList.get(position).getStock());
+        // textView3.setText(birdList.get(position).getStock());
 
         ids=birdList.get(position).getId();
         addD.setText(birdList.get(position).getStock());
-
-        /*viewk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               Intent i=new Intent(context,viewvariant.class);
-               context.startActivity(i);
-            }
-        });*/
 
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +89,7 @@ public class MyAdapter extends ArrayAdapter {
                     //     ApiClient.directsell_cartcount = String.valueOf(quantity);
                     addD.setText(birdList.get(position).getStock());
                     sessionManager.setSto(birdList.get(position).getStock());
-                    viewk.setText("Stock : "+birdList.get(position).getStock());
                     updatestock(birdList.get(position).getId());
-
                     /*ApiClient.productB2BPojo = bookingPojos;
 
                     ApiClient.ids.add(bookingPojos.get(position).getId());
@@ -127,21 +110,19 @@ public class MyAdapter extends ArrayAdapter {
                 if (quantity>0) {
 
                     quantity = Integer.parseInt(birdList.get(position).getStock())-1;
-                  //  ApiClient.directsell_cartcount = String.valueOf(quantity);
+                    //  ApiClient.directsell_cartcount = String.valueOf(quantity);
                     birdList.get(position).setStock(String.valueOf(quantity));
                     addD.setText(birdList.get(position).getStock());
-                    viewk.setText("Stock : "+birdList.get(position).getStock());
                     sessionManager.setSto(birdList.get(position).getStock());
                     updatestock(birdList.get(position).getId());
-                  //  ApiClient.productB2BPojo = bookingPojos;
+                    //  ApiClient.productB2BPojo = bookingPojos;
                 }
                 if (quantity==0){
-                   // ApiClient.directsell_cartcount = String.valueOf(quantity);
+                    // ApiClient.directsell_cartcount = String.valueOf(quantity);
                     addD.setText("0");
                     //minus.setVisibility(View.GONE);
                     birdList.get(position).setStock("0");
                     sessionManager.setSto(birdList.get(position).getStock());
-                    viewk.setText("Stock : "+birdList.get(position).getStock());
                     updatestock(birdList.get(position).getId());
                 }
             }
@@ -150,7 +131,7 @@ public class MyAdapter extends ArrayAdapter {
 
 
 
-        delete.setOnClickListener(new View.OnClickListener() {
+        /*delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
@@ -178,12 +159,12 @@ public class MyAdapter extends ArrayAdapter {
                 AlertDialog alert11 = builder1.create();
                 alert11.show();
             }
-        });
+        });*/
         return v;
 
     }
 
-    private void deleteuser(final String product_id){
+  /*  private void deleteuser(final String product_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
                 new Response.Listener<String>() {
                     @Override
@@ -251,7 +232,7 @@ public class MyAdapter extends ArrayAdapter {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
 
-    }
+    }*/
 
     private void updatestock(final String product_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLlin,
@@ -301,7 +282,7 @@ public class MyAdapter extends ArrayAdapter {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("pdt_id",product_id);
+                params.put("variant_id",product_id);
                 Log.d("idlllll","mm"+product_id);
                 params.put("count",sessionManager.getSto());
                 Log.d("idlllll","mm"+sessionManager.getSto());

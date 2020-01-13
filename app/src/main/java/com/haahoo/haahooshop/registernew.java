@@ -188,7 +188,7 @@ public class registernew extends AppCompatActivity {
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
                                 Toast.makeText(registernew.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(registernew.this, Payment.class);
+                                Intent intent = new Intent(registernew.this, PinRegister.class);
                                 startActivity(intent);
                             }
                             else{
