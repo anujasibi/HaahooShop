@@ -447,6 +447,11 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
                         break;
 
 
+                    case R.id.qr:
+                        startActivity(new Intent(Navigation.this,qrcode.class));
+                        break;
+
+
                     case R.id.nav_privacy_policy:
                         sessionManager.setTokens("");
                         startActivity(new Intent(Navigation.this,MainActivity.class));
@@ -478,7 +483,24 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+
+        if (doubleBackToExitPressedOnce) {
+// finish();
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+// System.exit(1);
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+
+        /*if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawers();
             return;
         }
@@ -512,7 +534,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
-
+*/
     }
 
     @Override
@@ -767,6 +789,7 @@ private void notif(){
     queue.add(stringRequest);
 
 }
+
 
 
 }

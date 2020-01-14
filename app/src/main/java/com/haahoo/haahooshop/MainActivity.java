@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     SessionManager sessionManager;
     TextView forgot;
     ImageView logo;
+    boolean doubleBackToExitPressedOnce = false;
     private String URLline = Global.BASE_URL+"api_shop_app/shop_otp_generation/";
     private String URLli = Global.BASE_URL+"api_shop_app/shop_login/";
 
@@ -261,6 +263,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(context,"Press again to exit",Toast.LENGTH_SHORT).show();
+        if (doubleBackToExitPressedOnce) {
+// finish();
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+// System.exit(1);
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+
     }
 }

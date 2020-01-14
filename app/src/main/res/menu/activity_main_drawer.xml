@@ -38,6 +38,11 @@
             android:icon="@drawable/change"
             android:title="Change Password" />
 
+        <item
+            android:id="@+id/qr"
+            android:icon="@drawable/qr"
+            android:title="Shop QR" />
+
 
 
     </group>

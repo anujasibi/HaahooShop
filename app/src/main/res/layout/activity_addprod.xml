@@ -103,6 +103,7 @@
                                 android:layout_width="match_parent"
                                 android:id="@+id/address"
                                 android:hint="Return Period (If Any)"
+                                android:inputType="number"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="2dp"
                                 android:layout_height="match_parent" />

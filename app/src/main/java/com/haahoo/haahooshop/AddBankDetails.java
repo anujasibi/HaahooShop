@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddBankDetails extends AppCompatActivity {
-    EditText empname,branch,phone,password;
+    EditText empname,branch,phone,email;
     TextView submit,show,hide;
     private String Urline = Global.BASE_URL+"shop_bank_details/shop_bank_det/";
     Context context=this;
@@ -63,6 +63,7 @@ public class AddBankDetails extends AppCompatActivity {
         empname=findViewById(R.id.shopname);
         branch=findViewById(R.id.distance);
         phone=findViewById(R.id.phone);
+        email=findViewById(R.id.email);
 
 
         imageView=findViewById(R.id.imageView3);
@@ -82,10 +83,10 @@ public class AddBankDetails extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(empname.getText().toString().length()==0||branch.getText().toString().length()==0||phone.getText().toString().length()==0){
+                if(empname.getText().toString().length()==0||branch.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0){
                     Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
                 }
-                if(!(empname.getText().toString().length()==0||branch.getText().toString().length()==0||phone.getText().toString().length()==0))
+                if(!(empname.getText().toString().length()==0||branch.getText().toString().length()==0||phone.getText().toString().length()==0)||email.getText().toString().length()==0)
                 {
                     dialog.setMessage("Loading");
                     dialog.show();
@@ -151,6 +152,8 @@ public class AddBankDetails extends AppCompatActivity {
                 Log.d("owener","mm"+branch.getText().toString());
                 params.put("acc_no",phone.getText().toString());
                 Log.d("phone","mm"+phone.getText().toString());
+                params.put("email",email.getText().toString());
+                Log.d("phone","mm"+email.getText().toString());
 
 
                 return params;

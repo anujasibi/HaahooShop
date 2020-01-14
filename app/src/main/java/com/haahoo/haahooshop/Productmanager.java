@@ -88,7 +88,7 @@ public class Productmanager extends AppCompatActivity {
                     Toast.makeText(Productmanager.this,"You choosed to view product",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Productmanager.this,viewproduct.class));
                 }
-                if(index==4){
+                if(index==2){
                     Toast.makeText(Productmanager.this,"Coming Soon",Toast.LENGTH_SHORT).show();
                     // startActivity(new Intent(Productmanager.this,cloudproductcategory.class));
                 }

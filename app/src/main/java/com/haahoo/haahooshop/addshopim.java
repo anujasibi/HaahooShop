@@ -128,6 +128,8 @@ public class addshopim extends AppCompatActivity {
                    Toast.makeText(context,"Please Choose Cover Image and Profile Image",Toast.LENGTH_SHORT).show();
                }
                if(!(filePath.equals("")||files.equals(""))){
+                   dialog.setMessage("Loading");
+                   dialog.show();
                    submituser();
                }
 

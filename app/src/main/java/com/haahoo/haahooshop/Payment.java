@@ -118,7 +118,7 @@ public class Payment extends Activity implements PaymentResultListener {
 
         try {
             JSONObject options = new JSONObject();
-            options.put("name", "Haahoo Shop");
+            options.put("name", "HaaHoo Business");
             options.put("description", "Registration Fee");
             //You can omit the image option to fetch the image from dashboard
 
