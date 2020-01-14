@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,6 +38,7 @@ public class addoffer extends AppCompatActivity {
     Context context=this;
     SessionManager sessionManager;
     private String Urline = Global.BASE_URL+"api_shop_app/add_pdt_offers/";
+    ImageView imageView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,15 @@ public class addoffer extends AppCompatActivity {
 
 
         sessionManager=new SessionManager(this);
+
+        imageView3=findViewById(R.id.imageView3);
+
+        imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,viewproduct.class));
+            }
+        });
 
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -151,7 +162,7 @@ public class addoffer extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context,Navigation.class));
+        startActivity(new Intent(context,viewproduct.class));
 
     }
 

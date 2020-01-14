@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:text="Choose your fundtion by clicking the menu in center"
+        android:text="Choose your function by clicking the menu in center"
         android:textAlignment="center"
         android:textColor="#000"
         android:textStyle="bold"

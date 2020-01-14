@@ -112,7 +112,7 @@ public class profile extends AppCompatActivity {
         location=findViewById(R.id.location);
         owner=findViewById(R.id.owner);
         gstno=findViewById(R.id.gstno);
-        catgory=findViewById(R.id.category);
+       // catgory=findViewById(R.id.category);
         edit=findViewById(R.id.edit);
         io=findViewById(R.id.io);
 
@@ -417,8 +417,8 @@ public class profile extends AppCompatActivity {
                             owner.setText("  "+owne);
                             String gst_n=jsonObject1.optString("gst_no");
                             gstno.setText("  "+gst_n);
-                            String categor=jsonObject1.optString("category");
-                            catgory.setText("  "+categor);
+                           /* String categor=jsonObject1.optString("category");
+                            catgory.setText("  "+categor);*/
                             em=jsonObject1.optString("email");
                             String images1 = jsonObject1.getString("image");
                             String[] seperated = images1.split(",");
