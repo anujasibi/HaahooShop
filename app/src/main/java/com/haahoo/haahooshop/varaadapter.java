@@ -59,14 +59,17 @@ public class varaadapter extends ArrayAdapter {
 
         View v = convertView;
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        v = inflater.inflate(R.layout.grid_view_items, null);
+        v = inflater.inflate(R.layout.grid_view_variant, null);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView textView1=(TextView)v.findViewById(R.id.textView1);
+        final TextView viewk=v.findViewById(R.id.sr);
         TextView minus = v.findViewById(R.id.minus);
         final TextView addD = v.findViewById(R.id.add);
         TextView plus = v.findViewById(R.id.plus);
         //   TextView textView3=(TextView)v.findViewById(R.id.textView3);
 
+
+        viewk.setText("Stock : "+birdList.get(position).getStock());
         ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
         ImageView delete = (ImageView) v.findViewById(R.id.delete);
         textView.setText(birdList.get(position).getName());
@@ -89,6 +92,7 @@ public class varaadapter extends ArrayAdapter {
                     //     ApiClient.directsell_cartcount = String.valueOf(quantity);
                     addD.setText(birdList.get(position).getStock());
                     sessionManager.setSto(birdList.get(position).getStock());
+                    viewk.setText("Stock : "+birdList.get(position).getStock());
                     updatestock(birdList.get(position).getId());
                     /*ApiClient.productB2BPojo = bookingPojos;
 
@@ -114,6 +118,7 @@ public class varaadapter extends ArrayAdapter {
                     birdList.get(position).setStock(String.valueOf(quantity));
                     addD.setText(birdList.get(position).getStock());
                     sessionManager.setSto(birdList.get(position).getStock());
+                    viewk.setText("Stock : "+birdList.get(position).getStock());
                     updatestock(birdList.get(position).getId());
                     //  ApiClient.productB2BPojo = bookingPojos;
                 }
@@ -123,6 +128,7 @@ public class varaadapter extends ArrayAdapter {
                     //minus.setVisibility(View.GONE);
                     birdList.get(position).setStock("0");
                     sessionManager.setSto(birdList.get(position).getStock());
+                    viewk.setText("Stock : "+birdList.get(position).getStock());
                     updatestock(birdList.get(position).getId());
                 }
             }

@@ -95,20 +95,7 @@
         </LinearLayout>
 
 
-        <Button
-            android:id="@+id/skip"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="end|bottom"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:background="#fff"
-            android:textSize="14sp"
-            android:textColor="#5C25B7"
-            android:text="Skip For Now >>"
-            />
+
 
 
     </LinearLayout>

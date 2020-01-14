@@ -233,7 +233,7 @@ public class viewvariant extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(viewvariant.this,Navigation.class));
+        startActivity(new Intent(viewvariant.this,viewproduct.class));
 
     }
 }

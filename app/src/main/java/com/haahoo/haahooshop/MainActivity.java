@@ -200,14 +200,15 @@ public class MainActivity extends AppCompatActivity {
 
                             Log.d("otp","mm"+token);
                             Log.d("code","mm"+status);
+
                             if(status.equals("200")){
                                 Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(MainActivity.this, Navigation.class);
                                 startActivity(intent);
                             }
-                            if(role_type.equals("")&&payment_status.equals("Payment not done")){
+                            if(role_type.equals("")||payment_status.equals("Payment not done")&&status.equals("200")){
                                 Toast.makeText(MainActivity.this, "Login Failed.Please do payment", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(MainActivity.this, Payment.class);
+                                Intent intent = new Intent(MainActivity.this, paymentnew.class);
                                 startActivity(intent);
 
                             }
@@ -216,6 +217,9 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Login Failed.Please choose your role for further process", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(MainActivity.this, choose.class);
                                 startActivity(intent);
+                            }
+                            if(ot.equals("You are not approved")){
+                                Toast.makeText(MainActivity.this, "You are not approved. Please wait until your verification has been cleared", Toast.LENGTH_LONG).show();
                             }
                           /*  if((!role_type.equals(""))&&payment_status.equals("Payment not done")){
 

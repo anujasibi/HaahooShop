@@ -54,6 +54,7 @@ public class review extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+        back=findViewById(R.id.back);
         sessionManager=new SessionManager(this);
 
         listView = (RecyclerView) findViewById(R.id.list);

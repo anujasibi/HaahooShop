@@ -148,15 +148,15 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
         carda=findViewById(R.id.carda);
         cardb=findViewById(R.id.cardb);
         cardc=findViewById(R.id.cardc);
-        cardd=findViewById(R.id.cardd);
-        carde=findViewById(R.id.carde);
+      //  cardd=findViewById(R.id.cardd);
+     //   carde=findViewById(R.id.carde);
         cardf=findViewById(R.id.cardf);
-        cardg=findViewById(R.id.cardg);
-        cardh=findViewById(R.id.cardh);
-        cardi=findViewById(R.id.cardi);
-        cardj=findViewById(R.id.cardj);
-        cardk=findViewById(R.id.cardk);
-        cardl=findViewById(R.id.cardl);
+     //   cardg=findViewById(R.id.cardg);
+   //     cardh=findViewById(R.id.cardh);
+    //    cardi=findViewById(R.id.cardi);
+    //    cardj=findViewById(R.id.cardj);
+     //   cardk=findViewById(R.id.cardk);
+    //    cardl=findViewById(R.id.cardl);
         cardn=findViewById(R.id.cardn);
         card1=findViewById(R.id.card1);
         card2=findViewById(R.id.card2);
@@ -185,20 +185,20 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(intent);
             }
         });
-        cardd.setOnClickListener(new View.OnClickListener() {
+       /* cardd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context,viewproduct.class);
                 startActivity(intent);
             }
-        });
-        carde.setOnClickListener(new View.OnClickListener() {
+        });*/
+     /*   carde.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context,viewemployee.class);
                 startActivity(intent);
             }
-        });
+        });*/
         cardf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,7 +206,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(intent);
             }
         });
-        cardg.setOnClickListener(new View.OnClickListener() {
+       /* cardg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context,ViewBranches.class);
@@ -247,7 +247,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
                 Intent intent=new Intent(context,cancelsub.class);
                 startActivity(intent);
             }
-        });
+        });*/
         cardn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

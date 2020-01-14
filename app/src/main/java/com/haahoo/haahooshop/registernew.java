@@ -146,11 +146,11 @@ public class registernew extends AppCompatActivity {
             public void onClick(View view) {
 
                 // register();
-                if(owner.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0){
+                if(owner.getText().toString().length()==0||phone.getText().toString().length()==0||password.getText().toString().length()==0){
                     Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
                 }
 
-                if(!(owner.getText().toString().length()==0||phone.getText().toString().length()==0||email.getText().toString().length()==0||password.getText().toString().length()==0)) {
+                if(!(owner.getText().toString().length()==0||phone.getText().toString().length()==0||password.getText().toString().length()==0)) {
 
                         dialog.setMessage("Loading");
                         dialog.show();

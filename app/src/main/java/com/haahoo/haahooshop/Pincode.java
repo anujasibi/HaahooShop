@@ -130,6 +130,8 @@ public class Pincode extends AppCompatActivity {
                     String ot = jsonObject.optString("message");
                     String status=jsonObject.optString("code");
                     String token=jsonObject.optString("token");
+                    String role_type=jsonObject.optString("role_type");
+                    String payment_status=jsonObject.optString("payment_status");
                     sessionManager.setTokens(token);
 
 
@@ -140,6 +142,18 @@ public class Pincode extends AppCompatActivity {
                     if(status.equals("200")){
                         Toast.makeText(Pincode.this, "Successful", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Pincode.this, Navigation.class);
+                        startActivity(intent);
+                    }
+                    if(role_type.equals("")||payment_status.equals("Payment not done")&&status.equals("200")){
+                        Toast.makeText(Pincode.this, "Login Failed.Please do payment", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Pincode.this, paymentnew.class);
+                        startActivity(intent);
+
+                    }
+                    if(role_type.equals("")&&payment_status.equals("Payment done")){
+
+                        Toast.makeText(Pincode.this, "Login Failed.Please choose your role for further process", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Pincode.this, choose.class);
                         startActivity(intent);
                     }
                     else{

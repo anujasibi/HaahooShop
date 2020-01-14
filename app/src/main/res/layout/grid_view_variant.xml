@@ -70,21 +70,28 @@
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/black"/>
 
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:id="@+id/sr"
+
                 android:layout_below="@+id/textView1"
                 android:textAlignment="center"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="10dp"
-                android:text="Available Stock"
-                android:layout_alignParentLeft="true"
-                android:layout_marginStart="15dp"/>
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:text=""
+                android:layout_centerInParent="true"
+                />
+
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_below="@+id/textView1"
-                android:layout_alignParentRight="true"
+                android:layout_below="@+id/sr"
+                android:id="@+id/re"
+                android:layout_centerInParent="true"
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 >
@@ -158,6 +165,8 @@
                 </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
+
+
 
         </RelativeLayout>
 

@@ -34,15 +34,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Payment extends Activity implements PaymentResultListener {
+public class paymentnew extends Activity implements PaymentResultListener {
     private static final String TAG = Payment.class.getSimpleName();
     private String number,email;
     ImageSlider imageSlider;
     String razorid="null";
-  //  private String URLlin = "https://testapi.creopedia.com/api_shop_app/shop_payment_det/";
- //   private String URLli = "https://testapi.creopedia.com/api_shop_app/shop_offer_images/";
-  //  private String URLlin = "https://haahoo.in/api_shop_app/shop_payment_det/";
- //   private String URLli = "https://haahoo.in/api_shop_app/shop_offer_images/";
+    //  private String URLlin = "https://testapi.creopedia.com/api_shop_app/shop_payment_det/";
+    //   private String URLli = "https://testapi.creopedia.com/api_shop_app/shop_offer_images/";
+    //  private String URLlin = "https://haahoo.in/api_shop_app/shop_payment_det/";
+    //   private String URLli = "https://haahoo.in/api_shop_app/shop_offer_images/";
     private String URLlin = Global.BASE_URL+"api_shop_app/shop_payment_det/";
     private String URLli = Global.BASE_URL+"api_shop_app/shop_offer_images/";
     SessionManager sessionManager;
@@ -57,13 +57,13 @@ public class Payment extends Activity implements PaymentResultListener {
 
 
 
-        setContentView(R.layout.activity_payment);
+        setContentView(R.layout.activity_paymentnew);
         sessionManager=new SessionManager(this);
 
         Window window = activity.getWindow();
         //offer();
 
-       // imageSlider=findViewById(R.id.img);
+        // imageSlider=findViewById(R.id.img);
        /* ArrayList<SlideModel>imagelist=new ArrayList<>();
         imagelist.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
         imagelist.add(new SlideModel("https://1.bp.blogspot.com/-GUZsgr8my50/XJUWOhyHyaI/AAAAAAAABUo/bljp3LCS3SUtj-judzlntiETt7G294WcgCLcBGAs/s1600/fox.jpg", "Foxes live wild in the city.", true));
@@ -89,16 +89,7 @@ public class Payment extends Activity implements PaymentResultListener {
         // Payment button created by you in XML layout
         Button button = (Button) findViewById(R.id.btn_pay);
 
-        Button skip=findViewById(R.id.skip);
 
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context,"You skipped payment",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Payment.this,choose.class));
-
-            }
-        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +176,7 @@ public class Payment extends Activity implements PaymentResultListener {
                             JSONObject obj = new JSONObject(response);
                             String data= obj.optString("data");
 
-                                String[] seperated = data.split(",");
+                            String[] seperated = data.split(",");
                             for(int i = 0; i<seperated.length; i++){
                                 String split = seperated[i].replace("[", "").replace("]","").trim();
                                 array.add(new SlideModel(Global.BASE_URL+split));
@@ -196,7 +187,7 @@ public class Payment extends Activity implements PaymentResultListener {
                             imageSlider.setImageList(array,false);
 
 
-                            } catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         //  Log.d("response","hhh"+response);
@@ -205,7 +196,7 @@ public class Payment extends Activity implements PaymentResultListener {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Payment.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(paymentnew.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
 
@@ -222,7 +213,7 @@ public class Payment extends Activity implements PaymentResultListener {
                     @Override
                     public void onResponse(String response) {
                         //  dialog.dismiss();
-                      //  Toast.makeText(Payment.this,response,Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(Payment.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -230,24 +221,24 @@ public class Payment extends Activity implements PaymentResultListener {
                             String status=jsonObject.optString("status");
                             String code=jsonObject.optString("code");
 
-                          //  Log.d("otp","mm"+ot);
+                            //  Log.d("otp","mm"+ot);
                             if(code.equals("200")) {
-                                Toast.makeText(Payment.this, ot, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(Payment.this,choose.class));
+                                Toast.makeText(paymentnew.this, ot, Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(paymentnew.this,Navigation.class));
                             }
                             else{
-                                Toast.makeText(Payment.this, ot, Toast.LENGTH_LONG).show();
+                                Toast.makeText(paymentnew.this, ot, Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                      //  Log.d("response","hhh"+response);
+                        //  Log.d("response","hhh"+response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Payment.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(paymentnew.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
@@ -275,6 +266,6 @@ public class Payment extends Activity implements PaymentResultListener {
 
     @Override
     public void onBackPressed() {
-       startActivity(new Intent(context,MainActivity.class));
+        startActivity(new Intent(context,MainActivity.class));
     }
 }

@@ -119,7 +119,7 @@ public class viewpdtdetails extends AppCompatActivity {
 
             }
         });
-        view=findViewById(R.id.viewk);
+     //   view=findViewById(R.id.viewk);
         shopname=findViewById(R.id.sname);
         location=findViewById(R.id.location);
         owner=findViewById(R.id.owner);
@@ -128,12 +128,12 @@ public class viewpdtdetails extends AppCompatActivity {
         edit=findViewById(R.id.edit);
         io=findViewById(R.id.io);
 
-        view.setOnClickListener(new View.OnClickListener() {
+       /* view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(context,viewvariant.class));
             }
-        });
+        });*/
 
         sessionManager=new SessionManager(this);
 

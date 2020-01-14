@@ -295,14 +295,14 @@
                                 android:layout_width="match_parent"
                                 android:textColor="#000"
                                 android:textAlignment="center"
-                                android:text="View/Modify Profile"
+                                android:text="Profile Management"
                                 android:layout_below="@+id/immm"
                                 android:layout_marginTop="10dp"
                                 android:layout_height="wrap_content"/>
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
+                  <!--  <androidx.cardview.widget.CardView
                         android:layout_width="150dp"
                         android:layout_height="100dp"
                         android:layout_alignParentRight="true"
@@ -600,7 +600,7 @@
                                 android:layout_height="wrap_content"/>
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
-
+-->
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="150dp"
@@ -608,7 +608,7 @@
                         android:layout_alignParentLeft="true"
                         app:cardCornerRadius="20dp"
                         android:id="@+id/cardn"
-                        android:layout_below="@+id/cardk"
+                        android:layout_below="@+id/cardf"
                         android:layout_marginTop="20dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginBottom="20dp"
@@ -646,7 +646,7 @@
                         android:layout_alignParentRight="true"
                         app:cardCornerRadius="20dp"
                         android:id="@+id/cardm"
-                        android:layout_below="@+id/cardl"
+                        android:layout_below="@+id/cardc"
                         android:layout_marginTop="20dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginBottom="20dp"

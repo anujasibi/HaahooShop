@@ -70,7 +70,7 @@ public class MyAdapter extends ArrayAdapter {
         TextView minus = v.findViewById(R.id.minus);
         final TextView addD = v.findViewById(R.id.add);
         TextView plus = v.findViewById(R.id.plus);
-     //   TextView textView3=(TextView)v.findViewById(R.id.textView3);
+        TextView viewi=(TextView)v.findViewById(R.id.viewk);
 
         ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
         ImageView delete = (ImageView) v.findViewById(R.id.delete);
@@ -85,13 +85,13 @@ public class MyAdapter extends ArrayAdapter {
         ids=birdList.get(position).getId();
         addD.setText(birdList.get(position).getStock());
 
-        /*viewk.setOnClickListener(new View.OnClickListener() {
+        viewi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                Intent i=new Intent(context,viewvariant.class);
                context.startActivity(i);
             }
-        });*/
+        });
 
         plus.setOnClickListener(new View.OnClickListener() {
             @Override

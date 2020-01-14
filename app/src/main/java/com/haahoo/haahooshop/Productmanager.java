@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ramotion.circlemenu.CircleMenuView;
 
@@ -76,13 +77,20 @@ public class Productmanager extends AppCompatActivity {
             public void onButtonClickAnimationEnd(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationEnd| index: " + index);
                 if(index==0){
+                    Toast.makeText(Productmanager.this,"You choosed to add product",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Productmanager.this,choosepdtcategory.class));
                 }
                 if(index==1){
-                    startActivity(new Intent(Productmanager.this,cloudproductcategory.class));
+                    Toast.makeText(Productmanager.this,"Coming Soon",Toast.LENGTH_SHORT).show();
+                   // startActivity(new Intent(Productmanager.this,cloudproductcategory.class));
                 }
                 if(index==3){
+                    Toast.makeText(Productmanager.this,"You choosed to view product",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Productmanager.this,viewproduct.class));
+                }
+                if(index==4){
+                    Toast.makeText(Productmanager.this,"Coming Soon",Toast.LENGTH_SHORT).show();
+                    // startActivity(new Intent(Productmanager.this,cloudproductcategory.class));
                 }
             }
 
