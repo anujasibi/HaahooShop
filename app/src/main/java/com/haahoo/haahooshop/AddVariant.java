@@ -42,8 +42,10 @@ public class AddVariant extends AppCompatActivity {
    // String URL = "https://haahoo.in/api_shop_app/list_variations/";
     String URL = Global.BASE_URL+"api_shop_app/list_variations/";
     ArrayList<String> areas = new ArrayList<String>();
+    ArrayList<String> areasid = new ArrayList<String>();
     SessionManager sessionManager;
     TextView submit;
+    public String idsp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,8 @@ public class AddVariant extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String country = spinner.getItemAtPosition(spinner.getSelectedItemPosition()).toString();
 
-               // idsp = areasid.get(spinner.getSelectedItemPosition());
+                idsp = areasid.get(spinner.getSelectedItemPosition());
+                sessionManager.setvar(idsp);
                 //       Toast.makeText(getApplicationContext(), spinner.getSelectedItemPosition(), Toast.LENGTH_LONG).show();
             }
 
@@ -112,16 +115,19 @@ public class AddVariant extends AppCompatActivity {
                     Log.d("ressssssssss","mm"+response);
                     JSONObject jsonObject = new JSONObject(response);
                     areas.add("Please Choose Variant Theme");
+                    areasid.add("0");
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         String country = jsonObject1.getString("name");
+                        String id = jsonObject1.getString("id");
+                       // sessionManager.setvar(id);
                         String value = jsonObject1.getString("values");
                         String[]seperated=value.split(",");
-                        sessionManager.setvar(value);
+                      //  sessionManager.setvar(value);
                         Log.d("valuess","mm"+seperated[0].replace("[","").replace("'",""));
                         areas.add(country);
-                   //     areasid.add(id);
+                        areasid.add(id);
 
                     }
 

@@ -44,7 +44,7 @@ import java.util.ArrayList;
 
 public class stepper extends AppCompatActivity {
     Activity activity = this;
-    EditText shopname,owner,gstno,phone,email,password,distance;
+    EditText shopname,owner,gstno,phone,email,password,distance,pinc;
     EditText address;
     TextView submit,show,hide;
     String device_id = null;
@@ -93,6 +93,7 @@ public class stepper extends AppCompatActivity {
         shopname=findViewById(R.id.shopname);
 
         owner=findViewById(R.id.owner);
+        pinc=findViewById(R.id.pinc);
         gstno=findViewById(R.id.gst);
         phone=findViewById(R.id.phone);
         email=findViewById(R.id.email);
@@ -168,15 +169,60 @@ public class stepper extends AppCompatActivity {
             }
         });
 
+        shopname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+
+                if(shopname.getText().length()==0) {
+                    shopname.setError("Shop Name is required");
+                }
+            }
+        });
+        owner.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(owner.getText().length()==0) {
+                    owner.setError("Owner Name is required");
+                }
+            }
+        });
+        address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(address.getText().length()==0) {
+                    address.setError("Address is required");
+                }
+
+            }
+        });
+        pinc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(pinc.getText().length()==0) {
+                    pinc.setError("Pincode is required");
+                }
+                if(pinc.getText().length()<6){
+                    pinc.setError("Invalid Pincode");
+                }
+            }
+        });
+
+
 
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(idsp.equals("0")){
+                    Toast.makeText(context,"Please choose the distance",Toast.LENGTH_SHORT).show();
+                }
+                if(pinc.getText().length()<6){
+                    pinc.setError("Invalid Pincode");
+                }
 
-                if(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||address.getText().toString().length()==0||idsp.equals("1")){
-                    Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
+                if(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||address.getText().toString().length()==0||idsp.equals("0")||pinc.getText().length()==0){
+                    Toast.makeText(context,"Some required field is missing",Toast.LENGTH_SHORT).show();
                 }
                 if(source_lng.equals("0")||source_lat.equals("0")){
                     //
@@ -186,7 +232,7 @@ public class stepper extends AppCompatActivity {
                     Toast.makeText(context,"Please enter the complete address",Toast.LENGTH_SHORT).show();
 
                 }
-                if(!(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||address.getText().toString().length()==0||idsp.equals("1")||source_lng.equals("0")||source_lat.equals("0"))) {
+                if(!(shopname.getText().toString().length()==0||owner.getText().toString().length()==0||address.getText().toString().length()==0||idsp.equals("0")||source_lng.equals("0")||source_lat.equals("0")||pinc.getText().length()<6)) {
                     sessionManager.setshopname(shopname.getText().toString());
                     sessionManager.setown(owner.getText().toString());
                     sessionManager.setgst(gstno.getText().toString());
@@ -194,6 +240,7 @@ public class stepper extends AppCompatActivity {
                     sessionManager.setdis(idsp);
                     sessionManager.setlat(source_lat);
                     sessionManager.setlog(source_lng);
+                    sessionManager.setpincode(pinc.getText().toString());
 
                     Log.d("cvgbnm","mmm"+sessionManager.getshopname());
                     Log.d("cvgbnm","mmm"+sessionManager.getown());
@@ -258,7 +305,7 @@ public class stepper extends AppCompatActivity {
             public void onResponse(String response) {
                 try{
                     JSONObject jsonObject=new JSONObject(response);
-                    areas.add("Please select the total distance covered in kms");
+                    areas.add("Delivery distance in kms");
                     areasid.add("0");
                     JSONArray jsonArray=jsonObject.getJSONArray("data");
                     for(int i=0;i<jsonArray.length();i++){

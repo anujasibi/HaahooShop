@@ -15,7 +15,13 @@
         android:roundIcon="@mipmap/rounded"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".qrcode"></activity>
+        <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".Pdf" />
+        <activity android:name=".Confirmresetpin" />
+        <activity android:name=".ResetPin" />
+        <activity android:name=".verifyotppin" />
+        <activity android:name=".Resetpinphone" />
+        <activity android:name=".qrcode" />
         <activity android:name=".paymentnew" />
         <activity android:name=".viewvariant" />
         <activity android:name=".ConfirmPin" />
@@ -84,13 +90,15 @@
         <activity android:name=".ViewBranches" />
         <activity android:name=".AddEmployee" />
         <activity android:name=".AddShopBranch" />
+        <!--
   <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_MquWTYi6ypIVBE" />
-       <!-- <meta-data
+        -->
+        <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_test_Sc2QOgXEJcedKm" />
--->
+
         <activity android:name=".addproductnew" />
         <activity android:name=".Payment" />
         <activity android:name=".editcategory" />

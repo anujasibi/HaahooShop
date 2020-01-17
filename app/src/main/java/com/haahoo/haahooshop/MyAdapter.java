@@ -274,7 +274,7 @@ public class MyAdapter extends ArrayAdapter {
 
                             Log.d("code","mm"+status);
                             if(status.equals("200")&&(!(ot.equals("verify")))){
-                                Toast.makeText(getContext(), "Successful", Toast.LENGTH_LONG).show();
+                               // Toast.makeText(getContext(), "Successful", Toast.LENGTH_LONG).show();
                             }
 
 

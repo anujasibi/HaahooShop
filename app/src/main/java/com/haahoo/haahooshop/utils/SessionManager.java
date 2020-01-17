@@ -74,6 +74,20 @@ public class SessionManager {
 
         return  sharedPreferences.getString("var","");
     }
+    public void setincent(String incent){
+        sharedPreferences.edit().putString("incent",incent).commit();
+    }
+    public String getincent(){
+
+        return  sharedPreferences.getString("incent","");
+    }
+    public void setresetphn(String rphn){
+        sharedPreferences.edit().putString("rphn",rphn).commit();
+    }
+    public String getresetphn(){
+
+        return  sharedPreferences.getString("rphn","");
+    }
     public void setaddshop(String addshop){
         sharedPreferences.edit().putString("addshop",addshop).commit();
     }
@@ -326,6 +340,15 @@ public class SessionManager {
     public void setcatrid(String rid){
         sharedPreferences.edit().putString("rid",rid).commit();
     }
+
+    public String getpincode(){
+
+        return  sharedPreferences.getString("pincode","");
+    }
+    public void setpincode(String pincode){
+        sharedPreferences.edit().putString("pincode",pincode).commit();
+    }
+
 
 
 }

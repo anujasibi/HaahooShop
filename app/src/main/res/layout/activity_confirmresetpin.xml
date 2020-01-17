@@ -17,7 +17,7 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:maxLines="1"
-        android:text="Login With Pin"
+        android:text="Confirm Pin"
         android:textColor="@color/white"
         android:textSize="25dp" />
 
@@ -40,30 +40,5 @@
         app:keypadShowDeleteButton="true"
         app:keypadTextColor="@color/white"
         app:keypadTextSize="18dp" />
-
-    <TextView
-        android:id="@+id/pass"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_below="@+id/pin_lock_view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="  Click here to Login With Password  "
-        android:textColor="@color/WHITE"
-        />
-    <TextView
-        android:id="@+id/reset"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_below="@+id/pass"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="  Forgot Pin  "
-        android:textColor="@color/WHITE"
-        />
 
 </RelativeLayout>

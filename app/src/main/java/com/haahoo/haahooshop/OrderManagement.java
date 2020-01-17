@@ -51,7 +51,7 @@ public class OrderManagement extends AppCompatActivity {
         arcMenu.setStateChangeListener(new StateChangeListener() {
             @Override
             public void onMenuOpened() {
-                Snackbar.make(arcMenu, "Menu Opened", Snackbar.LENGTH_SHORT).show();
+               // Snackbar.make(arcMenu, "Menu Opened", Snackbar.LENGTH_SHORT).show();
 
                 if(arcMenu.mDrawable instanceof Animatable)
                     ((Animatable) arcMenu.mDrawable).start();
@@ -59,7 +59,7 @@ public class OrderManagement extends AppCompatActivity {
 
             @Override
             public void onMenuClosed() {
-                Snackbar.make(arcMenu, "Menu Closed", Snackbar.LENGTH_SHORT).show();
+             //   Snackbar.make(arcMenu, "Menu Closed", Snackbar.LENGTH_SHORT).show();
             }
         });
 

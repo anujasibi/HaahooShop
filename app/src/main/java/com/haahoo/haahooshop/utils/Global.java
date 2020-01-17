@@ -7,11 +7,12 @@ import java.util.List;
 
 public class Global {
 
- //  public static String BASE_URL = "https://testapi.creopedia.com/";
-    public static String BASE_URL = "https://haahoo.in/";
+  public static String BASE_URL = "https://testapi.creopedia.com/";
+   // public static String BASE_URL = "https://haahoo.in/";
     public static String category = "null";
     public static ArrayList<String> discount = new ArrayList<>();
     public static String price="null";
+ public static  ArrayList<ArrayList<String>> row = new ArrayList<ArrayList<String>>();
     public static String total="0";
     public static boolean flag = false;
     public static ArrayList<String>spec_headers = new ArrayList<>();

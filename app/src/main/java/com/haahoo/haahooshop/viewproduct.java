@@ -171,6 +171,7 @@ public class viewproduct extends AppCompatActivity {
                                 sessionManager.setPdtid(id);
                                 String catid=dataobj.optString("category_id");
                                 playerModel.setCategoryid(catid);
+                                sessionManager.setcatid(catid);
                                 playerModel.setDescription(descr);
                                 playerModel.setDiscount(discount);
                                 playerModel.setStock(stock);

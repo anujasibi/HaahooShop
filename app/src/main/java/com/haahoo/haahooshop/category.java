@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class category extends AppCompatActivity {
@@ -147,11 +148,37 @@ public class category extends AppCompatActivity {
 
 
                     JSONArray jsonArray = jsonObject.optJSONArray("data");
+                    ArrayList<String> vals = new ArrayList<String>();
+                    ArrayList<ArrayList<String>> row = new ArrayList<ArrayList<String>>();
+
+
+                    Log.d("ghcghdata","ghfvghf"+jsonArray);
                     for (int i =0;i<jsonArray.length();i++){
+
                       JSONObject jsonObject1 = jsonArray.optJSONObject(i);
                       Specpojo specpojo = new Specpojo();
                       specpojo.setName(jsonObject1.optString("name"));
                       specpojo.setId(jsonObject1.optString("id"));
+                      String values1 = jsonObject1.optString("values");
+                      ArrayList<String> column = new ArrayList<String>();
+                      column.add(values1);
+                      row.add(column);
+
+                      String[]seperated=values1.split(",");
+                     specpojo.setValuesss(seperated);
+
+                     vals.add(values1);
+                      specpojo.setValuess(vals);
+                     for (int j =0;j<seperated.length;j++){
+                       Log.d("sepee","hjbhjb"+values1);
+                     }
+
+
+
+
+//                      for (int l = 0;l<seperated.length;l++){
+//
+//                      }
                       value = jsonObject1.optString("values").split(",");
                       ArrayList<String> values = new ArrayList<>();
                       values.add("Please Select ...");
@@ -162,6 +189,14 @@ public class category extends AppCompatActivity {
                       // Log.d("jsonresponse","hgf"+value[0]+"kkk"+value[1]+value.length);
                       specpojos.add(specpojo);
                     }
+
+
+                      Global.row = row;
+                 /*   for (int j = 0 ;j<vals.size();j++){*/
+                      Log.d("valss","hjghj"+row.get(0).get(0));
+                      Log.d("valssyyy+","hjghj"+row.get(1).get(0));
+
+                  /*  }*/
                     specAdapter = new SpecAdapter(specpojos, context);
                     recyclerView.setAdapter(specAdapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));

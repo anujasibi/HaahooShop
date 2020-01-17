@@ -147,7 +147,7 @@ public class registernew extends AppCompatActivity {
 
                 // register();
                 if(owner.getText().toString().length()==0||phone.getText().toString().length()==0||password.getText().toString().length()==0){
-                    Toast.makeText(context,"All fields are required",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"Some required field is missing",Toast.LENGTH_SHORT).show();
                 }
 
                 if(!(owner.getText().toString().length()==0||phone.getText().toString().length()==0||password.getText().toString().length()==0)) {

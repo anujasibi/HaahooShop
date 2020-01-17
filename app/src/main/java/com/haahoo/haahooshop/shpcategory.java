@@ -121,7 +121,7 @@ public class shpcategory extends AppCompatActivity {
         ItemClickSupport.addTo(listView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Toast.makeText(context,"clck",Toast.LENGTH_SHORT).show();
+          //      Toast.makeText(context,"clck",Toast.LENGTH_SHORT).show();
 //                list2.add(list1.get(position));
                 showphones(list1.get(position),list2.get(position));
                 adapter.notifyDataSetChanged();
@@ -151,7 +151,7 @@ public class shpcategory extends AppCompatActivity {
 
 
             if (id.contains(id1)){
-                Toast.makeText(context,"exists",Toast.LENGTH_SHORT).show();
+          //      Toast.makeText(context,"exists",Toast.LENGTH_SHORT).show();
             }
         if (!(id.contains(id1))) {
             id.add(id1);

@@ -26,6 +26,17 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.haahoo.haahooshop.utils.Global;
 import com.haahoo.haahooshop.utils.SessionManager;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -35,13 +46,19 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -59,11 +76,14 @@ public class Addvar extends AppCompatActivity {
     ArrayList<String> areas = new ArrayList<String>();
     SessionManager sessionManager;
     private static final String IMAGE_DIRECTORY = "/demonuts";
+    String url = Global.BASE_URL+"api_shop_app/variant_value_show/";
     private int GALLERY = 1, CAMERA = 2,CGALLERY=3,CCAMERA=4;;
     String files;
     private Uri uri;
     public String country;
     TextView submit;
+    public String[]seperated;
+    public String data;
 
 
     @Override
@@ -83,6 +103,8 @@ public class Addvar extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+
+        submit();
         imageView3=findViewById(R.id.imageView3);
 
         imageView3.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +133,7 @@ public class Addvar extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                  country = spinner.getItemAtPosition(spinner.getSelectedItemPosition()).toString();
                 // idsp = areasid.get(spinner.getSelectedItemPosition());
-                Toast.makeText(getApplicationContext(), spinner.getSelectedItemPosition()+country, Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), spinner.getSelectedItemPosition()+country, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -119,16 +141,6 @@ public class Addvar extends AppCompatActivity {
                 // DO Nothing here
             }
         });
-
-        areas.add("Please Choose the Variation Value");
-        String[]seperated=sessionManager.getvar().split(",");
-
-        for (int i=0;i<seperated.length;i++){
-            String name=seperated[i].replace("[","").replace("'","");
-            areas.add(name);
-        }
-        spinner.setAdapter(new ArrayAdapter<String>(Addvar.this, android.R.layout.simple_spinner_dropdown_item, areas));
-        Log.d("valuess","mm"+seperated[0].replace("[","").replace("'",""));
 
 
 
@@ -336,6 +348,84 @@ public class Addvar extends AppCompatActivity {
                 int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
                 return cursor.getString(idx);
             }
+        }
+
+        private void submit(){
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        Log.d("ressssssssss","mm"+response);
+                        JSONObject jsonObject = new JSONObject(response);
+                         data=jsonObject.optString("data");
+                        Log.d("mmm","data"+data);
+                        seperated=data.split(",");
+                        Log.d("seperated","data"+seperated);
+                        areas.add("Please Choose the Variation Value");
+                        // String[]seperated=data.split(",");
+
+                        for (int i=0;i<seperated.length;i++){
+                            String name=seperated[i].replace("[","").replace("'","").replace("]","");
+                            areas.add(name);
+                        }
+                        spinner.setAdapter(new ArrayAdapter<String>(Addvar.this, android.R.layout.simple_spinner_dropdown_item, areas));
+                        Log.d("valuess","mm"+seperated[0].replace("[","").replace("'",""));
+
+                       /* areas.add("Please Choose Variant Theme");
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String country = jsonObject1.getString("name");
+                            String id = jsonObject1.getString("id");
+                            sessionManager.setvar(id);
+                            String value = jsonObject1.getString("values");
+                            String[]seperated=value.split(",");
+                            //  sessionManager.setvar(value);
+                            Log.d("valuess","mm"+seperated[0].replace("[","").replace("'",""));
+                            areas.add(country);
+                            //     areasid.add(id);
+
+                        }
+*/
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            }){
+                @Override
+                protected Map<String,String> getParams() throws AuthFailureError {
+                    Map<String,String> params = new HashMap<String, String>();
+                    params.put("id",sessionManager.getvar());
+                    Log.d("dsdfghjkl","mm"+sessionManager.getvar());
+
+                    return params;
+                }
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Authorization", "Token "+sessionManager.getTokens());
+                    Log.d("token","mm"+sessionManager.getTokens());
+                    return params;
+                }
+
+
+            };
+
+
+            int socketTimeout = 30000;
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            stringRequest.setRetryPolicy(policy);
+            requestQueue.add(stringRequest);
+
         }
 
 

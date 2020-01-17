@@ -96,9 +96,17 @@ public class MainActivity extends AppCompatActivity {
         continuetologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.setMessage("Loading");
-                dialog.show();
-                submit();
+
+                if(phoneno.getText().length()<10){
+                    Toast.makeText(context,"Please enter a valid phone number",Toast.LENGTH_SHORT).show();
+
+                }
+                if(!(phoneno.getText().length()<10)) {
+                    dialog.setMessage("Loading");
+                    dialog.show();
+
+                    submit();
+                }
             }
         });
     }
@@ -208,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, Navigation.class);
                                 startActivity(intent);
                             }
-                            if(role_type.equals("")||payment_status.equals("Payment not done")&&status.equals("200")){
+                            if(payment_status.equals("Payment not done")&&status.equals("200")){
                                 Toast.makeText(MainActivity.this, "Login Failed.Please do payment", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(MainActivity.this, paymentnew.class);
                                 startActivity(intent);
@@ -220,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, choose.class);
                                 startActivity(intent);
                             }
-                            if(ot.equals("You are not approved")){
+                            if(ot.equals("You are not approved")&&(!role_type.equals(""))){
                                 Toast.makeText(MainActivity.this, "You are not approved. Please wait until your verification has been cleared", Toast.LENGTH_LONG).show();
                             }
                           /*  if((!role_type.equals(""))&&payment_status.equals("Payment not done")){

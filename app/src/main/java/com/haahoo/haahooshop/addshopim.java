@@ -554,6 +554,8 @@ public class addshopim extends AppCompatActivity {
                 Log.d("category","mm"+sessionManager.getcat());
                 params.put("role",sessionManager.getrole());
                 Log.d("category","mm"+sessionManager.getrole());
+                params.put("pincode",sessionManager.getpincode());
+                Log.d("category","mm"+sessionManager.getpincode());
 
 
                 return params;

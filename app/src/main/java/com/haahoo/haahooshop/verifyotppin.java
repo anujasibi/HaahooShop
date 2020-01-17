@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VerifyOtp extends AppCompatActivity {
+public class verifyotppin extends AppCompatActivity {
     EditText editText;
     TextView textView;
     Activity activity = this;
@@ -46,7 +46,8 @@ public class VerifyOtp extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_otp);
+        setContentView(R.layout.activity_verifyotppin);
+
 
         Window window = activity.getWindow();
 
@@ -58,7 +59,7 @@ public class VerifyOtp extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
-        dialog=new ProgressDialog(VerifyOtp.this,R.style.MyAlertDialogStyle);
+        dialog=new ProgressDialog(verifyotppin.this,R.style.MyAlertDialogStyle);
         Bundle bundle = getIntent().getExtras();
         phone_no = bundle.getString("phone_no");
         otp=bundle.getString("otp");
@@ -88,7 +89,7 @@ public class VerifyOtp extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                         dialog.dismiss();
+                        dialog.dismiss();
                         //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -104,16 +105,16 @@ public class VerifyOtp extends AppCompatActivity {
                             Log.d("otp","mm"+token);
                             Log.d("code","mm"+status);
                             if(status.equals("200")){
-                                Toast.makeText(VerifyOtp.this, "Successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(VerifyOtp.this, registernew.class);
+                                Toast.makeText(verifyotppin.this, "Successful", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(verifyotppin.this, ResetPin.class);
                                 intent.putExtra("phone_no",phone_no);
                                 startActivity(intent);
                             }
                             if(status.equals("203")){
-                                Toast.makeText(VerifyOtp.this, "Not a valid otp.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(verifyotppin.this, "Not a valid otp."+ot, Toast.LENGTH_LONG).show();
                             }
                             else{
-                                Toast.makeText(VerifyOtp.this, ot, Toast.LENGTH_LONG).show();
+                                Toast.makeText(verifyotppin.this, ot, Toast.LENGTH_LONG).show();
 
 
                             }
@@ -122,7 +123,7 @@ public class VerifyOtp extends AppCompatActivity {
                             dialog.dismiss();
                             e.printStackTrace();
                         }
-                         Log.d("response","hhh"+response);
+                        //   Log.d("response","hhh"+response);
 
 
                     }
@@ -131,7 +132,7 @@ public class VerifyOtp extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         dialog.dismiss();
-                        Toast.makeText(VerifyOtp.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(verifyotppin.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
@@ -151,6 +152,7 @@ public class VerifyOtp extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(VerifyOtp.this,MainActivity.class));
+        startActivity(new Intent(verifyotppin.this,MainActivity.class));
     }
-}
+    }
+

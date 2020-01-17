@@ -5,8 +5,29 @@ import java.util.ArrayList;
 public class Specpojo {
 
   public String id;
+
+  public ArrayList<String> getValuess() {
+    return valuess;
+  }
+
+  public void setValuess(ArrayList<String> valuess) {
+    this.valuess = valuess;
+  }
+
   public String name;
   public ArrayList<String> values = new ArrayList<>();
+
+  public ArrayList<String> valuess = new ArrayList<>();
+
+  public String[]valuesss;
+
+  public String[] getValuesss() {
+    return valuesss;
+  }
+
+  public void setValuesss(String[] valuesss) {
+    this.valuesss = valuesss;
+  }
 
   public String getId() {
     return id;
@@ -31,4 +52,8 @@ public class Specpojo {
   public void setValues(ArrayList<String> values) {
     this.values = values;
   }
+
+
+
+
 }
