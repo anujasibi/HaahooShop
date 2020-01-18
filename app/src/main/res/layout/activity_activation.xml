@@ -117,7 +117,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:textAlignment="center"
-                android:text="Copyright@ 2019 haahoo.in"
+                android:text="Copyright@ 2020 haahoo.in"
                 />
         </LinearLayout>
     </ScrollView>

@@ -85,6 +85,7 @@ public class addimage extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addimage);
+        requestMultiplePermissions();
 
         Window window = activity.getWindow();
 
@@ -97,7 +98,7 @@ public class addimage extends AppCompatActivity {
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
         dialog=new ProgressDialog(addimage.this,R.style.MyAlertDialogStyle);
-        requestMultiplePermissions();
+
 
         sessionManager=new SessionManager(this);
 

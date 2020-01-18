@@ -83,6 +83,7 @@ public class MyAdapter extends ArrayAdapter {
        // textView3.setText(birdList.get(position).getStock());
 
         ids=birdList.get(position).getId();
+        sessionManager.setPdtid(ids);
         addD.setText(birdList.get(position).getStock());
 
         viewi.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,15 @@
     android:background="@color/mine_shaft"
     >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/profile_name"
@@ -65,5 +74,10 @@
         android:text="  Forgot Pin  "
         android:textColor="@color/WHITE"
         />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
 
 </RelativeLayout>

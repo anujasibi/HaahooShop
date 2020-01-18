@@ -8,6 +8,15 @@
     >
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
     <TextView
         android:id="@+id/profile_name"
         android:layout_width="256dp"
@@ -40,5 +49,10 @@
         app:keypadShowDeleteButton="true"
         app:keypadTextColor="@color/white"
         app:keypadTextSize="18dp" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
 
 </RelativeLayout>

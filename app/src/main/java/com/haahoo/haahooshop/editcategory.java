@@ -39,7 +39,7 @@ import java.util.Map;
 public class editcategory extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ArrayList<Specpojo> specpojos = new ArrayList<>();
+    ArrayList<EditPojo> specpojos = new ArrayList<>();
     Specad specAdapter;
     Context context = this;
     String[] value = null;
@@ -51,6 +51,7 @@ public class editcategory extends AppCompatActivity {
     // String url = "https://testapi.creopedia.com/api_shop_app/list_pdt_cat_spec/";
     //String url = "https://haahoo.in/api_shop_app/list_pdt_cat_spec/";
     String url =Global.BASE_URL+ "api_shop_app/list_pdt_cat_spec/";
+    String urln =Global.BASE_URL+ "api_shop_app/product_specification_list/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class editcategory extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+
+
         recyclerView = findViewById(R.id.recycle);
         imageView3=findViewById(R.id.imageView3);
         save=findViewById(R.id.save);
@@ -80,6 +83,7 @@ public class editcategory extends AppCompatActivity {
         Bundle bundle =getIntent().getExtras();
         final String category = bundle.getString("category");
         loadspecs(category);
+        previous();
         ArrayList<String> vals = new ArrayList<>();
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -156,7 +160,7 @@ public class editcategory extends AppCompatActivity {
                                 for (int i =0;i<jsonArray.length();i++){
 
                                     JSONObject jsonObject1 = jsonArray.optJSONObject(i);
-                                    Specpojo specpojo = new Specpojo();
+                                    EditPojo specpojo = new EditPojo();
                                     specpojo.setName(jsonObject1.optString("name"));
                                     specpojo.setId(jsonObject1.optString("id"));
                                     String values1 = jsonObject1.optString("values");
@@ -235,6 +239,103 @@ public class editcategory extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
+    }
+
+
+    public void previous(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urln,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //    dialog.dismiss();
+                        //  Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String message=jsonObject.optString("message");
+                            JSONArray jsonArray = jsonObject.optJSONArray("data");
+                            Log.d("ghcghdata","ghfvghf"+jsonArray);
+                                for (int i =0;i<jsonArray.length();i++){
+
+                                    EditPojo specpojo = new EditPojo();
+
+                                    JSONObject jsonObject1 = jsonArray.optJSONObject(i);
+                                    JSONObject jsonObject2=jsonObject1.optJSONObject("specification");
+                                    JSONObject jsonObject3=jsonObject1.optJSONObject("specification_header");
+                                    for(int k=0; k<jsonObject3.length();k++){
+                                        String header=jsonObject3.optString("spec"+k);
+                                        Log.d("header","ghfvghf"+header);
+                                        specpojo.setHeader(header);
+                                        String value=jsonObject2.optString(header);
+                                        specpojo.setHval(value);
+                                        Log.d("value","ghfvghf"+value);
+                                    }
+
+
+
+                                    Log.d("jsonObject2","ghfvghf"+jsonObject2);
+                                    Log.d("jsonObject3","ghfvghf"+jsonObject3);
+
+
+
+
+
+
+
+
+//                      for (int l = 0;l<seperated.length;l++){
+//
+//                      }
+
+                                    // Log.d("jsonresponse","hgf"+value[0]+"kkk"+value[1]+value.length);
+                                  //  specpojos.add(specpojo);
+                                }
+
+
+
+
+                                /*  }*/
+  /*                              specAdapter = new Specad(specpojos, context);
+                                recyclerView.setAdapter(specAdapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));*/
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(editcategory.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError{
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("product_id",sessionManager.getPdtid());
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Authorization","Token "+sessionManager.getTokens());
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
     }
 
     @Override

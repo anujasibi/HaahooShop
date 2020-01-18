@@ -26,9 +26,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Specad extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
+public class Specad extends RecyclerView.Adapter<Specad.ViewHolder> {
 
-  public ArrayList<Specpojo> downloadPojos;
+  public ArrayList<EditPojo> downloadPojos;
   Context context1 ;
   JSONArray arr = new JSONArray();
   JSONObject products = new JSONObject();
@@ -38,7 +38,7 @@ public class Specad extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
   TextWatcher addOntext = null;
   private ArrayAdapter<String> adapter ;
 
-  public Specad(ArrayList<Specpojo> productPojo, Context context) {
+  public Specad(ArrayList<EditPojo> productPojo, Context context) {
     this.downloadPojos = productPojo;
     this.context1 = context;
 
@@ -64,15 +64,15 @@ public class Specad extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
   }
 
   @Override
-  public SpecAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public Specad.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-    View listItem= layoutInflater.inflate(R.layout.specification, parent, false);
-    SpecAdapter.ViewHolder viewHolder = new SpecAdapter.ViewHolder(listItem);
+    View listItem= layoutInflater.inflate(R.layout.editcat, parent, false);
+    Specad.ViewHolder viewHolder = new Specad.ViewHolder(listItem);
     return viewHolder;
   }
 
   @Override
-  public void onBindViewHolder(final SpecAdapter.ViewHolder holder, final int position) {
+  public void onBindViewHolder(final Specad.ViewHolder holder, final int position) {
     sessionManager = new SessionManager(context1);
     ArrayList<String> newlist = Global.row.get(position);
     ArrayList<String> finallist = new ArrayList<>();
@@ -85,6 +85,17 @@ public class Specad extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
       finallist.add(list[i].replace("[","").replace("]","").replace("'",""));
     }
 
+
+    holder.check.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        holder.check.setVisibility(View.GONE);
+        holder.spinner.setVisibility(View.VISIBLE);
+        holder.prev.setVisibility(View.GONE);
+        holder.apply.setVisibility(View.VISIBLE);
+
+      }
+    });
 
     adapter = new ArrayAdapter<String>(context1,android.R.layout.simple_spinner_item,finallist);
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,6 +115,12 @@ public class Specad extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
         // DO Nothing here
       }
     });
+
+
+
+
+
+
 
 
 
@@ -135,7 +152,6 @@ public class Specad extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
       @Override
       public void onClick(View view) {
         holder.apply.setBackgroundColor(Color.parseColor("#008000"));
-
         if (country.length() == 0) {
           Toast.makeText(context1, "Spec cannot be empty"+products.length(), Toast.LENGTH_SHORT).show();
         }
@@ -284,15 +300,20 @@ public class Specad extends RecyclerView.Adapter<SpecAdapter.ViewHolder> {
     public Spinner spinner;
     public EditText value;
     public TextView apply;
+    public EditText check;
+    public TextView prev;
     public TextView remove;
     public ViewHolder(View itemView) {
       super(itemView);
 
       spec1 = itemView.findViewById(R.id.spec1);
+
       spinner = itemView.findViewById(R.id.spinner);
       value = itemView.findViewById(R.id.value);
+      check=itemView.findViewById(R.id.editnew);
       apply=itemView.findViewById(R.id.apply);
       remove=itemView.findViewById(R.id.remove);
+      prev=itemView.findViewById(R.id.prval);
 
 
 
