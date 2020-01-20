@@ -3,6 +3,7 @@ package com.haahoo.haahooshop;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -49,7 +51,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Navigation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class Navigation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -96,6 +98,9 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
     Switch switchTop;
     CardView carda,cardb,cardc,cardd,carde,cardf,cardg,cardh,cardi,cardj,cardk,cardl,cardm,cardn,card1,card2,card3;
     TextView ear,sub,ord;
+    public String statusSwitch1;
+    Switch simpleSwitch;
+    private String statu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +127,9 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
 
         sessionManager=new SessionManager(this);
 
+
+
+
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawer,R.string.openDrawer,R.string.closeDrawer);
@@ -136,10 +144,29 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
 
+
+
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
         txtName = (TextView) navHeader.findViewById(R.id.name);
         txtWebsite = (TextView) navHeader.findViewById(R.id.website);
+         simpleSwitch = (Switch) navHeader.findViewById(R.id.simpleSwitch);
+        simpleSwitch.setOnCheckedChangeListener(this);
+
+
+      /*  if (simpleSwitch.isChecked()){
+            simpleSwitch.setText("Online");
+            statusSwitch1 = simpleSwitch.getTextOn().toString();
+            Toast.makeText(getApplicationContext(), "Switch1 :" + statusSwitch1 , Toast.LENGTH_LONG).show();
+        }
+       else {
+            simpleSwitch.setText("Offline");
+            statusSwitch1 = simpleSwitch.getTextOff().toString();
+            Toast.makeText(getApplicationContext(), "Switch1 :" + statusSwitch1 , Toast.LENGTH_LONG).show();
+
+        }
+*/
+
 
         ear=findViewById(R.id.ear);
         sub=findViewById(R.id.sub);
@@ -791,5 +818,93 @@ private void notif(){
 }
 
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if (simpleSwitch.isChecked()) {
+            simpleSwitch.setText("Online");
+            statu ="1";
+            statusSwitch1 = simpleSwitch.getTextOn().toString();
+            online();
+        //    Toast.makeText(getApplicationContext(), simpleSwitch.getText() , Toast.LENGTH_LONG).show();
 
+
+        } else {
+
+            simpleSwitch.setText("Offline");
+            statu ="0";
+            statusSwitch1 = simpleSwitch.getTextOn().toString();
+            online();
+           // Toast.makeText(getApplicationContext(), simpleSwitch.getText() , Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    private void online(){
+        RequestQueue queue=Volley.newRequestQueue(Navigation.this);
+
+        String url=Global.BASE_URL+"api_shop_app/shop_status_update/";
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String ot = jsonObject.optString("message");
+                    String status=jsonObject.optString("code");
+                    String token=jsonObject.optString("Token");
+                    //    sessionManager.setTokens(token);
+
+
+
+
+                    Log.d("otp","mm"+token);
+                    Log.d("code","mm"+status);
+                    if(status.equals("200")){
+                    //    Toast.makeText(Navigation.this, "Successful", Toast.LENGTH_LONG).show();
+
+                    }
+                    else{
+                     //   Toast.makeText(Navigation.this, "Failed."+ot, Toast.LENGTH_LONG).show();
+
+
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // dialog.dismiss();
+                Toast.makeText(Navigation.this,"Internal Server Error",Toast.LENGTH_LONG).show();
+
+
+            }
+        })
+
+        {
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError{
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("mode",statu);
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders()  {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Token " + sessionManager.getTokens());
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+
+    }
 }

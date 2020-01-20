@@ -74,6 +74,25 @@ public class Specad extends RecyclerView.Adapter<Specad.ViewHolder> {
   @Override
   public void onBindViewHolder(final Specad.ViewHolder holder, final int position) {
     sessionManager = new SessionManager(context1);
+  //  holder.prev.setText(downloadPojos.get(position).getHval());
+    Log.d("dddffftftftftf","mmm"+Global.spec_headers);
+    Log.d("dddffftftftftf","mmm"+Global.spec_values);
+    ArrayList<String>newli=Global.row1.get(position);
+    ArrayList<String> finallis = new ArrayList<>();
+    String[] lis =null;
+    for (String s: newli){
+      lis = s.split(",");
+
+    }
+    for (int i =0 ;i<lis.length;i++){
+      finallis.add(lis[i].replace("[","").replace("]","").replace("'",""));
+      Log.d("RSDRFGHJ","MM"+finallis.get(i));
+    //  holder.prev.setText(finallis.get(position));
+    }
+
+    holder.prev.setText(finallis.get(0));
+
+
     ArrayList<String> newlist = Global.row.get(position);
     ArrayList<String> finallist = new ArrayList<>();
     String[] list =null;
@@ -197,95 +216,6 @@ public class Specad extends RecyclerView.Adapter<Specad.ViewHolder> {
     });
 
 
-        /*holder.value.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                ArrayList<String> names = new ArrayList<>();
-                // names.clear();
-                names.add(downloadPojos.get(position).getName());
-                HashMap<String,JSONObject> map1 = new HashMap<String, JSONObject>();
-                JSONObject json = new JSONObject();
-                try {
-                    json.put("name",names.get(0));
-                    json.put("value",holder.value.getText().toString());
-                    map1.put("json",json);
-                    arr.put(map1.get("json"));
-                    //       products.put("product",arr);
-//                            JSONArray jsonArray = new JSONArray(json.toString());
-//                            JSONObject jsonObject = new JSONObject();
-//                            jsonObject.put("products",jsonArray.toString());
-//                            map.put("json" +0, json);
-//                            arr.put(map.get("json" + 0));
-//
-//                            //arr.put(map.get("json" + j));
-//
-//                                products.put("product", arr);
-                   *//* if (arr.length()>2){
-                        arr.remove(0);
-                    }*//*
-                    products.put("spec",arr);
-                    sessionManager.setcatName(products.toString());
-                    Log.d("fff", "mm" +sessionManager.getcatName());
-                    Log.d("fff", "mm" +products);
-                    //Log.d("sizedfgdfgfg11", "mm" + arr.getJSONObject(0).getString("name"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
-/*
-        holder.spinner.setAdapter(new ArrayAdapter<String>(context1, android.R.layout.simple_spinner_dropdown_item, downloadPojos.get(position).getValues()));
-        holder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ArrayList<String> names = new ArrayList<>();
-               // names.clear();
-                names.add(downloadPojos.get(position).getName());
-                ArrayList<String> values = new ArrayList<>();
-                values.clear();
-                values.add(downloadPojos.get(position).getValues().get(holder.spinner.getSelectedItemPosition()));
-                HashMap<String, JSONObject> map = new HashMap<String, JSONObject>();
-               // Toast.makeText(context1,""+Global.specpojos.size(),Toast.LENGTH_SHORT).show();
-              //  for (int j = 0; j < 1; j++) {
-                Global.category = downloadPojos.get(position).getValues().get(holder.spinner.getSelectedItemPosition());
-                    if(!(downloadPojos.get(position).getValues().get(holder.spinner.getSelectedItemPosition()).equals("Please Select ..."))){
-                        HashMap<String,JSONObject> map1 = new HashMap<String, JSONObject>();
-                        JSONObject json = new JSONObject();
-                        try {
-                            json.put("name",names.get(0));
-                            json.put("value",holder.value.getText().toString());
-                            map1.put("json",json);
-                            arr.put(map1.get("json"));
-                     //       products.put("product",arr);
-//                            JSONArray jsonArray = new JSONArray(json.toString());
-//                            JSONObject jsonObject = new JSONObject();
-//                            jsonObject.put("products",jsonArray.toString());
-//                            map.put("json" +0, json);
-//                            arr.put(map.get("json" + 0));
-//
-//                            //arr.put(map.get("json" + j));
-//
-//                                products.put("product", arr);
-                            if (arr.length()>2){
-                                arr.remove(0);
-                            }
-                            products.put("spec",arr);
-                            sessionManager.setcatName(products.toString());
-                                Log.d("fff", "mm" +sessionManager.getcatName());
-                            Log.d("fff", "mm" +products);
-                            //Log.d("sizedfgdfgfg11", "mm" + arr.getJSONObject(0).getString("name"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d("fff", "mm" +arr);
-                    }
-                //}
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-*/
 
   }
 

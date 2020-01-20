@@ -52,6 +52,7 @@ public class editcategory extends AppCompatActivity {
     //String url = "https://haahoo.in/api_shop_app/list_pdt_cat_spec/";
     String url =Global.BASE_URL+ "api_shop_app/list_pdt_cat_spec/";
     String urln =Global.BASE_URL+ "api_shop_app/product_specification_list/";
+    public String header,val;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,6 +257,8 @@ public class editcategory extends AppCompatActivity {
 
                             String message=jsonObject.optString("message");
                             JSONArray jsonArray = jsonObject.optJSONArray("data");
+                            ArrayList<ArrayList<String>> row = new ArrayList<ArrayList<String>>();
+
                             Log.d("ghcghdata","ghfvghf"+jsonArray);
                                 for (int i =0;i<jsonArray.length();i++){
 
@@ -265,14 +268,24 @@ public class editcategory extends AppCompatActivity {
                                     JSONObject jsonObject2=jsonObject1.optJSONObject("specification");
                                     JSONObject jsonObject3=jsonObject1.optJSONObject("specification_header");
                                     for(int k=0; k<jsonObject3.length();k++){
-                                        String header=jsonObject3.optString("spec"+k);
+                                         header=jsonObject3.optString("spec"+k);
                                         Log.d("header","ghfvghf"+header);
                                         specpojo.setHeader(header);
-                                        String value=jsonObject2.optString(header);
-                                        specpojo.setHval(value);
+                                         val=jsonObject2.optString(header);
+                                        specpojo.setHval(val);
+
+                                        ArrayList<String> column = new ArrayList<String>();
+                                        column.add(val);
+                                        row.add(column);
+
                                         Log.d("value","ghfvghf"+value);
+                                        Global.spec_headers.add(header);
+                                        Global.spec_values.add(val);
+                                    //    specpojos.add(specpojo);
                                     }
 
+
+                                  Global.row1=row;
 
 
                                     Log.d("jsonObject2","ghfvghf"+jsonObject2);
@@ -297,10 +310,9 @@ public class editcategory extends AppCompatActivity {
 
 
                                 /*  }*/
-  /*                              specAdapter = new Specad(specpojos, context);
-                                recyclerView.setAdapter(specAdapter);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));*/
-
+                           //     specAdapter = new Specad(specpojos, context);
+                            //    recyclerView.setAdapter(specAdapter);
+                        //        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
